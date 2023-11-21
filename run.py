@@ -1,6 +1,8 @@
 import gspread # needed for access to google sheets to store user wrong questions
 import html #needed to decode html specials in quiz questions
-import requests
+import requests #needed to request questions from open trivia DB API
+import json #needed to help parse the recieved json strings
+import os #access to CLi clear command to clear out previous text
 
 from google.oauth2.service_account import Credentials
 from pprint import pprint
@@ -23,8 +25,6 @@ response = requests.get(url)
 response_json = response.json()
 token = response_json['token'] #store session token - used once per game to prevent duplicate questions
 
-
-
 int_number_of_questions = 10
 url_questions = f'amount={int_number_of_questions}'
 
@@ -46,6 +46,8 @@ print(questions_json)
 category_list = requests.get('https://opentdb.com/api_category.php')
 category_list_json = category_list.json()
 print(f'Available Categories:\n {category_list_json}')
+
+os.system('clear')
 
 # questions = SHEET.worksheet('questions')
 
