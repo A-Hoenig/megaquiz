@@ -23,6 +23,8 @@ response = requests.get(url)
 response_json = response.json()
 token = response_json['token'] #store session token - used once per game to prevent duplicate questions
 
+
+
 int_number_of_questions = 10
 url_questions = f'amount={int_number_of_questions}'
 
@@ -41,6 +43,9 @@ questions_json = questions.json()
 
 print(questions_json)
 
+category_list = requests.get('https://opentdb.com/api_category.php')
+category_list_json = category_list.json()
+print(f'Available Categories:\n {category_list_json}')
 
 # questions = SHEET.worksheet('questions')
 
