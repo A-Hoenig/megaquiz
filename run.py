@@ -30,7 +30,7 @@ def generate_new_token():
 
 def get_categories():
     """
-    function to retrieve all available categories form open Trivia DB and the associated category code
+    function to retrieve all available categories from open Trivia DB and the associated category code
     """
     category_list = requests.get('https://opentdb.com/api_category.php')
     category_list_json = category_list.json()
@@ -41,7 +41,7 @@ def get_questions(number, category, question_type, difficulty, token):
     Main function to generate API query string from given inputs.
     Token is required per session to prevent repeated questions
     returns a json dictionary containing requested number of questions from given type and category
-    setting parameters to ANY opens up request to ANYL categories or difficulties or types
+    setting parameters to ANY opens up request to ANY categories or difficulties or types
     default number of questions is 10
     number, category are integers, difficulty = 'easy', 'medium', 'hard' strings
     """
@@ -63,6 +63,7 @@ def get_questions(number, category, question_type, difficulty, token):
         url_difficulty = f'&difficulty={difficulty}'
 
     url_token = f'&token={token}'
+
     questions_url = ('https://opentdb.com/api.php?' + url_no_of_questions + url_category + url_difficulty + url_type + url_token)
     questions = requests.get(questions_url)
     questions_json = questions.json()
@@ -83,12 +84,12 @@ Welcome to
 '''
     print(str_title)
     print('\u23AF' * 40)
-    print(f'    {readout_line}')
+    print(f'{readout_line}')
     print('\u23AF' * 40)
 
 def display_main_menu():
     '''
-    resets the CLI and then displays the main menu to start the quiz.
+    displays the main menu to start the quiz.
     also gives option to go into settings and change quiz parameters
     '''
     global num
@@ -97,7 +98,7 @@ def display_main_menu():
     global category
     global training_mode
     
-    reset_cli("Main Menu:")
+    reset_cli("Main Menu")
     print(f'Select number to proceed:\n\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{difficulty}\nType:\u0009\u0009{question_type}\nCategory:\u0009{category}\n\nEnter a number to proceed')
     while True:
         try:
@@ -114,13 +115,16 @@ def display_main_menu():
             print('Please enter a number!')
 
 def display_settings():
+    '''
+    displays the settings options and calls appropriate functions to change the global variables for the quiz parameters
+    '''
     global num
     global difficulty
     global question_type
     global category
     global training_mode
 
-    reset_cli("Settings:")
+    reset_cli("Settings")
     print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{difficulty}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{display_category(category,category_list)}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
     print('Turning on training mode will remember questions you got wrong\nYou can then select "training" as a category to build quizzes\nusing only previously wrong questions\n')
     while True:
@@ -173,7 +177,7 @@ def change_difficulty():
     '''
     global difficulty
 
-    reset_cli('Difficulty Level:')
+    reset_cli('Difficulty Level')
     while True:
         try:
             print(f'\n1. ANY\n2. easy\n3. medium\n4. hard\n')
@@ -197,15 +201,15 @@ def change_difficulty():
 
 def change_type():
     '''
-    Allow user to change the type of quiz. (multpile choice, true or false or noth (ANY). Changes the global variable
+    Allow user to change the type of quiz. (multpile choice, true or false or both (ANY). Changes the global variable
     '''
     global question_type
 
-    reset_cli('Question Types:')
+    reset_cli('Question Types')
     while True:
         try:
             print(f'\n1. ANY\n2. Multiple Choice\n3. True/False\n')
-            user_input = int(input('\nPLease select the question type:\n'))
+            user_input = int(input('\nPlease select the question type:\n'))
             if 1 <= user_input <= 3:
                 match user_input:
                         case 1:
@@ -227,7 +231,7 @@ def change_category ():
     '''
     global category
 
-    reset_cli('Available Categories:')
+    reset_cli('Available Categories')
     print(create_category_list(category_list))
     
     while True:
@@ -281,7 +285,7 @@ category_list = get_categories() #get and store list of categories from Trivia D
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
-num = 20
+num = 10
 training_mode = "OFF"
 tok = generate_new_token()
 
