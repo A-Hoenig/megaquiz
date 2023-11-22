@@ -248,14 +248,14 @@ def display_category(id, category_list):
     '''
     function to return the category name based on the given ID
     '''
-        trivia_categories = category_list.get("trivia_categories", [])
-        #loop through to find given ID
-        for cat in trivia_categories:
-            #check for ID match
-            if cat.get('id') == id:
-                #return cat name
-                return cat.get('name')
-        return None #if ID not found
+    trivia_categories = category_list.get("trivia_categories", [])
+    #loop through to find given ID
+    for cat in trivia_categories:
+        #check for ID match
+        if cat.get('id') == id:
+            #return cat name
+            return cat.get('name')
+    return 'ANY' #if ID not found
 
 def create_category_list(categories):
     '''
