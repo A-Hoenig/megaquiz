@@ -228,7 +228,7 @@ def change_category ():
     global category
 
     reset_cli('Available Categories:')
-    print(create_category_list(get_categories()))
+    print(create_category_list(category_list))
     
     while True:
         try:
@@ -244,9 +244,9 @@ def change_category ():
         except ValueError:
             print('Please enter a number!')
 
-def display_category(id):
+def display_category(id, category_list):
     '''
-    function to return teh category name based on the given ID
+    function to return the category name based on the given ID
     '''
 
 def create_category_list(categories):
@@ -268,6 +268,8 @@ def create_category_list(categories):
 
 ######################################################################################
 
+#global variables to keep track of selected game parameters
+category_list = get_categories() #get and store list of categories from Trivia DB
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
