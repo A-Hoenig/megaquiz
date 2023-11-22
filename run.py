@@ -141,10 +141,7 @@ def display_settings():
                         case 4:
                             change_category()
                         case 5:
-                            print('five')
-                            questions = SHEET.worksheet('questions')
-                            data = questions.get_all_values()
-                            pprint(data)
+                            toggle_training_mode()
                         case 6:
                             display_main_menu()
                 else:
@@ -278,6 +275,19 @@ def create_category_list(categories):
     #return the completed string
     return str_categories
 
+def toggle_training_mode():
+    '''
+    toggle training more on or off
+    used to determine if wrong questions should be stored on the google sheet
+    '''
+    global training_mode
+
+    if training_mode == 'OFF':
+        training_mode = 'ON'
+    else:
+        training_mode = 'OFF'
+    display_settings()
+
 ######################################################################################
 
 #global variables to keep track of selected game parameters
@@ -292,4 +302,6 @@ tok = generate_new_token()
 
 display_main_menu()
 
-
+# questions = SHEET.worksheet('questions')
+#                             data = questions.get_all_values()
+#                             pprint(data)
