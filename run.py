@@ -82,20 +82,25 @@ Welcome to
 ┛ ┗┗┛┗┛┛┗  ┗┻┗┛┻┗┛
 '''
     print(str_title)
-    print('---------------------------------------')
+    print('\u23AF' * 40)
     print(f'    {readout_line}')
-    print('---------------------------------------')
+    print('\u23AF' * 40)
 
-
-
+def display_main_menu(num, diff, question_type, cat):
+    print(f'Select number to proceed:\n\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{diff}\nType:\u0009\u0009{question_type}\nCategory:\u0009{cat}\n\nEnter a number to proceed')
+    
 ######################################################################################
-reset_cli("Hello")
+reset_cli("Main Menu:")
 
 cat = 'ALL' # number of category or ALL
 question_type = 'ALL' #multiple, boolean, ALL
 diff = 'ALL' # easy, medium, hard, ALL
 num = 20
 tok = generate_new_token()
+
+display_main_menu(num, diff, question_type, cat)
+
+
 # print(get_questions(num, cat, question_type, diff, tok))
 
 
