@@ -101,16 +101,20 @@ def display_main_menu(num, diff, question_type, cat):
 
 def display_settings(num, diff, question_type, cat, training_mode):
     reset_cli("Settings:")
-    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{diff}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{cat}\n4. Training Mode:\u0009{training_mode}\n5. Exit Settings \n')
+    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{diff}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{cat}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
     while True:
             try:
                 user_input = int(input('Select your option: '))
-                if 1 <= user_input <= 5:
+                if 1 <= user_input <= 6:
                     return user_input
                 else:
-                    print("Please enter 1 - 5!")
+                    print("Please enter 1 - 6!")
             except ValueError:
                 print('Please enter a number!')
+
+
+
+
 ######################################################################################
 
 cat = 'ALL' # number of category or ALL
@@ -125,7 +129,20 @@ if user_selection == 1:
     print('START THE QUIZ')
 else:
     settings_selection = display_settings(num, diff, question_type, cat, training_mode)
-    print(f'You selected {settings_selection}')
+    match settings_selection:
+        case 1:
+            print("one")
+        case 2:
+            print("two")
+        case 3:
+            print("three")
+        case 4:
+            print("four")
+        case 5:
+            print('five')
+        case 6:
+            display_main_menu(num, diff, question_type, cat)
+    
 
 # print(get_questions(num, cat, question_type, diff, tok))
 
