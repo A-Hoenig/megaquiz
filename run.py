@@ -129,17 +129,13 @@ def display_settings():
                 if 1 <= user_input <= 6:
                     match user_input:
                         case 1:
-                            print("one")
                             no_of_questions()
                         case 2:
-                            print("two")
                             change_difficulty()
                         case 3:
-                            print("three")
                             change_type()
                         case 4:
-                            print("four")
-                            print(get_categories())
+                            change_category()
                         case 5:
                             print('five')
                             questions = SHEET.worksheet('questions')
@@ -224,6 +220,45 @@ def change_type():
                 print("Please enter a value from 1 to 3!")
         except ValueError:
             print('Please enter a number!')
+
+def change_category ():
+    '''
+    Allow user to change the category.list pulled from open quiz DB. Changes the global variable
+    '''
+    global category
+
+    reset_cli('Available Categories:')
+    print(create_category_list(get_categories()))
+    
+    while True:
+        try:
+            user_input = int(input('\nPlease type the number of the category:\n'))
+            if 1 <= user_input <= 3:
+                
+                display_settings()
+                break
+            else:
+                print("Please enter a valid category number!")
+        except ValueError:
+            print('Please enter a number!')
+
+
+def create_category_list(categories):
+    '''
+    pass API category data and create string to display in settings menu for category selection
+    '''
+    str_categories = ""
+    trivia_categories = categories.get('trivia_categories', [])
+    #loop through entries:
+    for cat in trivia_categories:
+        #get ID and name
+        cat_id = cat.get('id')
+        cat_name = cat.get('name')
+    #append to string
+    str_categories += f'{cat_id} -- {cat_name}\n'
+    print(str_categories)
+    #return the completed string
+    return str_categories
 
 ######################################################################################
 
