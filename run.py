@@ -121,7 +121,7 @@ def display_settings():
     global training_mode
 
     reset_cli("Settings:")
-    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{difficulty}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{category}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
+    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{difficulty}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{display_category(category,category_list)}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
     print('Turning on training mode will remember questions you got wrong\nYou can then select "training" as a category to build quizzes\nusing only previously wrong questions\n')
     while True:
             try:
@@ -248,6 +248,14 @@ def display_category(id, category_list):
     '''
     function to return the category name based on the given ID
     '''
+        trivia_categories = category_list.get("trivia_categories", [])
+        #loop through to find given ID
+        for cat in trivia_categories:
+            #check for ID match
+            if cat.get('id') == id:
+                #return cat name
+                return cat.get('name')
+        return None #if ID not found
 
 def create_category_list(categories):
     '''
