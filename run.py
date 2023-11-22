@@ -83,9 +83,9 @@ Welcome to
 ┛ ┗┗┛┗┛┛┗  ┗┻┗┛┻┗┛
 '''
     print(str_title)
-    print('\u23AF' * 40)
+    print('\u23AF' * 50)
     print(f'{readout_line}')
-    print('\u23AF' * 40)
+    print('\u23AF' * 50)
 
 def display_main_menu():
     '''
@@ -106,6 +106,8 @@ def display_main_menu():
             if 1 <= user_input <= 2:
                 if user_input == 1:
                     print("START THE QUIZ!!")
+                    question_list = get_questions(num, category, question_type, difficulty, tok)
+                    display_quiz(question_list)
                     exit()
                 else:
                     display_settings()
@@ -296,6 +298,20 @@ def toggle_training_mode():
         training_mode = 'OFF'
     display_settings()
 
+def display_quiz(question_list):
+    global correct
+    global wrong
+    question_count = 1
+    if correct == 0:
+        percentage = 0
+    else:
+        percentage = correct / num  * 100
+   
+    status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({percentage}%)'
+    reset_cli(f'{status}')
+
+    print(question_list)
+
 ######################################################################################
 
 #global variables/defaults to keep track of selected quiz parameters
@@ -306,8 +322,11 @@ difficulty = 'ANY' # easy, medium, hard, ANY
 num = 10
 training_mode = "OFF"
 tok = generate_new_token()
+correct = 0
+wrong = 0
 
 
+#launch quiz CLI app
 display_main_menu()
 
 # questions = SHEET.worksheet('questions')
