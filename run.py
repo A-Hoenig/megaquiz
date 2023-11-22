@@ -234,9 +234,11 @@ def change_category ():
         try:
             user_input = int(input('\nPlease type the number of the category:\n'))
             if 8 <= user_input <= 32:
-                set_category_from_ID(user_input)
+                if user_input == 8:
+                    category = 'ANY'
+                else:
+                    category = user_input
                 display_settings()
-                break
             else:
                 print("Please enter a valid category number!")
         except ValueError:
@@ -246,7 +248,7 @@ def display_category(id):
     '''
     function to return teh category name based on the given ID
     '''
-    
+
 def create_category_list(categories):
     '''
     pass API category data and create string to display in settings menu for category selection
