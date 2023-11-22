@@ -41,23 +41,23 @@ def get_questions(number, category, question_type, difficulty, token):
     Main function to generate API query string from given inputs.
     Token is required per session to prevent repeated questions
     returns a json dictionary containing requested number of questions from given type and category
-    setting parameters to ALL opens up request to ALL categories or difficulties or types
+    setting parameters to ANY opens up request to ANYL categories or difficulties or types
     default number of questions is 10
     number, category are integers, difficulty = 'easy', 'medium', 'hard' strings
     """
     url_no_of_questions = f'amount={number}'
 
-    if category == 'ALL':
+    if category == 'ANY':
         url_category = ""
     else:
         url_category = f'&category={category}'
 
-    if question_type == "ALL":
+    if question_type == "ANY":
         url_type = ""
     else:
         url_type = f'&type={question_type}'
 
-    if difficulty == "ALL":
+    if difficulty == "ANY":
         url_difficulty = ""
     else:
         url_difficulty = f'&difficulty={difficulty}'
@@ -87,21 +87,25 @@ Welcome to
     print('\u23AF' * 40)
 
 def display_main_menu():
+    '''
+    resets the CLI and then displays the main menu to start the quiz.
+    also gives option to go into settings and change quiz parameters
+    '''
     global num
-    global diff
+    global difficulty
     global question_type
-    global cat
+    global category
     global training_mode
     
     reset_cli("Main Menu:")
-    print(f'Select number to proceed:\n\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{diff}\nType:\u0009\u0009{question_type}\nCategory:\u0009{cat}\n\nEnter a number to proceed')
+    print(f'Select number to proceed:\n\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{difficulty}\nType:\u0009\u0009{question_type}\nCategory:\u0009{category}\n\nEnter a number to proceed')
     while True:
         try:
             user_input = int(input('Select your option: '))
             if 1 <= user_input <= 2:
                 if user_input == 1:
                     print("START THE QUIZ!!")
-                    break
+                    exit()
                 else:
                     display_settings()
             else:
@@ -111,13 +115,13 @@ def display_main_menu():
 
 def display_settings():
     global num
-    global diff
+    global difficulty
     global question_type
-    global cat
+    global category
     global training_mode
 
     reset_cli("Settings:")
-    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{diff}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{cat}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
+    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{difficulty}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{category}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
     print('Turning on training mode will remember questions you got wrong\nYou can then select "training" as a category to build quizzes\nusing only previously wrong questions\n')
     while True:
             try:
@@ -126,6 +130,7 @@ def display_settings():
                     match user_input:
                         case 1:
                             print("one")
+                            no_of_questions()
                         case 2:
                             print("two")
                         case 3:
@@ -145,14 +150,30 @@ def display_settings():
             except ValueError:
                 print('Please enter a number!')
 
+def no_of_questions():
+    '''
+    Allow user to change the nunber of questions per quiz. Changes teh global variable
+    '''
+    global num
 
-
+    reset_cli('Number of Questions:')
+    while True:
+        try:
+            user_input = int(input('\nType how many questions you would like (1-50):\n'))
+            if 1 <= user_input <= 50:
+                num = user_input
+                display_settings()
+                break
+            else:
+                print("Please enter a value from 1 to 50!")
+        except ValueError:
+            print('Please enter a number!')
 
 ######################################################################################
 
-cat = 'ALL' # number of category or ALL
-question_type = 'ALL' #multiple, boolean, ALL
-diff = 'ALL' # easy, medium, hard, ALL
+category = 'ANY' # number of category or ANY
+question_type = 'ANY' #multiple, boolean, ANY
+difficulty = 'ANY' # easy, medium, hard, ANY
 num = 20
 training_mode = "ON"
 tok = generate_new_token()
