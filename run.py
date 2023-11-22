@@ -233,8 +233,8 @@ def change_category ():
     while True:
         try:
             user_input = int(input('\nPlease type the number of the category:\n'))
-            if 1 <= user_input <= 3:
-                
+            if 8 <= user_input <= 32:
+                set_category_from_ID(user_input)
                 display_settings()
                 break
             else:
@@ -242,21 +242,25 @@ def change_category ():
         except ValueError:
             print('Please enter a number!')
 
-
+def display_category(id):
+    '''
+    function to return teh category name based on the given ID
+    '''
+    
 def create_category_list(categories):
     '''
     pass API category data and create string to display in settings menu for category selection
     '''
-    str_categories = ""
+    str_categories = "8  -- ANY category\n"
     trivia_categories = categories.get('trivia_categories', [])
     #loop through entries:
     for cat in trivia_categories:
         #get ID and name
         cat_id = cat.get('id')
         cat_name = cat.get('name')
-    #append to string
-    str_categories += f'{cat_id} -- {cat_name}\n'
-    print(str_categories)
+        #append to string
+        str_categories += f'{cat_id} -- {cat_name}\n'
+    
     #return the completed string
     return str_categories
 
