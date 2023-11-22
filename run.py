@@ -28,55 +28,77 @@ def generate_new_token():
     response_json = response.json()
     return response_json['token'] #used once per game to prevent duplicate questions
 
+def get_categories():
+    """
+    function to retrieve all available categories form open Trivia DB and the associated category code
+    """
+    category_list = requests.get('https://opentdb.com/api_category.php')
+    category_list_json = category_list.json()
+    return category_list_json
 
 def get_questions(number, category, question_type, difficulty, token):
     """
     Main function to generate API query string from given inputs.
     Token is required per session to prevent repeated questions
-    returns a json dictionary containing requested number of questions from given category
-    omitting parameters opens up request to ALL categories or difficulties
+    returns a json dictionary containing requested number of questions from given type and category
+    setting parameters to ALL opens up request to ALL categories or difficulties or types
     default number of questions is 10
     number, category are integers, difficulty = 'easy', 'medium', 'hard' strings
     """
-    
     url_no_of_questions = f'amount={number}'
-    if category == 0:
+
+    if category == 'ALL':
         url_category = ""
     else:
         url_category = f'&category={category}'
 
-    if question_type == "":
+    if question_type == "ALL":
         url_type = ""
     else:
         url_type = f'&type={question_type}'
 
-    if difficulty == "":
+    if difficulty == "ALL":
         url_difficulty = ""
     else:
         url_difficulty = f'&difficulty={difficulty}'
 
     url_token = f'&token={token}'
-
     questions_url = ('https://opentdb.com/api.php?' + url_no_of_questions + url_category + url_difficulty + url_type + url_token)
-    print(questions_url)
     questions = requests.get(questions_url)
     questions_json = questions.json()
+    
     return questions_json
 
-def get_categories():
-    category_list = requests.get('https://opentdb.com/api_category.php')
-    category_list_json = category_list.json()
-    return category_list_json
+def reset_cli (readout_line):
+    """
+    clears the CLI and repaints the quiz header graphics. 
+    Score or messages can be passed in the readout_line
+    """
+    os.system('clear') #clear the cli first
+    str_title = '''
+Welcome to:
+  __  __ _____ ____    _       ___  _   _ ___ _____
+ |  \/  | ____/ ___|  / \     / _ \| | | |_ _|__  /
+ | |\/| |  _|| |  _  / _ \   | | | | | | || |  / / 
+ | |  | | |__| |_| |/ ___ \  | |_| | |_| || | / /_ 
+ |_|  |_|_____\____/_/   \_\  \__\_|\___/|___/____|
+'''
+    print(str_title)
+    print('---------------------------------------------------')
+    print(f'    {readout_line}')
+    print('---------------------------------------------------')
 
 
-os.system('clear') #clear the cli first
 
-cat = 0
-question_type = ''
-diff = 'easy'
+######################################################################################
+reset_cli("Hello")
+
+cat = 'ALL' # number of category or ALL
+question_type = 'ALL' #multiple, boolean, ALL
+diff = 'ALL' # easy, medium, hard, ALL
 num = 20
 tok = generate_new_token()
-print(get_questions(num, cat, question_type, diff, tok))
+# print(get_questions(num, cat, question_type, diff, tok))
 
 
 
