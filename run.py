@@ -87,8 +87,8 @@ Welcome to
     print('\u23AF' * 40)
 
 def display_main_menu(num, diff, question_type, cat):
+    reset_cli("Main Menu:")
     print(f'Select number to proceed:\n\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{diff}\nType:\u0009\u0009{question_type}\nCategory:\u0009{cat}\n\nEnter a number to proceed')
-    
     while True:
         try:
             user_input = int(input('Select your option: '))
@@ -96,16 +96,22 @@ def display_main_menu(num, diff, question_type, cat):
                 return user_input
             else:
                 print("Please enter 1 or 2!")
-                #do nothing
         except ValueError:
             print('Please enter a number!')
 
 def display_settings(num, diff, question_type, cat, training_mode):
     reset_cli("Settings:")
     print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{diff}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{cat}\n4. Training Mode:\u0009{training_mode}\n5. Exit Settings \n')
-   
+    while True:
+            try:
+                user_input = int(input('Select your option: '))
+                if 1 <= user_input <= 5:
+                    return user_input
+                else:
+                    print("Please enter 1 - 5!")
+            except ValueError:
+                print('Please enter a number!')
 ######################################################################################
-reset_cli("Main Menu:")
 
 cat = 'ALL' # number of category or ALL
 question_type = 'ALL' #multiple, boolean, ALL
