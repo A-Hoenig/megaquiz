@@ -89,6 +89,17 @@ Welcome to
 def display_main_menu(num, diff, question_type, cat):
     print(f'Select number to proceed:\n\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{diff}\nType:\u0009\u0009{question_type}\nCategory:\u0009{cat}\n\nEnter a number to proceed')
     
+    while True:
+        try:
+            user_input = int(input('Select your option: '))
+            if 1 <= user_input <= 2:
+                return user_input
+            else:
+                print("Please enter 1 or 2!")
+                #do nothing
+        except ValueError:
+            print('Please enter a number!')
+   
 ######################################################################################
 reset_cli("Main Menu:")
 
@@ -98,7 +109,8 @@ diff = 'ALL' # easy, medium, hard, ALL
 num = 20
 tok = generate_new_token()
 
-display_main_menu(num, diff, question_type, cat)
+user_selection = display_main_menu(num, diff, question_type, cat)
+print(f'You Chose:  {user_selection}')
 
 
 # print(get_questions(num, cat, question_type, diff, tok))
