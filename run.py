@@ -133,8 +133,10 @@ def display_settings():
                             no_of_questions()
                         case 2:
                             print("two")
+                            change_difficulty()
                         case 3:
                             print("three")
+                            change_type()
                         case 4:
                             print("four")
                             print(get_categories())
@@ -152,7 +154,7 @@ def display_settings():
 
 def no_of_questions():
     '''
-    Allow user to change the nunber of questions per quiz. Changes teh global variable
+    Allow user to change the number of questions per quiz. Changes the global variable
     '''
     global num
 
@@ -169,13 +171,67 @@ def no_of_questions():
         except ValueError:
             print('Please enter a number!')
 
+def change_difficulty():
+    '''
+    Allow user to change the difficulty level of quiz. Changes the global variable
+    '''
+    global difficulty
+
+    reset_cli('Difficulty Level:')
+    while True:
+        try:
+            print(f'\n1. ANY\n2. easy\n3. medium\n4. hard\n')
+            user_input = int(input('\nPLease select the difficulty level:\n'))
+            if 1 <= user_input <= 4:
+                match user_input:
+                        case 1:
+                            difficulty = 'ANY'
+                        case 2:
+                            difficulty = 'easy'
+                        case 3:
+                            difficulty = 'medium'
+                        case 4:
+                            difficulty = 'hard'
+                display_settings()
+                break
+            else:
+                print("Please enter a value from 1 to 4!")
+        except ValueError:
+            print('Please enter a number!')
+
+def change_type():
+    '''
+    Allow user to change the type of quiz. (multpile choice, true or false or noth (ANY). Changes the global variable
+    '''
+    global question_type
+
+    reset_cli('Question Types:')
+    while True:
+        try:
+            print(f'\n1. ANY\n2. Multiple Choice\n3. True/False\n')
+            user_input = int(input('\nPLease select the question type:\n'))
+            if 1 <= user_input <= 3:
+                match user_input:
+                        case 1:
+                            question_type = 'ANY'
+                        case 2:
+                            question_type = 'multiple'
+                        case 3:
+                            question_type = 'boolean'
+                display_settings()
+                break
+            else:
+                print("Please enter a value from 1 to 3!")
+        except ValueError:
+            print('Please enter a number!')
+
 ######################################################################################
 
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
 num = 20
-training_mode = "ON"
+training_mode = "OFF"
 tok = generate_new_token()
 
 
