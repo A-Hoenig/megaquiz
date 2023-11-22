@@ -125,7 +125,15 @@ def display_settings():
     global training_mode
 
     reset_cli("Settings")
-    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{difficulty}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{display_category(category,category_list)}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
+
+    if question_type == "boolean":
+        str_question_type = "True/False"
+    elif question_type == "multiple":
+        str_question_type = "Multiple Choice"
+    else:
+        str_question_type = "ANY"
+
+    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{difficulty}\n3. Change Type:\u0009\u0009{str_question_type}\n4. Change Category:\u0009{display_category(category,category_list)}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
     print('Turning on training mode will remember questions you got wrong\nYou can then select "training" as a category to build quizzes\nusing only previously wrong questions\n')
     while True:
             try:
@@ -290,7 +298,7 @@ def toggle_training_mode():
 
 ######################################################################################
 
-#global variables to keep track of selected game parameters
+#global variables/defaults to keep track of selected quiz parameters
 category_list = get_categories() #get and store list of categories from Trivia DB
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
