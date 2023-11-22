@@ -86,27 +86,60 @@ Welcome to
     print(f'    {readout_line}')
     print('\u23AF' * 40)
 
-def display_main_menu(num, diff, question_type, cat):
+def display_main_menu():
+    global num
+    global diff
+    global question_type
+    global cat
+    global training_mode
+    
     reset_cli("Main Menu:")
     print(f'Select number to proceed:\n\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{diff}\nType:\u0009\u0009{question_type}\nCategory:\u0009{cat}\n\nEnter a number to proceed')
     while True:
         try:
             user_input = int(input('Select your option: '))
             if 1 <= user_input <= 2:
-                return user_input
+                if user_input == 1:
+                    print("START THE QUIZ!!")
+                    break
+                else:
+                    display_settings()
             else:
                 print("Please enter 1 or 2!")
         except ValueError:
             print('Please enter a number!')
 
-def display_settings(num, diff, question_type, cat, training_mode):
+def display_settings():
+    global num
+    global diff
+    global question_type
+    global cat
+    global training_mode
+
     reset_cli("Settings:")
     print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{diff}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{cat}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
+    print('Turning on training mode will remember questions you got wrong\nYou can then select "training" as a category to build quizzes\nusing only previously wrong questions\n')
     while True:
             try:
                 user_input = int(input('Select your option: '))
                 if 1 <= user_input <= 6:
-                    return user_input
+                    match user_input:
+                        case 1:
+                            print("one")
+                        case 2:
+                            print("two")
+                        case 3:
+                            print("three")
+                        case 4:
+                            print("four")
+                            print(get_categories())
+                        case 5:
+                            print('five')
+                            questions = SHEET.worksheet('questions')
+                            data = questions.get_all_values()
+                            pprint(data)
+                        case 6:
+                            display_main_menu()
                 else:
                     print("Please enter 1 - 6!")
             except ValueError:
@@ -124,34 +157,7 @@ num = 20
 training_mode = "ON"
 tok = generate_new_token()
 
-user_selection = display_main_menu(num, diff, question_type, cat)
-if user_selection == 1:
-    print('START THE QUIZ')
-else:
-    settings_selection = display_settings(num, diff, question_type, cat, training_mode)
-    match settings_selection:
-        case 1:
-            print("one")
-        case 2:
-            print("two")
-        case 3:
-            print("three")
-        case 4:
-            print("four")
-        case 5:
-            print('five')
-        case 6:
-            display_main_menu(num, diff, question_type, cat)
-    
 
-# print(get_questions(num, cat, question_type, diff, tok))
+display_main_menu()
 
 
-
-
-
-# questions = SHEET.worksheet('questions')
-
-# data = questions.get_all_values()
-
-# pprint(data)
