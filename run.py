@@ -99,6 +99,10 @@ def display_main_menu(num, diff, question_type, cat):
                 #do nothing
         except ValueError:
             print('Please enter a number!')
+
+def display_settings(num, diff, question_type, cat, training_mode):
+    reset_cli("Settings:")
+    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{diff}\n3. Change Type:\u0009\u0009{question_type}\n4. Change Category:\u0009{cat}\n4. Training Mode:\u0009{training_mode}\n5. Exit Settings \n')
    
 ######################################################################################
 reset_cli("Main Menu:")
@@ -107,11 +111,15 @@ cat = 'ALL' # number of category or ALL
 question_type = 'ALL' #multiple, boolean, ALL
 diff = 'ALL' # easy, medium, hard, ALL
 num = 20
+training_mode = "ON"
 tok = generate_new_token()
 
 user_selection = display_main_menu(num, diff, question_type, cat)
-print(f'You Chose:  {user_selection}')
-
+if user_selection == 1:
+    print('START THE QUIZ')
+else:
+    settings_selection = display_settings(num, diff, question_type, cat, training_mode)
+    print(f'You selected {settings_selection}')
 
 # print(get_questions(num, cat, question_type, diff, tok))
 
