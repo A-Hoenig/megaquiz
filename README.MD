@@ -66,7 +66,7 @@ The finished site is hosted with gitpages under:
 
 ### FLOW CHART
 
-
+<img src="./assets/flowchart.jpg" alt="quiz flow chart" width="400"/>
 
 #### The Main Menu
 
