@@ -99,7 +99,7 @@ def display_main_menu():
     global training_mode
     
     reset_cli("Main Menu")
-    print(f'Select number to proceed:\n\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{difficulty}\nType:\u0009\u0009{question_type}\nCategory:\u0009{category}\n\nEnter a number to proceed')
+    print(f'\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{difficulty}\nType:\u0009\u0009{question_type}\nCategory:\u0009{category}\n')
     while True:
         try:
             user_input = int(input('Select your option: '))
