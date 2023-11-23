@@ -244,8 +244,10 @@ def change_category ():
     while True:
         try:
             user_input = int(input('\nPlease type the number of the category:\n'))
-            if 8 <= user_input <= 32:
-                if user_input == 8:
+            if 7 <= user_input <= 32:
+                if user_input == 7:
+                    category = 'Training'
+                elif user_input == 8:
                     category = 'ANY'
                 else:
                     category = user_input
@@ -266,13 +268,16 @@ def display_category(id, category_list):
         if cat.get('id') == id:
             #return cat name
             return cat.get('name')
-    return 'ANY' #if ID not found
+    if id == "Training":
+        return 'Training'
+    else:
+        return 'ANY' #if ID not found
 
 def create_category_list(categories):
     '''
     pass API category data and create string to display in settings menu for category selection
     '''
-    str_categories = "8  -- ANY category\n"
+    str_categories = "7 -- TRAINING Category (Previous wrong questions)\n8 -- ANY category\n"
     trivia_categories = categories.get('trivia_categories', [])
     #loop through entries:
     for cat in trivia_categories:
