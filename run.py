@@ -3,6 +3,7 @@ import html #needed to decode html specials in quiz questions
 import requests #needed to request questions from open trivia DB API
 import json #needed to help parse the recieved json strings
 import os #access to cli clear command to clear out previous text
+import random #needed to shuffle answers
 
 from google.oauth2.service_account import Credentials
 from pprint import pprint
@@ -310,17 +311,18 @@ def format_questions(raw_question_list):
     #step through entire question list
     for index, q in enumerate(raw_question_list['results']):
         #add question first
-        individual_question = f'\n{html.unescape(q['question'])}\n({q['difficulty']} level from {html.unescape(q['category'])})\n\n'
+        individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
         #add answer
         if q['type'] == 'boolean':
             individual_question += f'1. True\n2. False\n' # only needs 2 answers for true/false questions
             print(individual_question)
         else:
             answers = [html.unescape(q['correct_answer'])] + html.unescape(q['incorrect_answers'])
+            random.shuffle(answers) #shuffle so correct answer is not always 1
             #add answers underneath question string
             for i, ans in enumerate(answers, start=1): #dont use 0 for first answer
                 individual_question += f'{i}. {ans}\n' #number and add all answers
-            print(individual_question)
+            print(html.unescape(individual_question))
 
         formatted_questions.append(individual_question) #add formatted questions to question list
 
