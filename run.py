@@ -316,15 +316,21 @@ def format_question(raw_question_list, n):
     individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
     #add answer
     if q['type'] == 'boolean':
+        answers = ['True', 'False']
+        random.shuffle(answers)
+        correct_answer_number = 1 if q['correct_answer'] == 'True' else 2
         individual_question += f'1. True\n2. False\n' # T/F question only needs std 2 answers
+
     else:
         answers = [html.unescape(q['correct_answer'])] + html.unescape(q['incorrect_answers'])
         random.shuffle(answers) #shuffle so correct answer is not always 1
         #add answers underneath question string
         for i, ans in enumerate(answers, start=1): # don't use 0 for first answer
             individual_question += f'{i}. {ans}\n' # number and add all answers
+            if ans == html.unescape(q['correct_answer']):
+                correct_answer_number = i
 
-    return individual_question
+    return individual_question, correct_answer_number
 
 def display_quiz(raw_question_list):
     '''
@@ -340,8 +346,13 @@ def display_quiz(raw_question_list):
         status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({percentage}%)'
         reset_cli(f'{status}')
 
-        print(f'{format_question(raw_question_list, question_count-1)}\n') # get question index ( = -1 )
-        
+        # display formatted question
+        print(f'{format_question(raw_question_list, question_count-1)[0]}\n') # real question index ( = -1 )
+        correct_answer = format_question(raw_question_list, question_count-1)[1]
+
+        print(correct_answer)
+
+        # get user answer and validate
         if raw_question_list['results'][question_count-1]['type'] == 'boolean': #set how many valid answers there are
             qs = 2
         else:
@@ -357,6 +368,8 @@ def display_quiz(raw_question_list):
                     print(f"Please enter 1 or {qs}!")
             except ValueError:
                 print('Please enter a number!')
+
+
     
         
 
