@@ -314,19 +314,19 @@ def run_quiz(raw_question_list):
     '''
     global correct, wrong, training_mode
     
-    for question_count, _ in enumerate(raw_question_list['results'], start = 1): # display first question as 1, not 0
+    for question_count, _ in enumerate(raw_question_list['results'], start = 1): # start loop, display first question as 1, not 0
 
         percentage = correct / num  * 100 #num must never be zero ... set to default 10
         status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
-        reset_cli(f'{status}')
+        reset_cli(f'{status}') # reset CLI before showing first question
 
-        # display formatted question
-        result = format_question(raw_question_list, question_count-1)
+        # get formatted question
+        result = format_question(raw_question_list, question_count-1) #returns formatted question, answers, as well as correct answer
+        print(f'{result[0]}\n') # first tuple result from format function - prints question to CLI
         correct_answer = result[1] #second tuple result from format function - store correct answer
-
-        print(f'{result[0]}\n') # first tuple result from format function - print question to CLI
         
-        print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################DELETE ME
+        print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################     DELETE ME     ##########################################
+
         # get user answer and validate
         if raw_question_list['results'][question_count-1]['type'] == 'boolean': #set how many valid answers there are
             qs = 2
@@ -340,15 +340,15 @@ def run_quiz(raw_question_list):
                     # compare answers and update scores
                     if user_answer == correct_answer:
                         correct +=1
-                        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
                     else:
                         wrong += 1
-                        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
                     break
                 else:
                     print(f"Please enter 1 or {qs}!")
             except ValueError:
                 print('Please enter a number!')
+                
+            status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)' #update status bar
     
     percentage = correct / num  * 100 #final calc after last question
     status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
