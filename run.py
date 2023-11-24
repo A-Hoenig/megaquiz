@@ -294,8 +294,7 @@ def format_question(raw_question_list, n):
         correct_answer_number = 1 if q['correct_answer'] == 'True' else 2
         individual_question += f'1. True\n2. False\n' # T/F question only needs std 2 answers
     else:
-        
-        answers = [q['correct_answer']] + q['incorrect_answers']
+        answers = html.unescape([q['correct_answer']] + q['incorrect_answers'])
         random.shuffle(answers) #shuffle so correct answer is not always 1
         #add answers underneath question string
         for i, ans in enumerate(answers, start=1): # don't use 0 for first answer
@@ -325,7 +324,7 @@ def run_quiz(raw_question_list):
         print(f'{result[0]}\n') # first tuple result from format function - prints question to CLI
         correct_answer = result[1] #second tuple result from format function - store correct answer
         
-        print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################     DELETE ME     ##########################################
+        # print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################     DELETE ME     ##########################################
 
         # get user answer and validate
         if raw_question_list['results'][question_count-1]['type'] == 'boolean': #set how many valid answers there are
