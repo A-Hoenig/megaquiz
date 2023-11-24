@@ -88,8 +88,7 @@ def reset_cli (readout_line):
 
 def display_main_menu():
     '''
-    displays the main menu to start the quiz.
-    also gives option to go into settings and change quiz parameters
+    displays the main menu to start the quiz as well as change the quiz parameters
     '''
     global num
     global difficulty
@@ -99,6 +98,7 @@ def display_main_menu():
     
     reset_cli("Main Menu")
 
+    # display user readable text instead of boolean or multiple
     if question_type == "boolean":
         str_question_type = "True/False"
     elif question_type == "multiple":
@@ -106,9 +106,11 @@ def display_main_menu():
     else:
         str_question_type = "ANY"
 
+    # print the menu items with the current set global variables
     print(f'\n1. Start Quiz\n\n2. Number of Questions:\u0009{num}\n3. Change Difficulty:\u0009{difficulty}\n4. Change Type:\u0009\u0009{str_question_type}\n5. Change Category:\u0009{display_category(category,category_list)}\n6. Training Mode:\u0009{training_mode}\n')
     print('Turning on training mode will remember questions you got wrong\nYou can then select "training" as a category to build quizzes\nusing only previously wrong questions\n')
     
+    # get user menu selection and validate input
     while True:
         try:
             user_input = int(input('Select your option: '))
@@ -142,6 +144,8 @@ def no_of_questions():
     global num
 
     reset_cli('Number of Questions:')
+
+    #get user selection and validate input
     while True:
         try:
             user_input = int(input('\nType how many questions you would like (1-50):\n'))
@@ -161,6 +165,8 @@ def change_difficulty():
     global difficulty
 
     reset_cli('Difficulty Level')
+
+    #get user selection and validate input
     while True:
         try:
             print(f'\n1. ANY\n2. easy\n3. medium\n4. hard\n')
@@ -189,6 +195,8 @@ def change_type():
     global question_type
 
     reset_cli('Question Types')
+
+    #get user selection and validate input
     while True:
         try:
             print(f'\n1. ANY\n2. Multiple Choice\n3. True/False\n')
@@ -217,6 +225,7 @@ def change_category ():
     reset_cli('Available Categories')
     print(create_category_list(category_list))
     
+    #get user selection and validate input
     while True:
         try:
             user_input = int(input('\nPlease type the number of the category:\n'))
@@ -244,7 +253,7 @@ def display_category(id, category_list):
         if cat.get('id') == id:
             #return cat name
             return cat.get('name')
-    if id == "Training":
+    if id == "Training": #special category to get questions from google sheet (collection of previous wrong answers)
         return 'Training'
     else:
         return 'ANY' #if ID not found
@@ -281,8 +290,8 @@ def toggle_training_mode():
 
 def format_question(raw_question_list, n):
     '''
-    returns the nth question from the given raw question list in a proper
-    format. Answers are shuffled and category + difficulty added
+    returns the nth question from the given raw question list in a proper format as well as the correct answer number
+    Answers are shuffled and category + difficulty added. 
     '''
     #get nth question from given list
     q = raw_question_list['results'][n]
