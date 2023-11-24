@@ -336,17 +336,28 @@ def display_quiz(raw_question_list):
     
     for question_count, _ in enumerate(raw_question_list['results'], start = 1): # display first question as 1, not 0
 
-        
         percentage = correct / num  * 100 #num must never be zero ... set to default 10
         status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({percentage}%)'
         reset_cli(f'{status}')
 
         print(f'{format_question(raw_question_list, question_count-1)}\n') # get question index ( = -1 )
         
-        if raw_question_list['results'][question_count-1]['type'] == 'boolean':
-            user_answer = input("Select Answer: (type 1 - 2)\n")
+        if raw_question_list['results'][question_count-1]['type'] == 'boolean': #set how many valid answers there are
+            qs = 2
         else:
-            user_answer = input("Select Answer: (type 1 - 4)\n")
+            qs = 4
+
+        while True:
+            try:
+                user_answer = int(input(f"Select Answer: (type 1 - {qs})\n"))
+                if 1 <= user_answer <= qs:
+                    print('valid answer')
+                    break
+                else:
+                    print(f"Please enter 1 or {qs}!")
+            except ValueError:
+                print('Please enter a number!')
+    
         
 
 ######################################################################################
