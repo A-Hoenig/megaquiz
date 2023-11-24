@@ -82,7 +82,7 @@ def reset_cli (readout_line):
     print('Welcome to')
     print(custom_ascii_font.renderText('MEGA\nQUIZ'))
 
-    print('\u23AF' * 50)
+    print('\u23AF' * 50) # creates continuous line of 50 characters
     print(f'{readout_line}')
     print('\u23AF' * 50)
 
@@ -286,23 +286,24 @@ def format_question(raw_question_list, n):
     '''
     #get nth question from given list
     q = raw_question_list['results'][n]
-
+   
     #add question first
     individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
     #add answer
     if q['type'] == 'boolean':
         correct_answer_number = 1 if q['correct_answer'] == 'True' else 2
         individual_question += f'1. True\n2. False\n' # T/F question only needs std 2 answers
-
     else:
-        answers = [html.unescape(q['correct_answer'])] + html.unescape(q['incorrect_answers'])
+        
+        answers = [q['correct_answer']] + q['incorrect_answers']
         random.shuffle(answers) #shuffle so correct answer is not always 1
         #add answers underneath question string
         for i, ans in enumerate(answers, start=1): # don't use 0 for first answer
+            
             individual_question += f'{i}. {ans}\n' # number and add all answers
-            if ans == html.unescape(q['correct_answer']):
+            if ans == q['correct_answer']:
                 correct_answer_number = i
-
+   
     return individual_question, correct_answer_number
 
 def run_quiz(raw_question_list):
@@ -320,11 +321,12 @@ def run_quiz(raw_question_list):
         reset_cli(f'{status}')
 
         # display formatted question
-        print(f'{format_question(raw_question_list, question_count-1)[0]}\n') # real question index ( = -1 )
-        correct_answer = format_question(raw_question_list, question_count-1)[1] #get  the number of the correct answer
+        result = format_question(raw_question_list, question_count-1)
+        correct_answer = result[1] #second tuple result from format function
 
-        print(correct_answer) ################ REMOVE THIS AFTER TESTING!!!!! ################################
-
+        print(f'{result[0]}\n') # first tuple result from format function
+        
+        print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################DELETE ME
         # get user answer and validate
         if raw_question_list['results'][question_count-1]['type'] == 'boolean': #set how many valid answers there are
             qs = 2
@@ -359,7 +361,7 @@ category_list = get_categories() #get and store list of categories from Trivia D
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
-num = 3
+num = 20
 training_mode = "OFF"
 tok = generate_new_token()
 correct = 0
