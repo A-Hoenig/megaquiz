@@ -6,8 +6,7 @@ import os #access to cli clear command to clear out previous text
 import random #needed to shuffle answers
 
 from pyfiglet import Figlet #generate ASCII text art / fonts for CLI (install with  pip install pyfiglet)
-from google.oauth2.service_account import Credentials
-from pprint import pprint
+from google.oauth2.service_account import Credentials #secure IO access to google sheets
 
 # connect to google sheets
 SCOPE = [
@@ -40,34 +39,33 @@ def get_categories():
 
 def get_questions(number, category, question_type, difficulty, token):
     """
-    Main function to generate API query string from given inputs.
+    Main function to generate API query string from given inputs / global variables
     Token is required per session to prevent repeated questions
     returns a json dictionary containing requested number of questions from given type and category
     setting parameters to ANY opens up request to ANY categories or difficulties or types
-    default number of questions is 10
-    number, category are integers, difficulty = 'easy', 'medium', 'hard' strings
+    number, category are integers, difficulty = 'easy', 'medium', 'hard' type = 'boolean', 'multiple' strings
     """
-    url_no_of_questions = f'amount={number}'
+    url_no_of_questions = f'amount={number}' # always pass number for questions requested (max 50)
 
-    if category == 'ANY':
+    if category == 'ANY': #if setting is ANY, omit category string from URL
         url_category = ""
     else:
         url_category = f'&category={category}'
 
-    if question_type == "ANY":
+    if question_type == "ANY": #if setting is ANY, omit type string from URL
         url_type = ""
     else:
         url_type = f'&type={question_type}'
 
-    if difficulty == "ANY":
+    if difficulty == "ANY": #if setting is ANY, omit category difficultyfrom URL
         url_difficulty = ""
     else:
         url_difficulty = f'&difficulty={difficulty}'
 
-    url_token = f'&token={token}'
+    url_token = f'&token={token}' # add session token last to ensure unique question session
 
-    questions_url = ('https://opentdb.com/api.php?' + url_no_of_questions + url_category + url_difficulty + url_type + url_token)
-    questions = requests.get(questions_url)
+    questions_url = ('https://opentdb.com/api.php?' + url_no_of_questions + url_category + url_difficulty + url_type + url_token) #build complete API URL
+    questions = requests.get(questions_url) #get the questions
     questions_json = questions.json()
     
     return questions_json
@@ -79,16 +77,11 @@ def reset_cli (readout_line):
     """
     os.system('clear') #clear the cli first
     
-    custom_ascii_font = Figlet(font='graffiti')
-    print(custom_ascii_font.renderText('MEGA - QUIZ'))
-    
-    str_title = '''
-Welcome to
-┳┳┓┏┓┏┓┏┓  ┏┓┳┳┳┏┓
-┃┃┃┣ ┃┓┣┫  ┃┃┃┃┃┏┛
-┛ ┗┗┛┗┛┛┗  ┗┻┗┛┻┗┛
-'''
-    print(str_title)
+    custom_ascii_font = Figlet(font='graffiti') # change font name for different styles
+   
+    print('Welcome to')
+    print(custom_ascii_font.renderText('MEGA\nQUIZ'))
+
     print('\u23AF' * 50)
     print(f'{readout_line}')
     print('\u23AF' * 50)
@@ -356,10 +349,8 @@ def run_quiz(raw_question_list):
                 print('Please enter a number!')
 
     reset_cli(f'{status}') #update cli after last question
-    print('quiz ended!')
+    print('Quiz ended!')
     
-        
-
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
 ###########################################################################
@@ -380,3 +371,7 @@ display_main_menu()
 # questions = SHEET.worksheet('questions')
 #                             data = questions.get_all_values()
 #                             pprint(data)
+
+
+# bugs:
+# correct answer number not being evaluated correctly!!!
