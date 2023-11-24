@@ -342,6 +342,7 @@ def display_quiz(raw_question_list):
 
         print(f'{format_question(raw_question_list, question_count-1)}\n') # get question index ( = -1 )
         
+        user_answer = input("Select Answer: (type 1 - 4)")
         
 
 ######################################################################################
