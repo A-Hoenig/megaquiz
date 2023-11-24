@@ -335,14 +335,18 @@ def display_quiz(raw_question_list):
     global correct, wrong, training_mode
     
     for question_count, _ in enumerate(raw_question_list['results'], start = 1): # display first question as 1, not 0
-  
+
+        
         percentage = correct / num  * 100 #num must never be zero ... set to default 10
         status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({percentage}%)'
         reset_cli(f'{status}')
 
         print(f'{format_question(raw_question_list, question_count-1)}\n') # get question index ( = -1 )
         
-        user_answer = input("Select Answer: (type 1 - 4)")
+        if raw_question_list['results'][question_count-1]['type'] == 'boolean':
+            user_answer = input("Select Answer: (type 1 - 2)\n")
+        else:
+            user_answer = input("Select Answer: (type 1 - 4)\n")
         
 
 ######################################################################################
