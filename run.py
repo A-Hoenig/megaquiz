@@ -316,8 +316,6 @@ def format_question(raw_question_list, n):
     individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
     #add answer
     if q['type'] == 'boolean':
-        answers = ['True', 'False']
-        random.shuffle(answers)
         correct_answer_number = 1 if q['correct_answer'] == 'True' else 2
         individual_question += f'1. True\n2. False\n' # T/F question only needs std 2 answers
 
@@ -343,7 +341,7 @@ def display_quiz(raw_question_list):
     for question_count, _ in enumerate(raw_question_list['results'], start = 1): # display first question as 1, not 0
 
         percentage = correct / num  * 100 #num must never be zero ... set to default 10
-        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({percentage}%)'
+        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
         reset_cli(f'{status}')
 
         # display formatted question
@@ -361,15 +359,20 @@ def display_quiz(raw_question_list):
         while True:
             try:
                 user_answer = int(input(f"Select Answer: (type 1 - {qs})\n"))
-                if 1 <= user_answer <= qs:
-                    print('valid answer')
+                if 1 <= user_answer <= qs: #valid answer
+                    # compare answers and update scores
+                    if user_answer == correct_answer:
+                        correct +=1
+                    else:
+                        wrong += 1
                     break
                 else:
                     print(f"Please enter 1 or {qs}!")
             except ValueError:
                 print('Please enter a number!')
 
-
+        
+    print('quiz ended!')
     
         
 
@@ -380,7 +383,7 @@ category_list = get_categories() #get and store list of categories from Trivia D
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
-num = 10
+num = 3
 training_mode = "OFF"
 tok = generate_new_token()
 correct = 0
