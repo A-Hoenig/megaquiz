@@ -310,7 +310,7 @@ def format_questions(raw_question_list):
     #step through entire question list
     for index, q in enumerate(raw_question_list['results']):
         #add question first
-        individual_question = f'\n{html.unescape(q['question'])}\n\n'
+        individual_question = f'\n{html.unescape(q['question'])}\n({q['difficulty']} level from {html.unescape(q['category'])})\n\n'
         #add answer
         if q['type'] == 'boolean':
             individual_question += f'1. True\n2. False\n' # only needs 2 answers for true/false questions
