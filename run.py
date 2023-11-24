@@ -316,30 +316,33 @@ def format_question(raw_question_list, n):
     individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
     #add answer
     if q['type'] == 'boolean':
-        individual_question += f'1. True\n2. False\n' # only needs 2 answers for true/false questions
-        print(individual_question)
+        individual_question += f'1. True\n2. False\n' # T/F question only needs std 2 answers
     else:
         answers = [html.unescape(q['correct_answer'])] + html.unescape(q['incorrect_answers'])
         random.shuffle(answers) #shuffle so correct answer is not always 1
         #add answers underneath question string
-        for i, ans in enumerate(answers, start=1): #dont use 0 for first answer
-            individual_question += f'{i}. {ans}\n' #number and add all answers
+        for i, ans in enumerate(answers, start=1): # don't use 0 for first answer
+            individual_question += f'{i}. {ans}\n' # number and add all answers
 
     return individual_question
 
-def display_quiz(question_list):
-    global correct
-    global wrong
-    question_count = 1
-    if correct == 0:
-        percentage = 0
-    else:
-        percentage = correct / num  * 100
-   
-    status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({percentage}%)'
-    reset_cli(f'{status}')
+def display_quiz(raw_question_list):
+    '''
+    main quiz function that loops through all given questions, displays one by one,
+    processes user answer and updates the scores.
+    If training mode is on, function will also append a list of the incorrect answers and export to google sheet
+    '''
+    global correct, wrong, training_mode
     
-    print(format_question(question_list, 2))
+    for question_count, _ in enumerate(raw_question_list['results'], start = 1): # display first question as 1, not 0
+  
+        percentage = correct / num  * 100 #num must never be zero ... set to default 10
+        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({percentage}%)'
+        reset_cli(f'{status}')
+
+        print(f'{format_question(raw_question_list, question_count-1)}\n') # get question index ( = -1 )
+        
+        
 
 ######################################################################################
 
