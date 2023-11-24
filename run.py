@@ -363,15 +363,17 @@ def display_quiz(raw_question_list):
                     # compare answers and update scores
                     if user_answer == correct_answer:
                         correct +=1
+                        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
                     else:
                         wrong += 1
+                        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
                     break
                 else:
                     print(f"Please enter 1 or {qs}!")
             except ValueError:
                 print('Please enter a number!')
 
-        
+    reset_cli(f'{status}') #update cli after last question
     print('quiz ended!')
     
         
