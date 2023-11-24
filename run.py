@@ -322,9 +322,9 @@ def run_quiz(raw_question_list):
 
         # display formatted question
         result = format_question(raw_question_list, question_count-1)
-        correct_answer = result[1] #second tuple result from format function
+        correct_answer = result[1] #second tuple result from format function - store correct answer
 
-        print(f'{result[0]}\n') # first tuple result from format function
+        print(f'{result[0]}\n') # first tuple result from format function - print question to CLI
         
         print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################DELETE ME
         # get user answer and validate
@@ -349,7 +349,9 @@ def run_quiz(raw_question_list):
                     print(f"Please enter 1 or {qs}!")
             except ValueError:
                 print('Please enter a number!')
-
+    
+    percentage = correct / num  * 100 #final calc after last question
+    status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
     reset_cli(f'{status}') #update cli after last question
     print('Quiz ended!')
     
