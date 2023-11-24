@@ -304,29 +304,28 @@ def toggle_training_mode():
         training_mode = 'OFF'
     display_settings()
 
-def format_questions(raw_question_list):
-    #create list of all questions formatted
-    formatted_questions = []
-    
-    #step through entire question list
-    for index, q in enumerate(raw_question_list['results']):
-        #add question first
-        individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
-        #add answer
-        if q['type'] == 'boolean':
-            individual_question += f'1. True\n2. False\n' # only needs 2 answers for true/false questions
-            print(individual_question)
-        else:
-            answers = [html.unescape(q['correct_answer'])] + html.unescape(q['incorrect_answers'])
-            random.shuffle(answers) #shuffle so correct answer is not always 1
-            #add answers underneath question string
-            for i, ans in enumerate(answers, start=1): #dont use 0 for first answer
-                individual_question += f'{i}. {ans}\n' #number and add all answers
-            print(html.unescape(individual_question))
+def format_question(raw_question_list, n):
+    '''
+    returns the nth question from the given raw question list in a proper
+    format. Answers are shuffled and category + difficulty added
+    '''
+    #get nth question from given list
+    q = raw_question_list['results'][n]
 
-        formatted_questions.append(individual_question) #add formatted questions to question list
+    #add question first
+    individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
+    #add answer
+    if q['type'] == 'boolean':
+        individual_question += f'1. True\n2. False\n' # only needs 2 answers for true/false questions
+        print(individual_question)
+    else:
+        answers = [html.unescape(q['correct_answer'])] + html.unescape(q['incorrect_answers'])
+        random.shuffle(answers) #shuffle so correct answer is not always 1
+        #add answers underneath question string
+        for i, ans in enumerate(answers, start=1): #dont use 0 for first answer
+            individual_question += f'{i}. {ans}\n' #number and add all answers
 
-    return formatted_questions
+    return individual_question
 
 def display_quiz(question_list):
     global correct
@@ -340,7 +339,7 @@ def display_quiz(question_list):
     status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({percentage}%)'
     reset_cli(f'{status}')
     
-    print(format_questions(question_list))
+    print(format_question(question_list, 2))
 
 ######################################################################################
 
