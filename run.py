@@ -100,34 +100,6 @@ def display_main_menu():
     global training_mode
     
     reset_cli("Main Menu")
-    print(f'\n1. Start Quiz\n2. Enter Game Settings\n\nNext Quiz will be :\nQuestions:\u0009{num}\nDifficulty:\u0009{difficulty}\nType:\u0009\u0009{question_type}\nCategory:\u0009{category}\n')
-    while True:
-        try:
-            user_input = int(input('Select your option: '))
-            if 1 <= user_input <= 2:
-                if user_input == 1:
-                    print("START THE QUIZ!!")
-                    question_list = get_questions(num, category, question_type, difficulty, tok)
-                    display_quiz(question_list)
-                    exit()
-                else:
-                    display_settings()
-            else:
-                print("Please enter 1 or 2!")
-        except ValueError:
-            print('Please enter a number!')
-
-def display_settings():
-    '''
-    displays the settings options and calls appropriate functions to change the global variables for the quiz parameters
-    '''
-    global num
-    global difficulty
-    global question_type
-    global category
-    global training_mode
-
-    reset_cli("Settings")
 
     if question_type == "boolean":
         str_question_type = "True/False"
@@ -136,29 +108,34 @@ def display_settings():
     else:
         str_question_type = "ANY"
 
-    print(f'\n1. Number of Questions:\u0009{num}\n2. Change Difficulty:\u0009{difficulty}\n3. Change Type:\u0009\u0009{str_question_type}\n4. Change Category:\u0009{display_category(category,category_list)}\n5. Training Mode:\u0009{training_mode}\n6. Exit Settings \n')
+    print(f'\n1. Start Quiz\n\n2. Number of Questions:\u0009{num}\n3. Change Difficulty:\u0009{difficulty}\n4. Change Type:\u0009\u0009{str_question_type}\n5. Change Category:\u0009{display_category(category,category_list)}\n6. Training Mode:\u0009{training_mode}\n')
     print('Turning on training mode will remember questions you got wrong\nYou can then select "training" as a category to build quizzes\nusing only previously wrong questions\n')
+    
     while True:
-            try:
-                user_input = int(input('Select your option: '))
-                if 1 <= user_input <= 6:
-                    match user_input:
-                        case 1:
-                            no_of_questions()
-                        case 2:
-                            change_difficulty()
-                        case 3:
-                            change_type()
-                        case 4:
-                            change_category()
-                        case 5:
-                            toggle_training_mode()
-                        case 6:
-                            display_main_menu()
-                else:
-                    print("Please enter 1 - 6!")
-            except ValueError:
-                print('Please enter a number!')
+        try:
+            user_input = int(input('Select your option: '))
+            if 1 <= user_input <= 6:
+                match user_input:
+                    case 1:
+                        print("START THE QUIZ!!")
+                        question_list = get_questions(num, category, question_type, difficulty, tok)
+                        run_quiz(question_list)
+                        exit()
+                    case 2:
+                        no_of_questions()
+                    case 3:
+                        change_difficulty()
+                    case 4:
+                        change_type()
+                    case 5:
+                        change_category()
+                    case 6:
+                        toggle_training_mode()
+        
+            else:
+                print("Please enter 1 - 6!")
+        except ValueError:
+            print('Please enter a number!')
 
 def no_of_questions():
     '''
@@ -172,7 +149,7 @@ def no_of_questions():
             user_input = int(input('\nType how many questions you would like (1-50):\n'))
             if 1 <= user_input <= 50:
                 num = user_input
-                display_settings()
+                display_main_menu()
                 break
             else:
                 print("Please enter a value from 1 to 50!")
@@ -200,7 +177,7 @@ def change_difficulty():
                             difficulty = 'medium'
                         case 4:
                             difficulty = 'hard'
-                display_settings()
+                display_main_menu()
                 break
             else:
                 print("Please enter a value from 1 to 4!")
@@ -226,7 +203,7 @@ def change_type():
                             question_type = 'multiple'
                         case 3:
                             question_type = 'boolean'
-                display_settings()
+                display_main_menu()
                 break
             else:
                 print("Please enter a value from 1 to 3!")
@@ -252,7 +229,7 @@ def change_category ():
                     category = 'ANY'
                 else:
                     category = user_input
-                display_settings()
+                display_main_menu()
             else:
                 print("Please enter a valid category number!")
         except ValueError:
@@ -302,7 +279,7 @@ def toggle_training_mode():
         training_mode = 'ON'
     else:
         training_mode = 'OFF'
-    display_settings()
+    display_main_menu()
 
 def format_question(raw_question_list, n):
     '''
@@ -330,7 +307,7 @@ def format_question(raw_question_list, n):
 
     return individual_question, correct_answer_number
 
-def display_quiz(raw_question_list):
+def run_quiz(raw_question_list):
     '''
     main quiz function that loops through all given questions, displays one by one,
     processes user answer and updates the scores.
@@ -346,9 +323,9 @@ def display_quiz(raw_question_list):
 
         # display formatted question
         print(f'{format_question(raw_question_list, question_count-1)[0]}\n') # real question index ( = -1 )
-        correct_answer = format_question(raw_question_list, question_count-1)[1]
+        correct_answer = format_question(raw_question_list, question_count-1)[1] #get  the number of the correct answer
 
-        print(correct_answer)
+        print(correct_answer) ################ REMOVE THIS AFTER TESTING!!!!! ################################
 
         # get user answer and validate
         if raw_question_list['results'][question_count-1]['type'] == 'boolean': #set how many valid answers there are
