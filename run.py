@@ -5,6 +5,7 @@ import json #needed to help parse the recieved json strings
 import os #access to cli clear command to clear out previous text
 import random #needed to shuffle answers
 
+from pyfiglet import Figlet #generate ASCII text art / fonts for CLI (install with  pip install pyfiglet)
 from google.oauth2.service_account import Credentials
 from pprint import pprint
 
@@ -77,6 +78,10 @@ def reset_cli (readout_line):
     Score or messages can be passed in the readout_line
     """
     os.system('clear') #clear the cli first
+    
+    custom_ascii_font = Figlet(font='graffiti')
+    print(custom_ascii_font.renderText('MEGA - QUIZ'))
+    
     str_title = '''
 Welcome to
 ┳┳┓┏┓┏┓┏┓  ┏┓┳┳┳┏┓
@@ -117,7 +122,7 @@ def display_main_menu():
             if 1 <= user_input <= 6:
                 match user_input:
                     case 1:
-                        print("START THE QUIZ!!")
+                        print("... GENERATING THE QUIZ ...")
                         question_list = get_questions(num, category, question_type, difficulty, tok)
                         run_quiz(question_list)
                         exit()
@@ -355,9 +360,10 @@ def run_quiz(raw_question_list):
     
         
 
-######################################################################################
+###########################################################################
+### global variables/defaults to keep track of selected quiz parameters ###
+###########################################################################
 
-#global variables/defaults to keep track of selected quiz parameters
 category_list = get_categories() #get and store list of categories from Trivia DB
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
@@ -367,7 +373,6 @@ training_mode = "OFF"
 tok = generate_new_token()
 correct = 0
 wrong = 0
-
 
 #launch quiz CLI app
 display_main_menu()
