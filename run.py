@@ -323,7 +323,7 @@ def run_quiz(raw_question_list):
     If training mode is on, function will also append a list of the incorrect answers and export to google sheet
     '''
     global correct, wrong, training_mode
-    wrong_questions_dict = {}
+    wrong_questions_list = []
 
     for question_count, question_data in enumerate(raw_question_list['results'], start = 1): # start loop, display first question as 1, not 0
 
@@ -354,7 +354,12 @@ def run_quiz(raw_question_list):
                     else:
                         wrong += 1
                         if training_mode == "ON":
-                            wrong_questions_dict[question_count] = question_data
+                            wrong_questions_list.append({'type': question_data['type'],
+                                                   'difficulty': question_data['difficulty'],
+                                                   'category': question_data['category'],
+                                                   'question': question_data['question'],
+                                                   'correct_answer': question_data['correct_answer'],
+                                                   'incorrect_answers': question_data['incorrect_answers']})
                     break
                 else:
                     print(f"Please enter 1 or {qs}!")
@@ -371,7 +376,7 @@ def run_quiz(raw_question_list):
     
     #export wrong questions to google sheet
     if training_mode == "ON":
-        print(wrong_questions_dict)
+        print(wrong_questions_list)
     
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
@@ -382,7 +387,7 @@ category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
 num = 3 #default number of questions. Do not set to 0!
-training_mode = "OFF"
+training_mode = "ON"
 tok = generate_new_token()
 correct = 0
 wrong = 0
