@@ -353,7 +353,8 @@ def run_quiz(raw_question_list):
                         correct +=1
                     else:
                         wrong += 1
-                        wrong_questions_dict[question_count] = question_data
+                        if training_mode == "ON":
+                            wrong_questions_dict[question_count] = question_data
                     break
                 else:
                     print(f"Please enter 1 or {qs}!")
@@ -367,7 +368,10 @@ def run_quiz(raw_question_list):
     reset_cli(f'{status}') #update cli after last question
     print('Quiz ended!')
     print('these were your wrong questions:')
-    print(wrong_questions_dict)
+    
+    #export wrong questions to google sheet
+    if training_mode == "ON"
+        print(wrong_questions_dict)
     
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
