@@ -7,7 +7,7 @@ import random #needed to shuffle answers
 
 from pyfiglet import Figlet #generate ASCII text art / fonts for CLI (install with  pip install pyfiglet)
 from google.oauth2.service_account import Credentials #secure IO access to google sheets
-from datetime import date # for timestamp when wrong questions were added to google sheet
+from datetime import date # for timestamp when wrong questions are added to google sheet
 
 # connect to google sheets
 SCOPE = [
@@ -317,23 +317,32 @@ def format_question(raw_question_list, n):
     return individual_question, correct_answer_number
 
 def add_question_to_sheet(question_list):
+    '''
+    recieves list of wrong questions and extracts the data into a single key / column match
+    then saves the data to the google sheet via API
+    also adds the date when the question was added.
+    '''
     destination = SHEET.worksheet('questions')
-    # print(f'Raw Data: {question_list}')
-    if training_mode == "ON":
-        print("saving wrong questions for training category")
-        for q in question_list:
-            data = [q['type'], q['difficulty'], q['category'], q['question'], q['correct_answer']]
-            wrong_answers = q['incorrect_answers']
-            if q['type'] == 'boolean': #add 2 blank wrong answers to keep sheet column matching
-                wrong_answers.extend(['', ''])
-            data.extend(wrong_answers)
+  
+    print("Saving wrong questions for training category...")
+    
+    # EXTRACT data from wrong question list
+    for q in question_list:
+        data = [q['type'], q['difficulty'], q['category'], q['question'], q['correct_answer']]
+        wrong_answers = q['incorrect_answers']
+        if q['type'] == 'boolean': #add 2 blank wrong answers to keep sheet column matching
+            wrong_answers.extend(['', ''])
+        data.extend(wrong_answers)
 
-            #add date to end of data to track when question was added
-            todays_date = date.today()
-            str_todays_date = todays_date.strftime('%Y.%m.%d')
-            data.append(str_todays_date)
-            destination.append_row(data)
-        print("data saved")
+        #add date to end of data to track when question was added
+        todays_date = date.today()
+        str_todays_date = todays_date.strftime('%Y.%m.%d')
+
+        data.append(str_todays_date)
+
+        destination.append_row(data) #add data to google sheet
+
+    print("Questions saved")
 
 
 def run_quiz(raw_question_list):
@@ -394,7 +403,8 @@ def run_quiz(raw_question_list):
     print('Quiz ended!')
         
     #export wrong questions to google sheet
-    add_question_to_sheet(wrong_questions_list)
+    if training_mode == "ON":
+        add_question_to_sheet(wrong_questions_list)
     
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
