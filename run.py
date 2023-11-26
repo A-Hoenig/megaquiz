@@ -370,7 +370,7 @@ def run_quiz(raw_question_list):
     print('these were your wrong questions:')
     
     #export wrong questions to google sheet
-    if training_mode == "ON"
+    if training_mode == "ON":
         print(wrong_questions_dict)
     
 ###########################################################################
