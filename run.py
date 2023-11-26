@@ -317,30 +317,19 @@ def format_question(raw_question_list, n):
 
 def add_question_to_sheet(question_list):
     destination = SHEET.worksheet('questions')
-
+    # print(f'Raw Data: {question_list}')
     if training_mode == "ON":
         for q in question_list:
             # data = list(q.values())
+            wrong_answers = q['incorrect_answers']
             data = [q['type'], q['difficulty'], q['category'], q['question'], q['correct_answer']]
-            # data = [1 ,2 ,3, 4, 5, 6]
+            data.extend(wrong_answers)
             
             print(data)
+            print(f'wrong answers: {wrong_answers}')
             destination.append_row(data)
 
 
-    
-
-    # for d in l:
-    #   c = d['COUNTRY']
-    #   myDict[c] = myDict.get(c,0)+1
-    # print(myDict)  
-
-    # country = myDict.values()
-    # frequency = myDict.keys()
-
-
-
-       
     # destination = SHEET.worksheet('questions')
     # questions.append_row(question_list)
 
