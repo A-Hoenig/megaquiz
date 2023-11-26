@@ -316,11 +316,16 @@ def format_question(raw_question_list, n):
     return individual_question, correct_answer_number
 
 def add_question_to_sheet(question_list):
-    
+    destination = SHEET.worksheet('questions')
+
     if training_mode == "ON":
         for q in question_list:
-            print(f'type: {q['type']} difficulty: {q['difficulty']} category: {q['category']} question: {q['question']} correct ans: {q['correct_answer']} wrong answers: {q['incorrect_answers']}')
-
+            # data = list(q.values())
+            data = [q['type'], q['difficulty'], q['category'], q['question'], q['correct_answer']]
+            # data = [1 ,2 ,3, 4, 5, 6]
+            
+            print(data)
+            destination.append_row(data)
 
 
     
@@ -336,7 +341,7 @@ def add_question_to_sheet(question_list):
 
 
        
-    # questions = SHEET.worksheet('questions')
+    # destination = SHEET.worksheet('questions')
     # questions.append_row(question_list)
 
 def run_quiz(raw_question_list):
