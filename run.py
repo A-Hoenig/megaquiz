@@ -296,9 +296,10 @@ def format_question(raw_question_list, n):
     #get nth question from given list
     q = raw_question_list['results'][n]
    
-    #add question first
+    #add question first and add category and difficulty to it
     individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
-    #add answer
+    
+    #add answers
     if q['type'] == 'boolean':
         correct_answer_number = 1 if q['correct_answer'] == 'True' else 2
         individual_question += f'1. True\n2. False\n' # T/F question only needs std 2 answers
@@ -314,6 +315,7 @@ def format_question(raw_question_list, n):
    
     return individual_question, correct_answer_number
 
+
 def run_quiz(raw_question_list):
     '''
     main quiz function that loops through all given questions, displays one by one,
@@ -321,8 +323,9 @@ def run_quiz(raw_question_list):
     If training mode is on, function will also append a list of the incorrect answers and export to google sheet
     '''
     global correct, wrong, training_mode
-    
-    for question_count, _ in enumerate(raw_question_list['results'], start = 1): # start loop, display first question as 1, not 0
+    wrong_questions_dict = {}
+
+    for question_count, question_data in enumerate(raw_question_list['results'], start = 1): # start loop, display first question as 1, not 0
 
         percentage = correct / num  * 100 #num must never be zero ... set to default 10
         status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
@@ -333,7 +336,7 @@ def run_quiz(raw_question_list):
         print(f'{result[0]}\n') # first tuple result from format function - prints question to CLI
         correct_answer = result[1] #second tuple result from format function - store correct answer
         
-        # print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################     DELETE ME     ##########################################
+        print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################     DELETE ME     ##########################################
 
         # get user answer and validate
         if raw_question_list['results'][question_count-1]['type'] == 'boolean': #set how many valid answers there are
@@ -350,6 +353,7 @@ def run_quiz(raw_question_list):
                         correct +=1
                     else:
                         wrong += 1
+                        wrong_questions_dict[question_count] = question_data
                     break
                 else:
                     print(f"Please enter 1 or {qs}!")
@@ -362,6 +366,8 @@ def run_quiz(raw_question_list):
     status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
     reset_cli(f'{status}') #update cli after last question
     print('Quiz ended!')
+    print('these were your wrong questions:')
+    print(wrong_questions_dict)
     
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
@@ -371,7 +377,7 @@ category_list = get_categories() #get and store list of categories from Trivia D
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
-num = 20
+num = 3 #default number of questions. Do not set to 0!
 training_mode = "OFF"
 tok = generate_new_token()
 correct = 0
@@ -385,5 +391,4 @@ display_main_menu()
 #                             pprint(data)
 
 
-# bugs:
-# correct answer number not being evaluated correctly!!!
+
