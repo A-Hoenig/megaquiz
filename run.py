@@ -7,6 +7,7 @@ import random #needed to shuffle answers
 
 from pyfiglet import Figlet #generate ASCII text art / fonts for CLI (install with  pip install pyfiglet)
 from google.oauth2.service_account import Credentials #secure IO access to google sheets
+from datetime import date # for timestamp when wrong questions were added to google sheet
 
 # connect to google sheets
 SCOPE = [
@@ -324,14 +325,15 @@ def add_question_to_sheet(question_list):
             wrong_answers = q['incorrect_answers']
             data = [q['type'], q['difficulty'], q['category'], q['question'], q['correct_answer']]
             data.extend(wrong_answers)
+
+            #add date to end of data to track when question was added
+            todays_date = date.today()
+            str_todays_date = todays_date.strftime('%Y.%m.%d')
+            data.append(str_todays_date)
             
             print(data)
-            print(f'wrong answers: {wrong_answers}')
             destination.append_row(data)
 
-
-    # destination = SHEET.worksheet('questions')
-    # questions.append_row(question_list)
 
 def run_quiz(raw_question_list):
     '''
