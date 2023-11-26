@@ -320,19 +320,20 @@ def add_question_to_sheet(question_list):
     destination = SHEET.worksheet('questions')
     # print(f'Raw Data: {question_list}')
     if training_mode == "ON":
+        print("saving wrong questions for training category")
         for q in question_list:
-            # data = list(q.values())
-            wrong_answers = q['incorrect_answers']
             data = [q['type'], q['difficulty'], q['category'], q['question'], q['correct_answer']]
+            wrong_answers = q['incorrect_answers']
+            if q['type'] == 'boolean': #add 2 blank wrong answers to keep sheet column matching
+                wrong_answers.extend(['', ''])
             data.extend(wrong_answers)
 
             #add date to end of data to track when question was added
             todays_date = date.today()
             str_todays_date = todays_date.strftime('%Y.%m.%d')
             data.append(str_todays_date)
-            
-            print(data)
             destination.append_row(data)
+        print("data saved")
 
 
 def run_quiz(raw_question_list):
@@ -391,8 +392,7 @@ def run_quiz(raw_question_list):
     status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
     reset_cli(f'{status}') #update cli after last question
     print('Quiz ended!')
-    print('these were your wrong questions:')
-    
+        
     #export wrong questions to google sheet
     add_question_to_sheet(wrong_questions_list)
     
@@ -404,7 +404,7 @@ category_list = get_categories() #get and store list of categories from Trivia D
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
-num = 3 #default number of questions. Do not set to 0!
+num = 5 #default number of questions. Do not set to 0!
 training_mode = "ON"
 tok = generate_new_token()
 correct = 0
