@@ -315,6 +315,29 @@ def format_question(raw_question_list, n):
    
     return individual_question, correct_answer_number
 
+def add_question_to_sheet(question_list):
+    
+    if training_mode == "ON":
+        for q in question_list:
+            print(f'type: {q['type']} difficulty: {q['difficulty']} category: {q['category']} question: {q['question']} correct ans: {q['correct_answer']} wrong answers: {q['incorrect_answers']}')
+
+
+
+    
+
+    # for d in l:
+    #   c = d['COUNTRY']
+    #   myDict[c] = myDict.get(c,0)+1
+    # print(myDict)  
+
+    # country = myDict.values()
+    # frequency = myDict.keys()
+
+
+
+       
+    # questions = SHEET.worksheet('questions')
+    # questions.append_row(question_list)
 
 def run_quiz(raw_question_list):
     '''
@@ -375,8 +398,7 @@ def run_quiz(raw_question_list):
     print('these were your wrong questions:')
     
     #export wrong questions to google sheet
-    if training_mode == "ON":
-        print(wrong_questions_list)
+    add_question_to_sheet(wrong_questions_list)
     
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
