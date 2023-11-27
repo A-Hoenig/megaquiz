@@ -344,15 +344,33 @@ def add_question_to_sheet(question_list):
 
     print("Questions saved")
 
-def get_wrong_questions():
+def get_wrong_questions(n):
     '''
-    Function retrieves the saved data from the google sheet stored questions.
+    Function retrieves n questions from the saved data from the google sheet stored questions.
+    If there are not enough questions in the list, informs the users and sets n to all available questions
+    Returned result is randomized
     Data is then reconfigured into the same format recieved from Trivia API
     this can be passed to normal quiz functions to generate a quiz.
     '''
     wrong_questions_dict = {'response_code': 0, 'results': []} # build dict in same format as returned from the API
     questions = SHEET.worksheet('questions')
     data = questions.get_all_values()
+
+    if len(data) <= 1:
+        #no questions saved in google sheet yet
+        print ("Sorry, no questions have been saved yet. Ensure Training Mode is on to remember wrong questions")
+        input("Press enter to continue")
+
+        return wrong_questions_dict
+
+    elif n > (len(data) - 1):
+        # use number of available questions if n is greater
+        print (f'Not enough data to create quiz with {n} questions. Max available is {len(data)-1}')
+        input("Press enter to continue")
+
+    #create n random indices
+    random_indices = random.sample(range(1, len(data)), n)
+    print(random_indices)
 
     for item in data[1:]: #iterate through sheet data and append to new dictionary
         temp_dict = {
@@ -445,7 +463,7 @@ wrong = 0
 #launch quiz CLI app
 # display_main_menu()
 
-q = format_question(get_wrong_questions(),0)
+q = format_question(get_wrong_questions(10),0)
 print (q[0])
 
 
