@@ -370,9 +370,9 @@ def get_wrong_questions(n):
 
     #create n random indices
     random_indices = random.sample(range(1, len(data)), n)
-    print(random_indices)
-
-    for item in data[1:]: #iterate through sheet data and append to new dictionary
+    
+    for index in random_indices: #iterate through sheet data and append to new dictionary
+        item = data[index]
         temp_dict = {
             'type': item[0],
             'difficulty': item[1],
@@ -463,7 +463,7 @@ wrong = 0
 #launch quiz CLI app
 # display_main_menu()
 
-q = format_question(get_wrong_questions(10),0)
+q = format_question(get_wrong_questions(8),0)
 print (q[0])
 
 
