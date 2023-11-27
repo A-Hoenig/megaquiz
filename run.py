@@ -345,11 +345,16 @@ def add_question_to_sheet(question_list):
     print("Questions saved")
 
 def get_wrong_questions():
-    wrong_questions_dict = {'response_code': 0, 'results': []}
+    '''
+    Function retrieves the saved data from the google sheet stored questions.
+    Data is then reconfigured into the same format recieved from Trivia API
+    this can be passed to normal quiz functions to generate a quiz.
+    '''
+    wrong_questions_dict = {'response_code': 0, 'results': []} # build dict in same format as returned from the API
     questions = SHEET.worksheet('questions')
     data = questions.get_all_values()
 
-    for item in data[1:]:
+    for item in data[1:]: #iterate through sheet data and append to new dictionary
         temp_dict = {
             'type': item[0],
             'difficulty': item[1],
@@ -362,8 +367,6 @@ def get_wrong_questions():
     
     return wrong_questions_dict
     
-
-
 def run_quiz(raw_question_list):
     '''
     main quiz function that loops through all given questions, displays one by one,
@@ -442,7 +445,7 @@ wrong = 0
 #launch quiz CLI app
 # display_main_menu()
 
-q = format_question(get_wrong_questions(),1)
+q = format_question(get_wrong_questions(),0)
 print (q[0])
 
 
