@@ -344,6 +344,14 @@ def add_question_to_sheet(question_list):
 
     print("Questions saved")
 
+def get_wrong_questions():
+    wrong_questions_dict = {}
+    wrong_questions_dict = {'response_code': 0}
+    questions = SHEET.worksheet('questions')
+    data = questions.get_all_values()
+    print(wrong_questions_dict)
+    print(data)
+
 
 def run_quiz(raw_question_list):
     '''
@@ -396,7 +404,7 @@ def run_quiz(raw_question_list):
                 print('Please enter a number!')
                 
             status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)' #update status bar
-    
+
     percentage = correct / num  * 100 #final calc after last question
     status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
     reset_cli(f'{status}') #update cli after last question
@@ -421,11 +429,9 @@ correct = 0
 wrong = 0
 
 #launch quiz CLI app
-display_main_menu()
+# display_main_menu()
 
-# questions = SHEET.worksheet('questions')
-#                             data = questions.get_all_values()
-#                             pprint(data)
+get_wrong_questions()
 
 
 
