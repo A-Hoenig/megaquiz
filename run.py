@@ -304,14 +304,14 @@ def format_question(raw_question_list, n):
     q = raw_question_list['results'][n]
    
     #add question first and add category and difficulty to it
-    individual_question = (f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n')
+    individual_question = (f'{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n')
     
     #add answers
     if q['type'] == 'boolean':
         correct_answer_number = 1 if q['correct_answer'] == 'True' else 2
         individual_question += f'1. True\n2. False\n' # T/F question only needs std 2 answers
     else:
-        answers = html.unescape([q['correct_answer']] + q['incorrect_answers'])
+        answers = [q['correct_answer']] + q['incorrect_answers']
         random.shuffle(answers) #shuffle so correct answer is not always 1
         #add answers underneath question string
         for i, ans in enumerate(answers, start=1): # don't use 0 for first answer
@@ -320,7 +320,7 @@ def format_question(raw_question_list, n):
             if ans == q['correct_answer']:
                 correct_answer_number = i #remember correct answer number
    
-    return individual_question, correct_answer_number
+    return html.unescape(individual_question), correct_answer_number
 
 def add_question_to_sheet(question_list):
     '''
