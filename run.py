@@ -114,7 +114,7 @@ def display_main_menu():
     # get user menu selection and validate input
     while True:
         try:
-            user_input = int(input('Select your option: '))
+            user_input = int(input('Select your option: \n'))
             if 1 <= user_input <= 6:
                 match user_input:
                     case 1:
@@ -365,14 +365,14 @@ def get_wrong_questions(n):
     if len(data) <= 1:
         #no questions saved in google sheet yet
         print ("Sorry, no questions have been saved yet. Ensure Training Mode is on to remember wrong questions")
-        input("Press enter to continue")
+        input("Press enter to continue\]n")
 
         return wrong_questions_dict
 
     elif n > (len(data) - 1):
         # use number of available questions if n is greater
         print (f'Not enough data to create quiz with {n} questions. Max available is {len(data)-1}')
-        input("Press enter to continue")
+        input("Press enter to continue\n")
 
     #create n random indices
     random_indices = random.sample(range(1, len(data)), n)
@@ -467,9 +467,9 @@ def run_quiz(raw_question_list):
                         wrong = 0
                         display_main_menu()
                     case 2:
-                        status = f'Thanks for Playing'
+                        status = 'Thanks for Playing'
                         reset_cli(f'{status}') #update cli 
-                        custom_ascii_font = Figlet(font='graffiti') # change font name for different styles
+                        custom_ascii_font = Figlet(font='graffiti') # change font name for different style
                         print(custom_ascii_font.renderText('Have a nice day!'))
                         exit()
                 break
@@ -494,7 +494,3 @@ wrong = 0
 
 #launch quiz CLI app
 display_main_menu()
-
-
-
-
