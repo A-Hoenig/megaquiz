@@ -118,12 +118,13 @@ def display_main_menu():
             if 1 <= user_input <= 6:
                 match user_input:
                     case 1:
-                        print("... GENERATING THE QUIZ ...")
+                        
                         if category == 'Training':
-                            print('Generating quiz from previous wrong questions')
+                            print('... LOADING TRAINING QUESTIONS ...')
                             run_quiz(get_wrong_questions(num)) #load n questions from wrong q google sheet
                             exit()
                         else:
+                            print("... GENERATING NEW QUIZ ...")
                             question_list = get_questions(num, category, question_type, difficulty, tok) #generate n questions from API
                             run_quiz(question_list)
                             exit()
@@ -449,11 +450,33 @@ def run_quiz(raw_question_list):
     print('Quiz ended!')
     ############################    end of loop    ##################################################
 
-
     #export wrong questions to google sheet
     if training_mode == "ON" and category != "Training": #do not save wrong qeustions from previous wrong q's
         add_question_to_sheet(wrong_questions_list)
     
+    print('Would you like to play again?\n')
+   
+    #ask user if they want to play again
+    while True:
+        try:
+            user_input = int(input('1. - YES\n2. - NO\n'))
+            if 1 <= user_input <= 2:
+                match user_input:
+                    case 1:
+                        correct = 0 #reset scores before starting again
+                        wrong = 0
+                        display_main_menu()
+                    case 2:
+                        status = f'Thanks for Playing'
+                        reset_cli(f'{status}') #update cli 
+                        custom_ascii_font = Figlet(font='graffiti') # change font name for different styles
+                        print(custom_ascii_font.renderText('Have a nice day!'))
+                        exit()
+                break
+            else:
+                print("Please enter 1 or 2!")
+        except ValueError:
+            print('Please enter a number!')
 
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
