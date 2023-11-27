@@ -109,7 +109,7 @@ def display_main_menu():
 
     # print the menu items with the current set global variables
     print(f'\n1. Start Quiz\n\n2. Number of Questions:\u0009{num}\n3. Change Difficulty:\u0009{difficulty}\n4. Change Type:\u0009\u0009{str_question_type}\n5. Change Category:\u0009{display_category(category,category_list)}\n6. Training Mode:\u0009{training_mode}\n')
-    print('Turning on training mode will remember questions you got wrong\nYou can then select "training" as a category to build quizzes\nusing only previously wrong questions\n')
+    print('Turning on training mode will remember questions you got wrong\nYou can then select "Training" as a category to build quizzes\nusing only previously wrong questions\n')
     
     # get user menu selection and validate input
     while True:
@@ -119,9 +119,15 @@ def display_main_menu():
                 match user_input:
                     case 1:
                         print("... GENERATING THE QUIZ ...")
-                        question_list = get_questions(num, category, question_type, difficulty, tok)
-                        run_quiz(question_list)
-                        exit()
+                        if category == 'Training':
+                            print('Generating quiz from previous wrong questions')
+                            # q = format_question(get_wrong_questions(4),0)
+                            # print (q[0])
+                            exit()
+                        else:
+                            question_list = get_questions(num, category, question_type, difficulty, tok)
+                            run_quiz(question_list)
+                            exit()
                     case 2:
                         no_of_questions()
                     case 3:
@@ -310,9 +316,9 @@ def format_question(raw_question_list, n):
         #add answers underneath question string
         for i, ans in enumerate(answers, start=1): # don't use 0 for first answer
             
-            individual_question += f'{i}. {ans}\n' # number and add all answers
+            individual_question += f'{i}. {ans}\n' # number and add all answers 
             if ans == q['correct_answer']:
-                correct_answer_number = i
+                correct_answer_number = i #remember correct answer number
    
     return individual_question, correct_answer_number
 
@@ -330,7 +336,7 @@ def add_question_to_sheet(question_list):
     for q in question_list:
         data = [q['type'], q['difficulty'], q['category'], q['question'], q['correct_answer']]
         wrong_answers = q['incorrect_answers']
-        if q['type'] == 'boolean': #add 2 blank wrong answers to keep sheet column matching
+        if q['type'] == 'boolean': #add 2 blank wrong answers to keep sheet column matching (4 answers)
             wrong_answers.extend(['', ''])
         data.extend(wrong_answers)
 
@@ -347,7 +353,7 @@ def add_question_to_sheet(question_list):
 def get_wrong_questions(n):
     '''
     Function retrieves n questions from the saved data from the google sheet stored questions.
-    If there are not enough questions in the list, informs the users and sets n to all available questions
+    If there are not enough questions in the list, informs the user and sets n to all available questions
     Returned result is randomized
     Data is then reconfigured into the same format recieved from Trivia API
     this can be passed to normal quiz functions to generate a quiz.
@@ -372,7 +378,7 @@ def get_wrong_questions(n):
     random_indices = random.sample(range(1, len(data)), n)
     
     for index in random_indices: #iterate through sheet data and append to new dictionary
-        item = data[index]
+        item = data[index] # pick a question based on random index list
         temp_dict = {
             'type': item[0],
             'difficulty': item[1],
@@ -392,8 +398,9 @@ def run_quiz(raw_question_list):
     If training mode is on, function will also append a list of the incorrect answers and export to google sheet
     '''
     global correct, wrong, training_mode
-    wrong_questions_list = []
+    wrong_questions_list = [] #list to remember which questions the user got wrong
 
+    #######################     main loop to display each question     #####################################################
     for question_count, question_data in enumerate(raw_question_list['results'], start = 1): # start loop, display first question as 1, not 0
 
         percentage = correct / num  * 100 #num must never be zero ... set to default 10
@@ -441,11 +448,14 @@ def run_quiz(raw_question_list):
     status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
     reset_cli(f'{status}') #update cli after last question
     print('Quiz ended!')
-        
+    ############################    end of loop    ##################################################
+
+
     #export wrong questions to google sheet
     if training_mode == "ON":
         add_question_to_sheet(wrong_questions_list)
     
+
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
 ###########################################################################
@@ -461,9 +471,8 @@ correct = 0
 wrong = 0
 
 #launch quiz CLI app
-# display_main_menu()
+display_main_menu()
 
-q = format_question(get_wrong_questions(8),0)
-print (q[0])
+
 
 
