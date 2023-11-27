@@ -345,12 +345,21 @@ def add_question_to_sheet(question_list):
     print("Questions saved")
 
 def get_wrong_questions():
-    wrong_questions_dict = {}
-    wrong_questions_dict = {'response_code': 0}
+    wrong_questions_dict = {'response_code': 0, 'results': []}
     questions = SHEET.worksheet('questions')
     data = questions.get_all_values()
+
+    for item in data[1:]:
+        wrong_questions_dict = {
+            'type': item[0],
+            'difficulty': item[1],
+            'category': item[2],
+            'question': item[3],
+            'correct_answer': item[4],
+            'incorrect_answer': item[5]
+        }
     print(wrong_questions_dict)
-    print(data)
+    
 
 
 def run_quiz(raw_question_list):
