@@ -121,11 +121,10 @@ def display_main_menu():
                         print("... GENERATING THE QUIZ ...")
                         if category == 'Training':
                             print('Generating quiz from previous wrong questions')
-                            # q = format_question(get_wrong_questions(4),0)
-                            # print (q[0])
+                            run_quiz(get_wrong_questions(num)) #load n questions from wrong q google sheet
                             exit()
                         else:
-                            question_list = get_questions(num, category, question_type, difficulty, tok)
+                            question_list = get_questions(num, category, question_type, difficulty, tok) #generate n questions from API
                             run_quiz(question_list)
                             exit()
                     case 2:
@@ -452,7 +451,7 @@ def run_quiz(raw_question_list):
 
 
     #export wrong questions to google sheet
-    if training_mode == "ON":
+    if training_mode == "ON" and category != "Training": #do not save wrong qeustions from previous wrong q's
         add_question_to_sheet(wrong_questions_list)
     
 
