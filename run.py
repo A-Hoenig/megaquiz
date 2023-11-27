@@ -365,7 +365,7 @@ def get_wrong_questions(n):
     if len(data) <= 1:
         #no questions saved in google sheet yet
         print ("Sorry, no questions have been saved yet. Ensure Training Mode is on to remember wrong questions")
-        input("Press enter to continue\]n")
+        input("Press enter to continue\n")
 
         return wrong_questions_dict
 
