@@ -356,7 +356,7 @@ def get_wrong_questions():
             'category': item[2],
             'question': item[3],
             'correct_answer': item[4],
-            'incorrect_answer': item[5:8]
+            'incorrect_answers': item[5:8]
         }
         wrong_questions_dict['results'].append(temp_dict)
     
@@ -442,7 +442,7 @@ wrong = 0
 #launch quiz CLI app
 # display_main_menu()
 
-print(get_wrong_questions())
-
+q = format_question(get_wrong_questions(),1)
+print (q[0])
 
 
