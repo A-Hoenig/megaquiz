@@ -356,7 +356,7 @@ def get_wrong_questions():
             'category': item[2],
             'question': item[3],
             'correct_answer': item[4],
-            'incorrect_answer': item[5]
+            'incorrect_answer': item[5:8]
         }
         wrong_questions_dict['results'].append(temp_dict)
     
