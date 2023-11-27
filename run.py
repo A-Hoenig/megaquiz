@@ -304,7 +304,7 @@ def format_question(raw_question_list, n):
     q = raw_question_list['results'][n]
    
     #add question first and add category and difficulty to it
-    individual_question = (f'{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n')
+    individual_question = f'{q['question']}\n{q['category']} ({q['difficulty']})\n\n'
     
     #add answers
     if q['type'] == 'boolean':
@@ -486,8 +486,8 @@ category_list = get_categories() #get and store list of categories from Trivia D
 category = 'ANY' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
-num = 5 #default number of questions. Do not set to 0!
-training_mode = "ON"
+num = 10 #default number of questions. Do not set to 0!
+training_mode = "OFF"
 tok = generate_new_token()
 correct = 0
 wrong = 0
