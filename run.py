@@ -350,7 +350,7 @@ def get_wrong_questions():
     data = questions.get_all_values()
 
     for item in data[1:]:
-        wrong_questions_dict = {
+        temp_dict = {
             'type': item[0],
             'difficulty': item[1],
             'category': item[2],
@@ -358,7 +358,9 @@ def get_wrong_questions():
             'correct_answer': item[4],
             'incorrect_answer': item[5]
         }
-    print(wrong_questions_dict)
+        wrong_questions_dict['results'].append(temp_dict)
+    
+    return wrong_questions_dict
     
 
 
@@ -440,7 +442,7 @@ wrong = 0
 #launch quiz CLI app
 # display_main_menu()
 
-get_wrong_questions()
+print(get_wrong_questions())
 
 
 
