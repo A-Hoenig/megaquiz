@@ -304,7 +304,7 @@ def format_question(raw_question_list, n):
     q = raw_question_list['results'][n]
    
     #add question first and add category and difficulty to it
-    individual_question = f'{q['question']}\n{q['category']} ({q['difficulty']})\n\n'
+    individual_question = f"{q['question']}\n{q['category']} ({q['difficulty']})\n\n"
     
     #add answers
     if q['type'] == 'boolean':
