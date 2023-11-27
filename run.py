@@ -304,7 +304,7 @@ def format_question(raw_question_list, n):
     q = raw_question_list['results'][n]
    
     #add question first and add category and difficulty to it
-    individual_question = f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n'
+    individual_question = (f'\n{html.unescape(q['question'])}\n{html.unescape(q['category'])} ({q['difficulty']})\n\n')
     
     #add answers
     if q['type'] == 'boolean':
@@ -459,7 +459,7 @@ def run_quiz(raw_question_list):
     #ask user if they want to play again
     while True:
         try:
-            user_input = int(input('1. - YES\n2. - NO\n'))
+            user_input = int(input('1. YES\n2. NO\n'))
             if 1 <= user_input <= 2:
                 match user_input:
                     case 1:
