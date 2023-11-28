@@ -4,6 +4,7 @@ import requests #needed to request questions from open trivia DB API
 import json #needed to help parse the recieved json strings
 import os #access to cli clear command to clear out previous text
 import random #needed to shuffle answers
+import time
 
 from pyfiglet import Figlet #generate ASCII text art / fonts for CLI (install with  pip install pyfiglet)
 from google.oauth2.service_account import Credentials #secure IO access to google sheets
@@ -358,24 +359,34 @@ def get_wrong_questions(n):
     Data is then reconfigured into the same format recieved from Trivia API
     this can be passed to normal quiz functions to generate a quiz.
     '''
+    global num #change num if not enouigh wrong questions for quiz
+
     wrong_questions_dict = {'response_code': 0, 'results': []} # build dict in same format as returned from the API
     questions = SHEET.worksheet('questions')
     data = questions.get_all_values()
+    max_questions = 0
 
     if len(data) <= 1:
         #no questions saved in google sheet yet
         print ("Sorry, no questions have been saved yet. Ensure Training Mode is on to remember wrong questions")
         input("Press enter to continue\n")
-
-        return wrong_questions_dict
+        display_main_menu()
+        return
 
     elif n > (len(data) - 1):
         # use number of available questions if n is greater
-        print (f'Not enough data to create quiz with {n} questions. Max available is {len(data)-1}')
-        input("Press enter to continue\n")
+        print (f'Not enough data to create training quiz with {n} questions. Max available is {len(data)-1}')
+        max_questions = len(data) - 1
+        num = len(data)-1
+        time.sleep(4)
 
-    #create n random indices
-    random_indices = random.sample(range(1, len(data)), n)
+        display_main_menu()
+        return
+    else:
+        max_questions = n
+                
+    #create maximum random indices either n or max of wrong questions
+    random_indices = random.sample(range(1, len(data)), max_questions)
     
     for index in random_indices: #iterate through sheet data and append to new dictionary
         item = data[index] # pick a question based on random index list
@@ -388,7 +399,8 @@ def get_wrong_questions(n):
             'incorrect_answers': item[5:8]
         }
         wrong_questions_dict['results'].append(temp_dict)
-    
+
+    print(wrong_questions_dict)
     return wrong_questions_dict
     
 def run_quiz(raw_question_list):
@@ -397,12 +409,13 @@ def run_quiz(raw_question_list):
     processes user answer and updates the scores.
     If training mode is on, function will also append a list of the incorrect answers and export to google sheet
     '''
-    global correct, wrong, training_mode
+   
+    global correct, wrong, training_mode, num
     wrong_questions_list = [] #list to remember which questions the user got wrong
 
     #######################     main loop to display each question     #####################################################
     for question_count, question_data in enumerate(raw_question_list['results'], start = 1): # start loop, display first question as 1, not 0
-
+        
         percentage = correct / num  * 100 #num must never be zero ... set to default 10
         status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
         reset_cli(f'{status}') # reset CLI before showing first question
@@ -444,9 +457,10 @@ def run_quiz(raw_question_list):
                 
             status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)' #update status bar
 
-    percentage = correct / num  * 100 #final calc after last question
-    status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
-    reset_cli(f'{status}') #update cli after last question
+        percentage = correct / num  * 100 #final calc after last question
+    
+        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
+        reset_cli(f'{status}') #update cli after last question
     print('Quiz ended!')
     ############################    end of loop    ##################################################
 
@@ -483,10 +497,10 @@ def run_quiz(raw_question_list):
 ###########################################################################
 
 category_list = get_categories() #get and store list of categories from Trivia DB
-category = 'ANY' # number of category or ANY
+category = 'Training' # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
-num = 10 #default number of questions. Do not set to 0!
+num = 20 #default number of questions. Do not set to 0!
 training_mode = "OFF"
 tok = generate_new_token()
 correct = 0
