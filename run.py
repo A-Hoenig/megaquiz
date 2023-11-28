@@ -596,25 +596,9 @@ def run_quiz(raw_question_list):
                         exit()
                 break
             else:
-                print("Please enter 1 or 2!")
+                print("Please enter 1 or 2!\n")
         except ValueError:
-            print('Please enter a number!')
-
-
-def make_fonts():
-    '''
-    output all available figlet fonts to output.txt file
-    '''
-
-    with open("pyfigletfonts.txt", "r") as file:
-        fonts = file.read().splitlines()
-
-    with open("output.txt", "a") as outp:
-        for fonty in fonts:
-            print("Testing font " + fonty)
-            custom_ascii_font = Figlet(font=fonty, width=80)
-            outp.write(f'\nFont Name: {fonty}\n')
-            outp.write(custom_ascii_font.renderText('MegaQuiz'))
+            print('Please enter a number!\n')
 
 # ##########################################################################
 # ## global variables/defaults to keep track of selected quiz parameters ###
