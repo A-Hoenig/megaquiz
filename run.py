@@ -402,7 +402,31 @@ def get_wrong_questions(n):
 
     print(wrong_questions_dict)
     return wrong_questions_dict
+
     
+def show_result(score):
+    '''
+    display end of quiz result and a message based on the percentage
+    '''
+    reset_cli('End of Quiz!') 
+    custom_ascii_font = Figlet(font='broadway') # change font name for different style
+    print(custom_ascii_font.renderText('END!'))
+    print(f'Your Final Score:  {round(score,1)}%\n')
+    match score:
+        case _ if score == 100:
+            print("You aced it! Awesome!\n")
+        case _ if score  > 90:
+            print("Great effort! You're a trivia master!\n")
+        case _ if score  > 75:
+            print('Not too bad! Keep practicing\n')
+        case _ if score  > 50:
+            print('Good effort. Have you tried Training mode yet?\n')
+        case _ if score  >= 25 :
+            print('These topics were not your strongpoint. Try again!\n')
+        case _ if score  < 25 :
+            print('Sorry, you need to brush up on this topic!\n')
+    return
+
 def run_quiz(raw_question_list):
     '''
     main quiz function that loops through all given questions, displays one by one,
@@ -452,7 +476,7 @@ def run_quiz(raw_question_list):
                     else:
                         wrong += 1
                         
-                        print(f"{green_color}Correct answer was: {correct_answer}: {question_data['correct_answer']}{reset_color}")
+                        print(f"{green_color}Correct answer was: {correct_answer}: {html.unescape(question_data['correct_answer'])}{reset_color}")
                         time.sleep(2)
                         if training_mode == "ON":
                             wrong_questions_list.append({'type': question_data['type'],
@@ -473,7 +497,7 @@ def run_quiz(raw_question_list):
     
         status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
         reset_cli(f'{status}') #update cli after last question
-    print('Quiz ended!')
+        show_result(percentage)
     ############################    end of loop    ##################################################
 
     #export wrong questions to google sheet
@@ -495,7 +519,7 @@ def run_quiz(raw_question_list):
                     case 2:
                         status = 'Thanks for Playing'
                         reset_cli(f'{status}') #update cli 
-                        custom_ascii_font = Figlet(font='graffiti') # change font name for different style
+                        custom_ascii_font = Figlet(font='small') # change font name for different style
                         print(custom_ascii_font.renderText('Have a nice day!'))
                         exit()
                 break
@@ -526,7 +550,7 @@ def make_fonts():
 ###########################################################################
 
 category_list = get_categories() #get and store list of categories from Trivia DB
-category = 9 # number of category or ANY
+category = 9 # number of category or ANY, dafault is 9, General Knowledge
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
 num = 10 #default number of questions. Do not set to 0!
@@ -539,7 +563,6 @@ wrong = 0
 
 #launch quiz CLI app
 display_main_menu()
-# make_fonts()
 
 
         
