@@ -452,7 +452,7 @@ def run_quiz(raw_question_list):
                     else:
                         wrong += 1
                         
-                        print(f'{green_color}Correct answer was: {correct_answer}: {question_data['correct_answer']}{reset_color}')
+                        print(f"{green_color}Correct answer was: {correct_answer}: {question_data['correct_answer']}{reset_color}")
                         time.sleep(2)
                         if training_mode == "ON":
                             wrong_questions_list.append({'type': question_data['type'],
