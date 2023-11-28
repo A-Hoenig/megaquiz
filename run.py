@@ -110,7 +110,7 @@ def display_main_menu():
 
     # print the menu items with the current set global variables
     print(f'\n1. Start Quiz\n\n2. Number of Questions:\u0009{num}\n3. Change Difficulty:\u0009{difficulty}\n4. Change Type:\u0009\u0009{str_question_type}\n5. Change Category:\u0009{display_category(category,category_list)}\n6. Training Mode:\u0009{training_mode}\n')
-    print('Turning on training mode will remember questions you got wrong\nYou can then select "Training" as a category to build quizzes\nusing only previously wrong questions\n')
+    print('Turn on training mode to track wrong questions\nThen select "Training" category to practice them')
     
     # get user menu selection and validate input
     while True:
@@ -424,8 +424,12 @@ def run_quiz(raw_question_list):
         result = format_question(raw_question_list, question_count-1) #returns formatted question, answers, as well as correct answer
         print(f'{result[0]}\n') # first tuple result from format function - prints question to CLI
         correct_answer = result[1] #second tuple result from format function - store correct answer
+
         
-        print(f'Debug: CorrectAnswerNo: {correct_answer}') #######################     DELETE ME     ##########################################
+        #######################     UNCOMMENT FOR DEBUG / EVALUATION PURPOSES    ##########################################
+        # print(f'Debug: CorrectAnswerNo: {correct_answer}') 
+        #######################     UNCOMMENT FOR DEBUG / EVALUATION PURPOSES    ##########################################
+
 
         # get user answer and validate
         if raw_question_list['results'][question_count-1]['type'] == 'boolean': #set how many valid answers there are
