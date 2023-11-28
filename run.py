@@ -79,10 +79,10 @@ def reset_cli (readout_line):
     """
     os.system('clear') #clear the cli first
     
-    custom_ascii_font = Figlet(font='graffiti') # change font name for different styles
+    custom_ascii_font = Figlet(font='standard') # change font name for different styles
    
     print('Welcome to')
-    print(custom_ascii_font.renderText('MEGA\nQUIZ'))
+    print(custom_ascii_font.renderText('MEGA-QUIZ'))
 
     print('\u23AF' * 50) # creates continuous line of 50 characters
     print(f'{readout_line}')
@@ -492,6 +492,23 @@ def run_quiz(raw_question_list):
         except ValueError:
             print('Please enter a number!')
 
+def make_fonts():
+    '''
+    output all available figlet fonts to output.txt file
+    '''
+
+    with open("pyfigletfonts.txt", "r") as file:
+        fonts = file.read().splitlines()
+
+    
+    with open("output.txt", "a") as outp:
+        for fonty in fonts:
+            print("Testing font " + fonty)
+            custom_ascii_font = Figlet(font=fonty, width=80)
+            outp.write(f'\nFont Name: {fonty}\n')
+            outp.write(custom_ascii_font.renderText('MegaQuiz'))
+
+
 ###########################################################################
 ### global variables/defaults to keep track of selected quiz parameters ###
 ###########################################################################
@@ -506,5 +523,11 @@ tok = generate_new_token()
 correct = 0
 wrong = 0
 
+
+
 #launch quiz CLI app
 display_main_menu()
+# make_fonts()
+
+
+        
