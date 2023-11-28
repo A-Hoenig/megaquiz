@@ -498,21 +498,21 @@ def run_quiz(raw_question_list):
     '''
 
     global correct, wrong, training_mode, num
-    wrong_questions_list = []  # remember which questions were wrong
+    wrong_qs = []  # remember which questions were wrong
 
     #     main loop to display each question     ##
     # start loop, display first question as 1, not 0
-    for question_count, question_data in enumerate(raw_question_list['results'],
-                                                   start=1):
+    for q_count, q_data in enumerate(raw_question_list['results'],
+                                     start=1):
         percentage = correct / num * 100
-        status = (f'Question {question_count} of {num}.'
+        status = (f'Question {q_count} of {num}.'
                   f' Correct: {correct} / Wrong: {wrong}.'
                   f' ({round(percentage,1)}%)')
         reset_cli(f'{status}')  # reset CLI before showing first question
 
         # get formatted question
         # returns formatted question, answers, as well as correct answer
-        result = format_question(raw_question_list, question_count-1)
+        result = format_question(raw_question_list, q_count-1)
         # first tuple result from format function - prints question to CLI
         print(f'{result[0]}\n')
         # second tuple result from format function - store correct answer
@@ -523,7 +523,7 @@ def run_quiz(raw_question_list):
 
         # get user answer and validate
         # set how many valid answers there are
-        if raw_question_list['results'][question_count-1]['type'] == 'boolean':
+        if raw_question_list['results'][q_count-1]['type'] == 'boolean':
             qs = 2
         else:
             qs = 4
@@ -543,15 +543,15 @@ def run_quiz(raw_question_list):
                         wrong += 1
 
                         print(f"{grn}Correct answer: {correct_answer}: "
-                              f"{html.unescape(question_data['correct_answer'])}{rst}")
+                              f"{html.unescape(q_data['correct_answer'])}{rst}")
                         time.sleep(2)
                         if training_mode == "ON":
-                            wrong_questions_list.append({'type': question_data['type'],
-                                                         'difficulty': question_data['difficulty'],
-                                                         'category': question_data['category'],
-                                                         'question': question_data['question'],
-                                                         'correct_answer': question_data['correct_answer'],
-                                                         'incorrect_answers': question_data['incorrect_answers']})
+                            wrong_qs.append({'type': q_data['type'],
+                                             'difficulty': q_data['difficulty'],
+                                             'category': q_data['category'],
+                                             'question': q_data['question'],
+                                             'correct_answer': q_data['correct_answer'],
+                                             'incorrect_answers': q_data['incorrect_answers']})
                     break
                 else:
                     print(f"Please enter 1 or {qs}!")
@@ -559,12 +559,12 @@ def run_quiz(raw_question_list):
                 print('Please enter a number!')
 
             # update status bar
-            status = (f'Question {question_count} of {num}.'
+            status = (f'Question {q_count} of {num}.'
                       f' Correct: {correct} / Wrong: {wrong}.'
                       f' ({round(percentage,1)}%)'
                       )
         percentage = correct / num * 100  # final calc after last question
-        status = (f'Question {question_count} of {num}.'
+        status = (f'Question {q_count} of {num}.'
                   f' Correct: {correct} / Wrong: {wrong}.'
                   f' ({round(percentage,1)}%)')
         reset_cli(f'{status}')  # update cli after last question
@@ -574,7 +574,7 @@ def run_quiz(raw_question_list):
     # export wrong questions to google sheet
     # do not save wrong qeustions from previous wrong q's
     if training_mode == "ON" and category != "Training":
-        add_question_to_sheet(wrong_questions_list)
+        add_question_to_sheet(wrong_qs)
 
     print('Would you like to play again?\n')
 
