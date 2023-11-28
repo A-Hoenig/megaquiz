@@ -386,12 +386,15 @@ def add_question_to_sheet(question_list):
     also adds the date when the question was added.
     '''
     destination = SHEET.worksheet('questions')
-
     print("Saving wrong questions for training category...")
 
     # EXTRACT data from wrong question list
     for q in question_list:
-        data = [q['type'], q['difficulty'], q['category'], q['question'], q['correct_answer']]
+        data = [q['type'],
+                q['difficulty'],
+                q['category'],
+                q['question'],
+                q['correct_answer']]
         wrong_answers = q['incorrect_answers']
         if q['type'] == 'boolean':  # add 2 blank wrong answers
             wrong_answers.extend(['', ''])
@@ -400,11 +403,8 @@ def add_question_to_sheet(question_list):
         # add date to end of data to track when question was added
         todays_date = date.today()
         str_todays_date = todays_date.strftime('%Y.%m.%d')
-
         data.append(str_todays_date)
-
         destination.append_row(data)  # add data to google sheet
-
     print("Questions saved")
 
 
@@ -420,25 +420,26 @@ def get_wrong_questions(n):
     '''
     global num  # change num if not enouigh wrong questions for quiz
 
-    wrong_questions_dict = {'response_code': 0, 'results': []}  # build dict in same format as returned from the API
+    # build dict in same format as returned from the API
+    wrong_questions_dict = {'response_code': 0, 'results': []}
     questions = SHEET.worksheet('questions')
     data = questions.get_all_values()
     max_questions = 0
 
     if len(data) <= 1:
         # no questions saved in google sheet yet
-        print("Sorry, no questions have been saved yet. Ensure Training Mode is on to remember wrong questions")
+        print(f"Sorry, no questions have been saved yet."
+              f"Ensure Training Mode is on to remember wrong questions")
         input("Press enter to continue\n")
         display_main_menu()
         return
-
     elif n > (len(data) - 1):
         # use number of available questions if n is greater
-        print(f'Not enough data to create training quiz with {n} questions. Max available is {len(data)-1}')
+        print(f'Not enough data to create training quiz with {n} questions.'
+              f'Max available is {len(data)-1}')
         max_questions = len(data) - 1
         num = len(data)-1
         time.sleep(4)
-
         display_main_menu()
         return
     else:
@@ -490,26 +491,32 @@ def show_result(score):
 
 def run_quiz(raw_question_list):
     '''
-    main quiz function that loops through all given questions, displays one by one,
+    main function that loops through all given questions, displays one by one,
     processes user answer and updates the scores.
     If training mode is on, function will also append
     a list of the incorrect answers and export to google sheet
     '''
 
     global correct, wrong, training_mode, num
-    wrong_questions_list = []  # list to remember which questions the user got wrong
+    wrong_questions_list = []  # remember which questions were wrong
 
     #     main loop to display each question     ##
-    for question_count, question_data in enumerate(raw_question_list['results'], start=1):  # start loop, display first question as 1, not 0
-
-        percentage = correct / num * 100  # num must never be zero ... set to default 10
-        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
+    # start loop, display first question as 1, not 0
+    for question_count, question_data in enumerate(raw_question_list['results'],
+                                                   start=1):
+        percentage = correct / num * 100
+        status = (f'Question {question_count} of {num}.'
+                  f' Correct: {correct} / Wrong: {wrong}.'
+                  f' ({round(percentage,1)}%)')
         reset_cli(f'{status}')  # reset CLI before showing first question
 
         # get formatted question
-        result = format_question(raw_question_list, question_count-1)  # returns formatted question, answers, as well as correct answer
-        print(f'{result[0]}\n')  # first tuple result from format function - prints question to CLI
-        correct_answer = result[1]  # second tuple result from format function - store correct answer
+        # returns formatted question, answers, as well as correct answer
+        result = format_question(raw_question_list, question_count-1)
+        # first tuple result from format function - prints question to CLI
+        print(f'{result[0]}\n')
+        # second tuple result from format function - store correct answer
+        correct_answer = result[1]
 
         # UNCOMMENT FOR DEBUG / EVALUATION PURPOSES
         # print(f'Debug: CorrectAnswerNo: {correct_answer}')
@@ -522,21 +529,21 @@ def run_quiz(raw_question_list):
             qs = 4
 
         while True:
-            green_color = '\033[92m'
-            reset_color = '\033[0m'
-
+            grn = '\033[92m'
+            rst = '\033[0m'
             try:
                 user_answer = int(input(f"Select Answer: (type 1 - {qs})\n"))
                 if 1 <= user_answer <= qs:  # valid answer
                     # compare answers and update scores
                     if user_answer == correct_answer:
                         correct += 1
-                        print(f'{green_color}CORRECT!{reset_color}')
+                        print(f'{grn}CORRECT!{rst}')
                         time.sleep(2)
                     else:
                         wrong += 1
 
-                        print(f"{green_color}Correct answer was: {correct_answer}: {html.unescape(question_data['correct_answer'])}{reset_color}")
+                        print(f"{grn}Correct answer: {correct_answer}: "
+                              f"{html.unescape(question_data['correct_answer'])}{rst}")
                         time.sleep(2)
                         if training_mode == "ON":
                             wrong_questions_list.append({'type': question_data['type'],
@@ -552,11 +559,14 @@ def run_quiz(raw_question_list):
                 print('Please enter a number!')
 
             # update status bar
-            status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
-
+            status = (f'Question {question_count} of {num}.'
+                      f' Correct: {correct} / Wrong: {wrong}.'
+                      f' ({round(percentage,1)}%)'
+                      )
         percentage = correct / num * 100  # final calc after last question
-
-        status = f'Question {question_count} of {num}. Correct: {correct} / Wrong: {wrong}. ({round(percentage,1)}%)'
+        status = (f'Question {question_count} of {num}.'
+                  f' Correct: {correct} / Wrong: {wrong}.'
+                  f' ({round(percentage,1)}%)')
         reset_cli(f'{status}')  # update cli after last question
         show_result(percentage)
     # ###########################    end of loop
@@ -611,7 +621,8 @@ def make_fonts():
 # ##########################################################################
 
 
-category_list = get_categories()  # get and store list of categories from Trivia DB
+# get and store list of categories from Trivia DB
+category_list = get_categories()
 category = 9  # number of category or ANY, dafault is 9, General Knowledge
 question_type = 'ANY'  # multiple, boolean, ANY
 difficulty = 'ANY'  # easy, medium, hard, ANY
