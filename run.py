@@ -438,14 +438,22 @@ def run_quiz(raw_question_list):
             qs = 4
 
         while True:
+            green_color = '\033[92m'
+            reset_color = '\033[0m'
+            
             try:
                 user_answer = int(input(f"Select Answer: (type 1 - {qs})\n"))
                 if 1 <= user_answer <= qs: #valid answer
                     # compare answers and update scores
                     if user_answer == correct_answer:
                         correct +=1
+                        print(f'{green_color}CORRECT!{reset_color}')
+                        time.sleep(2)
                     else:
                         wrong += 1
+                        
+                        print(f'{green_color}Correct answer was: {correct_answer}: {question_data['correct_answer']}{reset_color}')
+                        time.sleep(2)
                         if training_mode == "ON":
                             wrong_questions_list.append({'type': question_data['type'],
                                                    'difficulty': question_data['difficulty'],
@@ -518,10 +526,10 @@ def make_fonts():
 ###########################################################################
 
 category_list = get_categories() #get and store list of categories from Trivia DB
-category = 'Training' # number of category or ANY
+category = 9 # number of category or ANY
 question_type = 'ANY' #multiple, boolean, ANY
 difficulty = 'ANY' # easy, medium, hard, ANY
-num = 20 #default number of questions. Do not set to 0!
+num = 10 #default number of questions. Do not set to 0!
 training_mode = "OFF"
 tok = generate_new_token()
 correct = 0
