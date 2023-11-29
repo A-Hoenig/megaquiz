@@ -197,9 +197,9 @@ def log_in():
     user_list = get_users()
     user_input = input("Enter your username: ")
     if user_input in user_list:
-        print (f"Welcome {user_input}\n")
+        print (f"Welcome back, {user_input}!\n")
         while True:
-            user_pw = input("Enter your password: \n")
+            user_pw = getpass.getpass("Enter your password: \n")
             if check_password(user_list, user_input, user_pw) == True:
                 user = user_input
                 display_main_menu()
