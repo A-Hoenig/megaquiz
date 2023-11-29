@@ -9,7 +9,7 @@ import getpass  # used to input passwords without showing letters
 
 from pyfiglet import Figlet  # generate CLI ASCII text art/fonts
 from google.oauth2.service_account import Credentials  # IO access to google
-from datetime import date  # needed for delays
+from datetime import date  # needed to post current date to google sheet
 
 
 # connect to google sheets
@@ -124,7 +124,7 @@ def display_main_menu():
     else:
         str_question_type = "ANY"
 
-    # print the menu items with the current set global variables
+    # print the menu items with the current global variables
     print(
         f'\n1. Start Quiz\n\n'
         f'2. Number of Questions:\u0009{num}\n'
@@ -138,7 +138,7 @@ def display_main_menu():
 
     print(
         f'Turn on training mode to track wrong questions\n'
-        f'Then select "Training" category to practice them'
+        f'Then select "Training" category to practice them\n'
         )
 
     # get user menu selection and validate input
@@ -219,7 +219,6 @@ def log_in():
                         case 1:
                             create_user(user_input)
                         case 2:
-                            question_type = 'multiple'
                             display_main_menu()
                     break
                 else:
@@ -244,13 +243,11 @@ def check_password(user_list, username, pw):
 def get_users():
     '''
     returns a dictionary of all users and passwords for login
-    virification
+    verification
     '''
     user_list = SHEET.worksheet('users')
-    
     keys = user_list.col_values(1)[1:]
     values = user_list.col_values(2)[1:]
-    defaults = user_list.col_values(4)[1:]
     # create dictionary of users and passwords
     user_data = dict(zip(keys, values))
     
@@ -315,7 +312,7 @@ def change_difficulty():
     while True:
         try:
             print(f'\n1. ANY\n2. easy\n3. medium\n4. hard\n')
-            user_input = int(input('\nPLease select the difficulty level:\n'))
+            user_input = int(input('\nPlease select the difficulty level:\n'))
             if 1 <= user_input <= 4:
                 match user_input:
                     case 1:
@@ -370,7 +367,7 @@ def change_category():
     Allow user to change the category.list pulled from open quiz DB.
     Changes the global variable
     '''
-    global category
+    global category, category_list
 
     reset_cli('Available Categories')
     print(create_category_list(category_list))
