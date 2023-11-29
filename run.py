@@ -5,10 +5,12 @@ import json  # needed to help parse the recieved json strings
 import os  # access to cli clear command to clear out previous text
 import random  # needed to shuffle answers
 import time
+import getpass
 
 from pyfiglet import Figlet  # generate CLI ASCII text art/fonts
 from google.oauth2.service_account import Credentials  # IO access to google
 from datetime import date  # needed for delays
+
 
 # connect to google sheets
 SCOPE = [
@@ -131,6 +133,7 @@ def display_main_menu():
         f'5. Change Category:\u0009{display_category(category,category_list)}'
         f'\n6. Training Mode:\u0009{training_mode}\n'
         f'7. Log In\u0009\u0009{user}\n'
+        f'8. Exit MegaQuiz\n'
         )
 
     print(
@@ -142,7 +145,7 @@ def display_main_menu():
     while True:
         try:
             user_input = int(input('Select option & press Enter: \n'))
-            if 1 <= user_input <= 7:
+            if 1 <= user_input <= 8:
                 match user_input:
                     case 1:
                         if category == 'Training':
@@ -174,9 +177,11 @@ def display_main_menu():
                         toggle_training_mode()
                     case 7:
                         log_in()
+                    case 8:
+                        exit()
 
             else:
-                print("Please enter 1 - 7!")
+                print("Please enter 1 - 8!")
         except ValueError:
             print('Please enter a number!')
 
@@ -208,7 +213,7 @@ def log_in():
             try:
                 print(f'\n1. Add {user_input} as new user\n'
                       f'2. Abort / Back to Menu\n')
-                user_selection = int(input('\nPlease select the question type:\n'))
+                user_selection = int(input('\nSelect option 1 or 2:\n'))
                 if 1 <= user_selection <= 2:
                     match user_selection:
                         case 1:
@@ -218,7 +223,7 @@ def log_in():
                             display_main_menu()
                     break
                 else:
-                    print("Please enter a value from 1 to 3!")
+                    print("Please enter 1 or 2!")
             except ValueError:
                 print('Please enter a number!')
     exit()
@@ -257,7 +262,21 @@ def create_user(user_name):
     if user does not exist, add a new one and create a sheet
     '''
     print(f'Creating new user {user_name}')
+    
+    while True:
+        pass1 = getpass.getpass("Enter a password:\n")
+        pass2 = getpass.getpass("Repeat password:\n")
 
+        if pass1 == pass2:
+            # add user to password list
+            SHEET.worksheet('users').append_row([user_name, pass1])
+            #create new user sheet to store their wrong questions
+            print("Creating new user profile...")
+            new_tab = SHEET.add_worksheet(title=user_name, rows="2000", cols="10")
+            display_main_menu()
+            break
+        else:
+            print('Passwords do not match. Please try again!')
 
 def no_of_questions():
     '''
@@ -695,6 +714,7 @@ def run_quiz(raw_question_list):
 
 
 # get and store list of categories from Trivia DB
+
 user = "Not Logged In"
 category_list = get_categories()
 category = 9  # number of category or ANY, dafault is 9, General Knowledge
