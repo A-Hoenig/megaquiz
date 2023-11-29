@@ -4,8 +4,8 @@ import requests  # needed to request questions from open trivia DB API
 import json  # needed to help parse the recieved json strings
 import os  # access to cli clear command to clear out previous text
 import random  # needed to shuffle answers
-import time
-import getpass
+import time  # used for pausing to display messages
+import getpass  # used to input passwords without shoing letters
 
 from pyfiglet import Figlet  # generate CLI ASCII text art/fonts
 from google.oauth2.service_account import Credentials  # IO access to google
@@ -712,8 +712,6 @@ def run_quiz(raw_question_list):
 # ## global variables/defaults to keep track of selected quiz parameters ###
 # ##########################################################################
 
-
-# get and store list of categories from Trivia DB
 
 user = "Not Logged In"
 category_list = get_categories()
