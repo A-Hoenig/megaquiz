@@ -190,12 +190,11 @@ def log_in():
 
     reset_cli('Log in...')
     user_list = get_users()
-    print(user_list)
     user_input = input("Enter your username: ")
     if user_input in user_list:
-        print ("User exists")
+        print (f"Welcome {user_input}\n")
         while True:
-            user_pw = input("Enter your password: ")
+            user_pw = input("Enter your password: \n")
             if check_password(user_list, user_input, user_pw) == True:
                 user = user_input
                 display_main_menu()
@@ -204,6 +203,24 @@ def log_in():
                 print("Incorrect Password. Please try again")
     else:
         print ("User does not exist!")
+        # get user selection and validate input
+        while True:
+            try:
+                print(f'\n1. Add {user_input} as new user\n'
+                      f'2. Abort / Back to Menu\n')
+                user_selection = int(input('\nPlease select the question type:\n'))
+                if 1 <= user_selection <= 2:
+                    match user_selection:
+                        case 1:
+                            create_user(user_input)
+                        case 2:
+                            question_type = 'multiple'
+                            display_main_menu()
+                    break
+                else:
+                    print("Please enter a value from 1 to 3!")
+            except ValueError:
+                print('Please enter a number!')
     exit()
 
 
@@ -234,11 +251,12 @@ def get_users():
     
     return user_data
 
+
 def create_user(user_name):
     '''
     if user does not exist, add a new one and create a sheet
     '''
-
+    print(f'Creating new user {user_name}')
 
 
 def no_of_questions():
