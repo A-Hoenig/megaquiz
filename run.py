@@ -130,6 +130,7 @@ def display_main_menu():
         f'4. Change Type:\u0009\u0009{str_question_type}\n'
         f'5. Change Category:\u0009{display_category(category,category_list)}'
         f'\n6. Training Mode:\u0009{training_mode}\n'
+        f'7. Log In\u0009\u0009{user}\n'
         )
 
     print(
@@ -141,7 +142,7 @@ def display_main_menu():
     while True:
         try:
             user_input = int(input('Select your option: \n'))
-            if 1 <= user_input <= 6:
+            if 1 <= user_input <= 7:
                 match user_input:
                     case 1:
                         if category == 'Training':
@@ -171,12 +172,36 @@ def display_main_menu():
                         change_category()
                     case 6:
                         toggle_training_mode()
+                    case 7:
+                        log_in()
 
             else:
-                print("Please enter 1 - 6!")
+                print("Please enter 1 - 7!")
         except ValueError:
             print('Please enter a number!')
 
+
+def log_in():
+    '''
+    show log in screen
+    option to create new user
+    '''
+    reset_cli('Log in...')
+    user_list = get_users()
+    print(user_list)
+    exit()
+
+
+def get_users():
+    user_list = SHEET.worksheet('users')
+    
+    keys = user_list.col_values(1)[1:]
+    values = user_list.col_values(2)[1:]
+    defaults = user_list.col_values(4)[1:]
+    # create dictionary of users and passwords
+    user_data = dict(zip(keys, values))
+    
+    return user_data
 
 def no_of_questions():
     '''
@@ -435,7 +460,7 @@ def get_wrong_questions(n):
         return
     elif n > (len(data) - 1):
         # use number of available questions if n is greater
-        print(f'Not enough data to create training quiz with {n} questions.'
+        print(f'Not enough data to create training quiz with {n} questions.\n'
               f'Max available is {len(data)-1}')
         max_questions = len(data) - 1
         num = len(data)-1
@@ -606,6 +631,7 @@ def run_quiz(raw_question_list):
 
 
 # get and store list of categories from Trivia DB
+user = "Not Logged In"
 category_list = get_categories()
 category = 9  # number of category or ANY, dafault is 9, General Knowledge
 question_type = 'ANY'  # multiple, boolean, ANY
