@@ -189,10 +189,33 @@ def log_in():
     reset_cli('Log in...')
     user_list = get_users()
     print(user_list)
+    user_input = input("Enter your username: ")
+    if user_input in user_list:
+        print ("User exists")
+        user_pw = input("Enter your password: ")
+        if check_password(user_list, user_input, user_pw) == True:
+            print("Correct")
+        else:
+            print("incorrect")
+    else:
+        print ("User does not exist!")
     exit()
 
 
+def check_password(user_list, username, pw):
+    correct_pw = user_list.get(username, None)
+
+    if correct_pw is not None and correct_pw == pw:
+        return True
+    else:
+        return False
+
+
 def get_users():
+    '''
+    returns a dictionary of all users and passwords for login
+    virification
+    '''
     user_list = SHEET.worksheet('users')
     
     keys = user_list.col_values(1)[1:]
