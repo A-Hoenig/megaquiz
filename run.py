@@ -393,6 +393,14 @@ def toggle_training_mode():
      should be stored on the google sheet
     '''
     global training_mode
+    global user
+
+    if user == "Not Logged In":
+        print(f'Sorry, you must be logged into your profile'
+              f' to use Training Mode (option 7)')
+        time.sleep(3)
+        display_main_menu()
+        exit()
 
     if training_mode == 'OFF':
         training_mode = 'ON'
