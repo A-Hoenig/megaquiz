@@ -5,7 +5,7 @@ import json  # needed to help parse the recieved json strings
 import os  # access to cli clear command to clear out previous text
 import random  # needed to shuffle answers
 import time  # used for pausing to display messages
-import getpass  # used to input passwords without shoing letters
+import getpass  # used to input passwords without showing letters
 
 from pyfiglet import Figlet  # generate CLI ASCII text art/fonts
 from google.oauth2.service_account import Credentials  # IO access to google
