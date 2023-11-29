@@ -186,6 +186,8 @@ def log_in():
     show log in screen
     option to create new user
     '''
+    global user
+
     reset_cli('Log in...')
     user_list = get_users()
     print(user_list)
@@ -194,15 +196,19 @@ def log_in():
         print ("User exists")
         user_pw = input("Enter your password: ")
         if check_password(user_list, user_input, user_pw) == True:
-            print("Correct")
+            user = user_input
+            display_main_menu()
         else:
-            print("incorrect")
+            print("incorrect. please try again")
     else:
         print ("User does not exist!")
     exit()
 
 
 def check_password(user_list, username, pw):
+    '''
+    compares user input pw with saved one from user_list
+    '''
     correct_pw = user_list.get(username, None)
 
     if correct_pw is not None and correct_pw == pw:
