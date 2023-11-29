@@ -493,7 +493,7 @@ def add_question_to_sheet(question_list):
     then saves the data to the google sheet via API
     also adds the date when the question was added.
     '''
-    destination = SHEET.worksheet('questions')
+    destination = SHEET.worksheet(user)
     print("Saving wrong questions for training category...")
 
     # EXTRACT data from wrong question list
@@ -530,7 +530,7 @@ def get_wrong_questions(n):
 
     # build dict in same format as returned from the API
     wrong_questions_dict = {'response_code': 0, 'results': []}
-    questions = SHEET.worksheet('questions')
+    questions = SHEET.worksheet(user)
     data = questions.get_all_values()
     max_questions = 0
 
