@@ -141,7 +141,7 @@ def display_main_menu():
     # get user menu selection and validate input
     while True:
         try:
-            user_input = int(input('Select your option: \n'))
+            user_input = int(input('Select option & press Enter: \n'))
             if 1 <= user_input <= 7:
                 match user_input:
                     case 1:
@@ -194,12 +194,14 @@ def log_in():
     user_input = input("Enter your username: ")
     if user_input in user_list:
         print ("User exists")
-        user_pw = input("Enter your password: ")
-        if check_password(user_list, user_input, user_pw) == True:
-            user = user_input
-            display_main_menu()
-        else:
-            print("incorrect. please try again")
+        while True:
+            user_pw = input("Enter your password: ")
+            if check_password(user_list, user_input, user_pw) == True:
+                user = user_input
+                display_main_menu()
+                break
+            else:
+                print("Incorrect Password. Please try again")
     else:
         print ("User does not exist!")
     exit()
@@ -231,6 +233,13 @@ def get_users():
     user_data = dict(zip(keys, values))
     
     return user_data
+
+def create_user(user_name):
+    '''
+    if user does not exist, add a new one and create a sheet
+    '''
+
+
 
 def no_of_questions():
     '''
