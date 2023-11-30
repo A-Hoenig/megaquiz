@@ -178,6 +178,7 @@ def display_main_menu():
                     case 7:
                         log_in()
                     case 8:
+                        show_goodbye()
                         exit()
 
             else:
@@ -594,6 +595,16 @@ def show_result(score):
     return
 
 
+def show_goodbye():
+    '''
+    show goodbye screen if user exits
+    '''
+    status = 'Thanks for Playing'
+    reset_cli(f'{status}')
+    custom_ascii_font = Figlet(font='small')
+    print(custom_ascii_font.renderText('Have a nice day!'))
+
+
 def run_quiz(raw_question_list):
     '''
     main function that loops through all given questions, displays one by one,
@@ -694,10 +705,7 @@ def run_quiz(raw_question_list):
                         wrong = 0
                         display_main_menu()
                     case 2:
-                        status = 'Thanks for Playing'
-                        reset_cli(f'{status}')  # update cli
-                        custom_ascii_font = Figlet(font='small')
-                        print(custom_ascii_font.renderText('Have a nice day!'))
+                        show_goodbye()
                         exit()
                 break
             else:
