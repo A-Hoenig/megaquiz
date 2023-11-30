@@ -97,7 +97,7 @@ The specific API documantation can be referenced <a href="https://opentdb.com/ap
 
 ### Datamodel
 
-The site returns a dictionary of the entire quiz. It contains all questions, including their type, difficulty and category, the correct answer as well as a list of incorrect answers. The raw structure is as follows:
+The site returns a json string which is then converted into a dictionary of the entire quiz (using json library). It contains all questions, including their type, difficulty and category, the correct answer as well as a list of incorrect answers. The raw structure is as follows:
 
 ```
 {  
@@ -140,9 +140,9 @@ The site returns a dictionary of the entire quiz. It contains all questions, inc
 ]  
 }  
 ```
-The API returns a dictionary of 2 keys: response_code and results.  
+The resulting dictionary contains 2 keys: response_code and results.  
 The results value is a list of n dictionaries (based on how many questions are requested)  
-Each question dictionary contains the parameters, the question, the correct answer, and an additional list of incorrect answers. Multiple Choice questions therefore have 3 incorrect answers, whereas True/False questions only have one.
+Each question dictionary contains the parameters, the question, the correct answer, and an additional list of incorrect answers. Multiple Choice questions therefore have 3 incorrect answers, whereas boolean questions only have one.
 
 This structure must be iterated correctly to extract and build legible questions for the user.
 
@@ -153,7 +153,7 @@ Extracted text therefore needs to interpret special characters using the html.un
 
 ## Command Line Interface
 
-Since this is part of a course user project, the directive was to design a user font end using python only in a commandline environment. A full HTML based front end is recommended eventually to drastically improve the user interaction.
+Since this is part of a course user project, the directive was to design a user font end using python only in a commandline environment. A full HTML based front end is recommended eventually to drastically improve the user UX/UI experience.
 
 Design choices were made to ensure ease of use inside an 80x44 character CLI window using a keyboard only input device. This drove all choices in how the interface would be structured.
 
@@ -162,14 +162,16 @@ Below is the main logic decided upon for the flow of the game interaction.
 
 <img src="./assets/flowchart-main.jpg" alt="MEGA-QUIZ" width="600"/>
 
-<!-- GETTING STARTED -->
-## Accessing the Site
+The main structure is a single function that pauses for a user input. All options are captured and call additional fuctions to call submenus, change parameters or start the quiz.
 
-The finished site is hosted with gitpages under:
+The main quiz function is a simple loop that iterates through the question dictionary and builds each question to dsiplay it. The correct answer is compared with the user input and then repeated until all questions have been presented.
 
-<br>
-<a href="https://a-hoenig.github.io/worddash/">WordDash Word Guessing Game</a>
-<br/>
+For simplicity and ease of use, all inputs are digits from 1-8 (with the exeption of when the user can input the number of questions: 1-50)  
+This means once started, the user can keep his hand on the numberpad or numbers 1-4 and easily interact with the quiz without needing to navigate the keyboard.
+
+All inputs are verified to allow only the applicable numbers to be input.
+
+If the number is out of range, the input is repeated and feedback is given.
 
 ## User Experience
 
@@ -179,21 +181,13 @@ The finished site is hosted with gitpages under:
 
 
 
-### FLOW CHART
-
-<img src="./assets/flowchart.jpg" alt="quiz flow chart" width="400"/>
-
 #### The Main Menu
 
-
-
-#### The Game Settings
-
-
+<img src="./assets/screenshot1.jpg" alt="main menu" width="600"/>
 
 #### Quiz Questions
 
-
+#### User LogIn / Create User Page
 
 #### Quiz Feedback
 
@@ -219,20 +213,43 @@ PYTHON FOR MAIN APP. HTML, CSS for mock CLI in HEROKU.
 
 * [GitPod](https://gitpod.io/) - IDE used to create the site.
 
-* [GithubPages](https://pages.github.com/) - Hosts the deployed website.
+* [Heroku](https://www.heroku.com) - Hosts a mock CLI to run python app
+
+#### Python Libraries:
+| Library        | Needed For |
+| :-------------- | :------ |
+|gspread|google sheet manipulation|
+|from google.oauth2.service_account import Credentials|authenticate google sheets|
+|html|decode special characters from trivia site|
+|requests|used for trivia API query|
+|json|used to parse the recieved dictionary|
+|os|needed to be able to clear CLI|
+|random|needed to randomize questions answers|
+|time|used to pause app long enough for user to read feedback|
+|getpass|allow password entry without showing input text|
+|from pyfiglet import Figlet|ASCII font art generator|
+|from datetime import date|format date string for google sheet data|
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
+
+<!-- GETTING STARTED -->
+## Accessing the Site
+
+The finished app is hosted with HEROKU here:
+<br>
+<a href="https://mega-quiz-c93f32d70f60.herokuapp.com/">MEGA-QUIZ</a>
+<br/>
 
 ## Repository
 
 ### Deployment
 
-The site is deployed using GitHub pages - [WordDash](https://a-hoenig.github.io/WordDash/).
+The site is deployed using GitHub pages - [megaquiz](https://github.com/A-Hoenig/megaquiz).
 
 To deploy the site using GitHub pages:
 
 1. Login (or signup) to Github.
-2. Go to the repository for this project, [A-Hoenig/WordDash](https://github.com/A-Hoenig/WordDash).
+2. Go to the repository for this project, [A-Hoenig/megaquiz](https://github.com/A-Hoenig/megaquiz).
 3. Click the settings button.
 4. Select pages in the left hand navigation menu.
 5. From the source dropdown select main branch and press save.
@@ -245,7 +262,7 @@ To deploy the site using GitHub pages:
 To fork the repository:
 
 1. Log in (or sign up) to Github.
-2. Go to the repository for this project, [A-Hoenig/WordDash](https://github.com/A-Hoenig/WordDash)
+2. Go to the repository for this project, [A-Hoenig/megaquiz](https://github.com/A-Hoenig/megaquiz)
 3. Click the Fork button in the top right corner.
 
 #### How to Clone
@@ -253,7 +270,7 @@ To fork the repository:
 To clone the repository:
 
 1. Log in (or sign up) to GitHub.
-2. Go to the repository for this project, [A-Hoenig/WordDash](https://github.com/A-Hoenig/WordDash)
+2. Go to the repository for this project, [A-Hoenig/megaquiz](https://github.com/A-Hoenig/megaquiz)
 3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
 4. Open the terminal in your code editor and change the current working directory to the location you want to use for the cloned directory.
 5. Type 'git clone' into the terminal and then paste the link you copied in step 3. Press enter.
