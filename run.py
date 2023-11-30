@@ -264,7 +264,6 @@ def create_user(user_name):
     while True:
         pass1 = getpass.getpass("Enter a password:\n")
         pass2 = getpass.getpass("Repeat password:\n")
-
         if pass1 == pass2:
             # add user to password list
             SHEET.worksheet('users').append_row([user_name, pass1])
