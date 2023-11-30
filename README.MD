@@ -37,13 +37,13 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/megaquiz">MEGA-QUIZ</a>
 ## About The Project
 
 The OpenTriviaDatabase is an online database of thousands of trivia questions which can be accessed via an API.
-The website itself has no front end and is only setup to allow users to create accounts and contribute questions to the database once they are verified.
+The website itself has no front end and is only setup to allow users to create accounts and contribute questions to the database. User suggested questions are added once they are verified.  
 
 MEGA-QUIZ gives the user the ability to customize the parameters for a quiz and generate a trivia quiz of random questions from the site.
 
 Additionally, Mega-Quiz offers a training option. In this case, the user can log in and create a user profile.
 Once training mode is selected, any questions the user gets wrong are stored in a private google sheet.
-This self generated database of 'wrong questions' can then also be selected as a category so that previously wrong questions can be repeatedly trained in order to increase ones knowlege on desired topics.
+This self generated database of 'wrong questions' can then be selected as a category, so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics.
 
 ### User alterable parameters:
 <ol>
@@ -58,7 +58,7 @@ If the parameters are not provided (except number of questions), the site will r
 
 ie -- if no category is provided, questions will be sourced from ALL categories or only the one that is selected. The API does not allow selection of multiple different categories.
 
-### The available categories:
+### Available categories:
 
 * 7 -- TRAINING Category (Previous wrong questions)
 * 8 -- ANY category
@@ -87,9 +87,9 @@ ie -- if no category is provided, questions will be sourced from ALL categories 
 * 31 -- Entertainment: Japanese Anime & Manga
 * 32 -- Entertainment: Cartoon & Animations
 
-The numbering of the categories is defined by the API which startes at 9-32. These integers must be passed to the site to specifiy the desired category. Adding 7 and 8 were a logical continuation of this fact: thsese are added by the program to allow the user to select ANY category (ie no category will be passed to the API) or TRAINING.
+The numbering of the categories is defined by the API which startes at 9-32. These integers must be passed to the site to specifiy the desired category. Adding 7 and 8 were a logical continuation of this fact: these are added by the program to allow the user to select ANY category (ie no category will be passed to the API) or TRAINING. Therefore category 7 and 8 are NOT passed to the API.
 
-In this case the source of questions becomes the linked google sheet, that is accessed via a different API. Using this mode requires that previously, a user has generated a profile and stored wrong questions in Training mode.
+When training category is selected, the source of questions becomes the linked google sheet that is accessed via a different API. Using this mode requires that previously, a user has generated a profile and stored wrong questions in Training mode.
 
 The specific API documantation can be referenced <a href="https://opentdb.com/api_config.php">HERE</a>
 
@@ -146,14 +146,16 @@ Each question dictionary contains the parameters, the question, the correct answ
 
 This structure must be iterated correctly to extract and build legible questions for the user.
 
-Finally, to handle special characters, all text form the site can be encoded by different means. The default is HTML encoding. (&#)  
+Finally, to handle special characters, all text from the site can be encoded by different means. The default is HTML encoding. (&#)  
 An exmple can be seen in the first wrong answer of the first question.
 
 Extracted text therefore needs to interpret special characters using the html.unescape() method from the html library.
 
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
 ## Command Line Interface
 
-Since this is part of a course user project, the directive was to design a user font end using python only in a commandline environment. A full HTML based front end is recommended eventually to drastically improve the user UX/UI experience.
+Since this is part of a course user project, the directive was to design a user font end using python only in a commandline environment. A full HTML/CSS/JS based front end is recommended eventually to drastically improve the user UX/UI experience.
 
 Design choices were made to ensure ease of use inside an 80x44 character CLI window using a keyboard only input device. This drove all choices in how the interface would be structured.
 
@@ -162,9 +164,9 @@ Below is the main logic decided upon for the flow of the game interaction.
 
 <img src="./assets/flowchart-main.jpg" alt="MEGA-QUIZ" width="600"/>
 
-The main structure is a single function that pauses for a user input. All options are captured and call additional fuctions to call submenus, change parameters or start the quiz.
+The main structure is a single function that pauses for a user input. All options are captured and then call additional functions to display submenus, change parameters or start the quiz.
 
-The main quiz function is a simple loop that iterates through the question dictionary and builds each question to dsiplay it. The correct answer is compared with the user input and then repeated until all questions have been presented.
+The main quiz function is a simple loop that iterates through the question dictionary and builds each question to display it. The correct answer is compared with the user input and then repeated until all questions have been presented.
 
 For simplicity and ease of use, all inputs are digits from 1-8 (with the exeption of when the user can input the number of questions: 1-50)  
 This means once started, the user can keep his hand on the numberpad or numbers 1-4 and easily interact with the quiz without needing to navigate the keyboard.
@@ -172,6 +174,8 @@ This means once started, the user can keep his hand on the numberpad or numbers 
 All inputs are verified to allow only the applicable numbers to be input.
 
 If the number is out of range, the input is repeated and feedback is given.
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
 ## User Experience
 
@@ -185,17 +189,74 @@ If the number is out of range, the input is repeated and feedback is given.
 
 <img src="./assets/screenshot1.jpg" alt="main menu" width="600"/>
 
-#### Quiz Questions
+#### Adjusting number of questions
 
-#### User LogIn / Create User Page
+<img src="./assets/screenshot2.jpg" alt="no of qs" width="600"/>
 
-#### Quiz Feedback
+<p align="right">(<a href="#contents">back to top</a>)</p>
 
+#### Setting the difficulty level
 
+<img src="./assets/screenshot3.jpg" alt="difficulty" width="600"/>
+
+#### Selecting the question type
+
+<img src="./assets/screenshot4.jpg" alt="type" width="600"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+#### Selecting the category
+
+<img src="./assets/screenshot5.jpg" alt="category" width="600"/>
 
 #### Training Mode
 
-#### Future Development
+<img src="./assets/screenshot6.jpg" alt="training mode" width="600"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+#### User Login
+
+<img src="./assets/screenshot7.jpg" alt="login" width="600"/>
+
+#### Main Menu User Logged In
+
+<img src="./assets/screenshot8.jpg" alt="logged in" width="600"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+#### User Does not exist / Create new user
+
+<img src="./assets/screenshot9.jpg" alt="new user" width="600"/>
+
+#### Standard question format display
+
+<img src="./assets/screenshot10.jpg" alt="question" width="600"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+#### Question CORRECT ANSWER
+
+<img src="./assets/screenshot11.jpg" alt="correct" width="600"/>
+
+#### Question INCORRECT ANSWER
+
+<img src="./assets/screenshot12.jpg" alt="wrong" width="600"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+#### Quiz completed feedback
+
+<img src="./assets/screenshot13.jpg" alt="end of quiz" width="600"/>
+
+#### User quit goodbye
+
+<img src="./assets/screenshot14.jpg" alt="goodbye" width="600"/>
+
+<p align="right">(<a href="#contents">back to top</a>)</p>
+
+
+### Future Development
 
 
 
