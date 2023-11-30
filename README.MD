@@ -19,7 +19,6 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/megaquiz">MEGA-QUIZ</a>
     <li><a href="#license">License</a></li>
     <li><a href="#image-credits">Image Credits</a></li>
     <li><a href="#testing">Testing</a></li>
-    <li><a href="#accessibility">Accessibility</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
@@ -179,6 +178,31 @@ If the number is out of range, the input is repeated and feedback is given.
 
 ## User Experience
 
+### User stories
+  
+template:  
+As a **'role'**, I can **'capability'**, so that **'receive benefit'**
+
+the role will always be **"user/player..."**
+
+"As a user, I can... 
+
+* ...view the menu and select an option to quickly change parameters and start a game"
+* ...log in to a user profile so my wrong answers can be stored"
+* ...create a user profile if I am new and setup a password"
+* ...change the number of questions per quiz so I can decide how long the quiz will be"
+* ...change the difficulty level so I can challenge myself or not"
+* ...change the type of questions so I can focus on only true or false if I want"
+* ...change the category so I can focus on a specific quiz topic"
+* ...turn on Training Mode so I can store wrong questions"
+* ...select training cateogy so I can revisit wrong question and improve my knowledge"
+* ...exit the menu so I can finish the quiz when I am done"
+* ...start a quiz so I can display questions based on my quiz parameters"
+* ...enter an answer so I can guess the correct answer to the question"
+* ...receive feedback if my answer was right or wrong"
+* ...see the correct answer if I got it wrong"
+* ...get a final summary of my quiz performance including a percentage"
+* ...decide if I want to play again or leave the app"
 
 
 ## Design
@@ -294,7 +318,10 @@ PYTHON FOR MAIN APP. HTML, CSS for mock CLI in HEROKU.
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
-## Accessing the Site
+## Running the app
+
+1. fork or clone the repository and enter your IDE
+2. In the terminal / command line type **python3 run.py** to run the app on your IDE
 
 The finished app is hosted with HEROKU here:
 <br>
@@ -303,18 +330,90 @@ The finished app is hosted with HEROKU here:
 
 ## Repository
 
-### Deployment
+###  **Deploying to Heroku**
 
-The site is deployed using GitHub pages - [megaquiz](https://github.com/A-Hoenig/megaquiz).
+1. Go to [Heroku](https://id.heroku.com/login), create account if you don't have and log in.
 
-To deploy the site using GitHub pages:
+2. Head to your dashboard and click "New", then "Create new app"
 
-1. Login (or signup) to Github.
-2. Go to the repository for this project, [A-Hoenig/megaquiz](https://github.com/A-Hoenig/megaquiz).
-3. Click the settings button.
-4. Select pages in the left hand navigation menu.
-5. From the source dropdown select main branch and press save.
-6. The site has now been deployed, please note that this process may take a few minutes before the site goes live.
+    <details>
+    <summary>New / Create New App</summary>
+              
+    ![New/CreateNewApp](/assets/images/deployment/step1-create-new-app.png)  
+
+    </details>
+
+3. Next step is to give your app a name and to choose region. After that click on "Create app".
+
+    <details>
+    <summary>Name / Region / Create</summary>
+              
+    ![Name/Region/Create](/assets/images/deployment/step2.png)  
+
+    </details>
+
+4. After that head to "Settings" tab which you can find on top of your Heroku page and under the "Config Vars" set your Key/Value Pairs.
+
+    <details>
+    <summary>CREDS / PORT</summary>
+              
+    ![CREDS/PORT](/assets/images/deployment/step3.png)  
+
+    </details>
+
+5. Then in the "Buildpacks" section you will need to add buildpacks. Pay attention to the order in which you add buildpacks you need. In my case I had to add Python first and nodejs second.
+
+    <details>
+    <summary>Buildpacks</summary>
+              
+    ![Buildpacks](/assets/images/deployment/step4.png)  
+
+    </details>
+
+6. First add "Python", by clicking on Python icon and then click on "Add Buildpack".
+
+    <details>
+    <summary>Python</summary>
+              
+    ![Python](/assets/images/deployment/step5-python.png)  
+
+    </details>
+
+7. Then add "nodejs", by clicking on nodejs icon and then click on "Add Buildpack".
+
+    <details>
+    <summary>nodejs</summary>
+              
+    ![nodejs](/assets/images/deployment/step6-nodejs.png)  
+
+    </details>
+
+8. Then head to "Deployment" tab which you can also find on top of your Heroku page and under "Deployment method" click on "GitHub"(in my case that's where my repository is).
+
+    <details>
+    <summary>GitHub</summary>
+              
+    ![GitHub](/assets/images/deployment/step7-github.png)  
+
+    </details>
+
+9. After that, just under the "Deployment method" section is "Connect to GitHub" section where you need to find your repository and then click on "Connect".
+
+    <details>
+    <summary>Connect</summary>
+              
+    ![Connect](/assets/images/deployment/step8.png)  
+
+    </details>
+
+10. Just under "Connect to GitHub" section is "Automatic deploys" section where you can click on "Enable Automatic Deploys" if that's what you want and just under is "Manual Deploy" section, where you need to click on "Deploy Manually".
+
+    <details>
+    <summary>Enable Automatic Deploys / Deploy Manually</summary>
+              
+    ![EnableAutomaticDeploys/DeployManually](/assets/images/deployment/step9-deployment-type.png)  
+
+    </details>
 
 ### Local Development
 
@@ -325,6 +424,7 @@ To fork the repository:
 1. Log in (or sign up) to Github.
 2. Go to the repository for this project, [A-Hoenig/megaquiz](https://github.com/A-Hoenig/megaquiz)
 3. Click the Fork button in the top right corner.
+4. To run the quiz type: python3 run.py in the command line / terminal
 
 #### How to Clone
 
@@ -348,8 +448,6 @@ mance.png" alt="lighthouse-results" width="400"/>
 
 ## Manual Testing
 
-### HOME PAGE
-
 ### GAMEPLAY TESTING
 
 | Feature        | Expect | Action | Result |
@@ -360,30 +458,17 @@ mance.png" alt="lighthouse-results" width="400"/>
 
 The site was tested on the three most popular browsers for functionality:
 
-<img src="./assets/docs/popular-browsers.png" alt="popular browsers" width="400"/>
-
-<pre>|       SAFARI MacOS      |         SAFARI iOS      |        CHROME         |          EDGE           |</pre>
-
 ### Known / Fixed Bugs
 
 No bugs found impacting playability or styling.
 
 ## Credits
 
-### Code Used
+### External Help
 
+* Google / Stackoverflow
 * TheQuizArms Pub Quiz project README was recommended as a baseline for this README. Many thanks. <a href="https://github.com/kera-cudmore/TheQuizArms/blob/main/README.md">The Quiz Arms README.md</a>
-
-
-<!-- IMAGE-CREDITS -->
-## Image Credits
-
-Quiz Menu graphic was created using <a href="https://patorjk.com/software/taag/#p=testall&f=Big&t=MEGA%20QUIZ">TEXT TO ASCII ART GENERATOR</a> 
-<br>
-
-## Open Trivia Quiz Database
-The comprehensive list of 5 letter words was sourced at:
-nt to the list is recommended to remove obscure or obsolete words aswell.
+* Thanks to https://github.com/AleksandarJavorovic for sharing the instructions on how best to deploy the app on Heroku.
 
 ## License
 
