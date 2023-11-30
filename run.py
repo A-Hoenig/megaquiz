@@ -198,17 +198,18 @@ def log_in():
     user_list = get_users()
     user_input = input("Enter your username: ")
     if user_input in user_list:
-        print (f"Welcome back, {user_input}!\n")
+        print(f"Welcome back, {user_input}!\n")
         while True:
             user_pw = getpass.getpass("Enter your password: \n")
-            if check_password(user_list, user_input, user_pw) == True:
+            correct_pw = check_password(user_list, user_input, user_pw)
+            if correct_pw:
                 user = user_input
                 display_main_menu()
                 break
             else:
                 print("Incorrect Password. Please try again")
     else:
-        print ("User does not exist!")
+        print("User does not exist!")
         # get user selection and validate input
         while True:
             try:
@@ -251,7 +252,7 @@ def get_users():
     values = user_list.col_values(2)[1:]
     # create dictionary of users and passwords
     user_data = dict(zip(keys, values))
-    
+
     return user_data
 
 
@@ -260,20 +261,21 @@ def create_user(user_name):
     if user does not exist, add a new one and create a sheet
     '''
     print(f'Creating new user {user_name}')
-    
+
     while True:
         pass1 = getpass.getpass("Enter a password:\n")
         pass2 = getpass.getpass("Repeat password:\n")
         if pass1 == pass2:
             # add user to password list
             SHEET.worksheet('users').append_row([user_name, pass1])
-            #create new user sheet to store their wrong questions
+            # create new user sheet to store their wrong questions
             print("Creating new user profile...")
             new_tab = SHEET.add_worksheet(title=user_name, rows="2000", cols="10")
             display_main_menu()
             break
         else:
             print('Passwords do not match. Please try again!')
+
 
 def no_of_questions():
     '''
@@ -614,8 +616,7 @@ def run_quiz(raw_question_list):
 
     global correct, wrong, training_mode, num
     wrong_qs = []  # remember which questions were wrong
-
-    #     main loop to display each question     ##
+    
     # start loop, display first question as 1, not 0
     for q_count, q_data in enumerate(raw_question_list['results'],
                                      start=1):
@@ -656,7 +657,6 @@ def run_quiz(raw_question_list):
                         time.sleep(2)
                     else:
                         wrong += 1
-
                         print(f"{grn}Correct answer: {correct_answer}: "
                               f"{html.unescape(q_data['correct_answer'])}{rst}")
                         time.sleep(2)

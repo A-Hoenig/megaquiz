@@ -44,6 +44,34 @@ Additionally, Mega-Quiz offers a training option. In this case, the user can log
 Once training mode is selected, any questions the user gets wrong are stored in a private google sheet.
 This self generated database of 'wrong questions' can then be selected as a category, so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics.
 
+## User stories
+  
+template:  
+As a **'role'**, I can **'capability'**, so that **'receive benefit'**
+
+the role will always be **"user/player..."**
+
+"As a user, I can... 
+
+* ...view the menu and select an option to quickly change parameters and start a game"
+* ...log in to a user profile so my wrong answers can be stored"
+* ...create a user profile if I am new and setup a password"
+* ...change the number of questions per quiz so I can decide how long the quiz will be"
+* ...change the difficulty level so I can challenge myself or not"
+* ...change the type of questions so I can focus on only true or false if I want"
+* ...change the category so I can focus on a specific quiz topic"
+* ...turn on Training Mode so I can store wrong questions"
+* ...select training cateogy so I can revisit wrong question and improve my knowledge"
+* ...exit the menu so I can finish the quiz when I am done"
+* ...start a quiz so I can display questions based on my quiz parameters"
+* ...enter an answer so I can guess the correct answer to the question"
+* ...receive feedback if my answer was right or wrong"
+* ...see the correct answer if I got it wrong"
+* ...get a final summary of my quiz performance including a percentage"
+* ...decide if I want to play again or leave the app"
+
+## Underlying Functionality
+
 ### User alterable parameters:
 <ol>
   <li>Number of questions (API allows 1-50)</li>
@@ -176,38 +204,8 @@ If the number is out of range, the input is repeated and feedback is given.
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
-## User Experience
-
-### User stories
-  
-template:  
-As a **'role'**, I can **'capability'**, so that **'receive benefit'**
-
-the role will always be **"user/player..."**
-
-"As a user, I can... 
-
-* ...view the menu and select an option to quickly change parameters and start a game"
-* ...log in to a user profile so my wrong answers can be stored"
-* ...create a user profile if I am new and setup a password"
-* ...change the number of questions per quiz so I can decide how long the quiz will be"
-* ...change the difficulty level so I can challenge myself or not"
-* ...change the type of questions so I can focus on only true or false if I want"
-* ...change the category so I can focus on a specific quiz topic"
-* ...turn on Training Mode so I can store wrong questions"
-* ...select training cateogy so I can revisit wrong question and improve my knowledge"
-* ...exit the menu so I can finish the quiz when I am done"
-* ...start a quiz so I can display questions based on my quiz parameters"
-* ...enter an answer so I can guess the correct answer to the question"
-* ...receive feedback if my answer was right or wrong"
-* ...see the correct answer if I got it wrong"
-* ...get a final summary of my quiz performance including a percentage"
-* ...decide if I want to play again or leave the app"
-
 
 ## Design
-
-
 
 #### The Main Menu
 
@@ -282,7 +280,16 @@ the role will always be **"user/player..."**
 
 ### Future Development
 
-
+* Since the API will only return a singe category or ALL categories, use the front end to allow the user to select multiple categories. Then manually pull a set of the requested topics from the database. eg user wants 20 questions and selected 3 categories, app would then request (20 / 3) + 1 questions from each topic and then build a random quiz using those quesitions.
+* use the date of when questions were added to prioritize older questions rather than recently added ones (user option selectable)
+* allow user to set a threshold when to remove training questions from the stored list - eg if the user has answered a specific question correctly x times, it can be removed
+* improve the funciton that gets the google sheets questions to only collect questions of the specificed type, category and difficulty
+* store the user settings in their profile so that the app defaults can be remembered
+* store a high score for each category in the user profile and track some basic useage statisics - number of questions, overall percentage etc
+* add a user change password option
+* add password encryption to keep everything secure
+* instead of googe sheets, store user data in an actual back end database
+* integrate app into a well designed graphical front end that allows keyboard and mouse user input with engaging graphics
 
 ## Technologies Used
 
@@ -290,7 +297,7 @@ the role will always be **"user/player..."**
 
 PYTHON FOR MAIN APP. HTML, CSS for mock CLI in HEROKU.
 
-* [EDrawMAax](https://www.edrawsoft.com/ad/edrawmax-diagram-tool.html?gad_source=1&gclid=CjwKCAiAjfyqBhAsEiwA-UdzJP7WWEuJcqaBE2Vag1b0U3ukJ_MwizjN76YlORg6EU2jBAXaFfTgxxoC2vAQAvD_BwE) - Used to create flowcharts.
+* [EDrawMax](https://www.edrawsoft.com/ad/edrawmax-diagram-tool.html?gad_source=1&gclid=CjwKCAiAjfyqBhAsEiwA-UdzJP7WWEuJcqaBE2Vag1b0U3ukJ_MwizjN76YlORg6EU2jBAXaFfTgxxoC2vAQAvD_BwE) - Used to create flowcharts.
 
 * [Git](https://git-scm.com/) - For version control.
 
@@ -319,6 +326,8 @@ PYTHON FOR MAIN APP. HTML, CSS for mock CLI in HEROKU.
 
 <!-- GETTING STARTED -->
 ## Running the app
+
+for a quick run without google sheets integration:
 
 1. fork or clone the repository and enter your IDE
 2. In the terminal / command line type **python3 run.py** to run the app on your IDE
@@ -443,8 +452,8 @@ To clone the repository:
 ### Validator Testing
 
 #### PYTHON
-  - No errors were returned when passing through the official [W3C validator](https://validator.w3.org/)
-mance.png" alt="lighthouse-results" width="400"/>
+  - No errors were returned when passing through the official [CI pep8 Linter](https://pep8ci.herokuapp.com/)
+
 
 ## Manual Testing
 
@@ -453,10 +462,30 @@ mance.png" alt="lighthouse-results" width="400"/>
 | Feature        | Expect | Action | Result |
 | :-------------- | :------ | :------ | :------ |
 |||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+|||||
+
 
 ### Browser Compatibility
 
-The site was tested on the three most popular browsers for functionality:
+The deployed app on heroku was tested on the three most popular browsers for functionality:
+* Chrome
+* Safari
+* Firefox
 
 ### Known / Fixed Bugs
 
