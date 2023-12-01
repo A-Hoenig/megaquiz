@@ -521,7 +521,6 @@ To clone the repository:
 |User recognized|logged in correectly|Verified OK|
 |Username validation rejects special characters|input @$_ etc|Verified OK|
 |Unreconized User triggers 'create new'|typed a new username|Verified OK|
-|New user name checked is available|typed known username again|**check if still needed!!**|
 |New user can enter password|new user name + password input|Verified OK|
 |New password is checked matching|typed wrong and correct repeat pw|Verified OK|
 |Feedback given to user|typed all options|Verified OK|
@@ -552,9 +551,9 @@ To clone the repository:
 |All text is decoded when HTML codes present|play many quizzes to check examples|Verified OK|
 |Correct answer is at random position|play many quizzes|Verified OK|
 |True False question changes input promt|checked on boolean questions|Verified OK|
-|Input only allows 1-4 or 1-2|played many quizzes|Verified OK|
-|Correct answer is recognized|Input correct answer|Verified OK|
-|Correct answer updates correct counter|Input correct answer|Verified OK|
+|Input only allows 1-4 or 1-2|input deliberate wrong digits|Verified OK|
+|Correct answer is recognized|input correct answer|Verified OK|
+|Correct answer updates correct counter|input correct answer|Verified OK|
 |Correct answer user feedback is shown in green|input correct answer|Verified OK|
 |Wrong answer is flagged|input wrong answer|Verified OK|
 |Wrong answer updates wrong counter|input wrong answer|Verified OK|
@@ -580,9 +579,6 @@ To clone the repository:
 |Wrong questions are saved to correct user sheet|answer wonrg questions and check user sheet|Verified OK|
 |Correct date recorded with each wrong question|not tested yet|**TBD**|
 |User gets feedback if no questions saved yet|select cat 7 before wrong qs added|Verified OK|
-
-
-
 
 ### Browser Compatibility
 
