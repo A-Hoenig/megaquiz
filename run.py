@@ -224,11 +224,11 @@ def log_in():
             time.sleep(3)
             display_main_menu()
     else:
-        print("User does not exist!")
+        print(f"Username {user_input} does not exist!")
         # get user selection and validate input
         while True:
             try:
-                print(f'\n1. Add {user_input} as new user\n'
+                print(f'\n1. Add as new user profile\n'
                       f'2. Abort / Back to Menu\n')
                 user_selection = int(input('\nSelect option 1 or 2:\n'))
                 if 1 <= user_selection <= 2:
