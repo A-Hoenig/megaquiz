@@ -285,6 +285,7 @@ If the number is out of range, the input is repeated and feedback is given.
 * allow user to set a threshold when to remove training questions from the stored list - eg if the user has answered a specific question correctly x times, it can be removed
 * improve the funciton that gets the google sheets questions to only collect questions of the specificed type, category and difficulty
 * store the user settings in their profile so that the app defaults can be remembered
+* add user feedback of how many wrong questions are stored and what categories
 * store a high score for each category in the user profile and track some basic useage statisics - number of questions, overall percentage etc
 * add a user change password option
 * add password encryption to keep everything secure
@@ -372,6 +373,9 @@ A step by step guide on how to do this can be referenced [Here (README_googleAPI
     ![CREDS/PORT](/assets/images/deployment/step3.png)  
 
     </details>
+
+    First Key = **CREDS**. Value: Paste content of **creds.json** file  
+    Second Key = **PORT**. Value: **8000**
 
 5. Then in the "Buildpacks" section you will need to add buildpacks. Pay attention to the order in which you add buildpacks you need. In my case I had to add Python first and nodejs second.
 
@@ -463,27 +467,68 @@ To clone the repository:
 
 ## Manual Testing
 
-### GAMEPLAY TESTING
+### 1. GENERAL TESTS / LOGIC
+| Feature/Story       | Action | Result |
+| :-------------- |:------ | :------ |
+|App starts after run.py|||
+|App starts in Heroku CLI|||
+|App accepts keyboard input|||
+|Input validation blank input|||
+|Input validation no number|||
+|Input validation wrong number|||
+|New user creates new sheet in google|||
+|New sheet is correctly named|||
+|Google users sheet is updated with new user + pw|||
 
-| Feature        | Expect | Action | Result |
-| :-------------- | :------ | :------ | :------ |
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
-|||||
+### 2. MAIN MENU TESTS
+| Feature/Story       | Action | Result |
+| :-------------- |:------ | :------ |
+|Main Menu displays correct in CLI|||
+|Input Number launches correct action|||
+|Input 1 starts the quiz|||
+|Input 2 shows change question number screen|||
+|Input 3 shows change difficulty|||
+|Input 4 shows change type|||
+|Input 5 shows change category|||
+|Input 6 toggles training mode|||
+|Input 6 flags error if not logged in|||
+|Input 7 shows log in screen|||
+|Input 7 shows user name if logged in|||
+|Input 8 end app and returns to CLI|||
+||||
+||||
+||||
+||||
+
+### 3. LOGIN / USER ACCOUNT TESTS
+| Feature/Story       | Action | Result |
+| :-------------- |:------ | :------ |
+|User can log in|||
+|Password entry is checked|||
+|Wrong password x3 = back to menu|||
+|User recognized|||
+|Unreconized User triggers 'create new'|||
+|New user name checked is available|||
+|New user can enter password|||
+|New password is checked matching|||
+|New user Feedback given to user|||
+||||
+
+### 4. API TESTS
+| Feature/Story       | Action | Result |
+| :-------------- |:------ | :------ |
+||||
+
+### 5. QUIZ MECHANICS TESTS
+| Feature/Story       | Action | Result |
+| :-------------- |:------ | :------ |
+||||
+
+### 5. TRAINING MODE TESTS
+| Feature/Story       | Action | Result |
+| :-------------- |:------ | :------ |
+||||
+
 
 
 ### Browser Compatibility
