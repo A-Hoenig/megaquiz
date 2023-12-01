@@ -472,114 +472,114 @@ To clone the repository:
 | :-------------- |:------ | :------ |
 |App starts after run.py|Enter command in CLI|Verified OK|
 |App starts in Heroku CLI|Click run app on page|Verified OK|
-|App accepts keyboard input|Type keyboard input|Verfied except Safari in Heroku|
+|App accepts keyboard input|Type keyboard input|**Verfied except Safari in Heroku**|
 |Input validation blank input|Type Enter w/ no num |Verified OK|
 |Input validation no number|Type letter & special characters|Verified OK|
 |Input validation wrong number|Typed 0 and 9+|Verified OK|
-|New user creates new sheet in google|||
-|New sheet is correctly named|||
-|Google users sheet is updated with new user + pw|||
-|User can exit gracefully|||
-|Exit shows goodbye message|||
+|New user creates new sheet in google|Created new user|Verified OK|
+|New sheet is correctly named|open google sheet after new user added|Verified OK|
+|Google users sheet is updated with new user + pw|check google sheet|Verified OK|
+|User can exit gracefully|press 8 in menu or 2 after quiz|Verified OK|
+|Exit shows goodbye message|exited app from quiz and menu|Verified OK|
 
 ### 2. MENU TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-|Main Menu displays correct in CLI|||
-|Input Number launches correct action|||
-|Input 1 starts the quiz|||
-|Input 2 shows change question number screen|||
-|Input 3 shows change difficulty|||
-|Input 4 shows change type|||
-|Input 5 shows change category|||
-|Input 6 toggles training mode|||
-|Input 6 flags error if not logged in|||
-|Input 7 shows log in screen|||
-|Input 7 shows user name if logged in|||
-|Input 8 end app and returns to CLI|||
-|Change question accepts only 1-50|||
-|No of questions is updated in main menu|||
-|Change difficulty menu displayed correctly|||
-|New Difficulty displayed in Main menu|||
-|Change type menu displays correctly|||
-|New Type displayed in Menu|||
-|Type correctly displays True/False, not boolean|||
-|Change category menu displays correctly|||
-|Categories recieved from API|||
-|New category displays name in Menu (not number)|||
-|Training mode only toggles if logged in|||
-|Training mode displays correctly in main menu|||
-|User login displayed correctly|||
-|Once logged in, user name displays in main menu|||
+|Main Menu displays correct in CLI|start app|Verified OK|
+|Input Number launches correct action|checked all options|Verified OK|
+|Input 1 starts the quiz|selected 1|Verified OK|
+|Input 2 shows change question number screen|Selected 2|Verified OK|
+|Input 3 shows change difficulty|Selected 3|Verified OK|
+|Input 4 shows change type|Selected 4|Verified OK|
+|Input 5 shows change category|Selected 5|Verified OK|
+|Input 6 toggles training mode|Selected 6 when logged in|Verified OK|
+|Input 6 flags error if not logged in|Selected 6 not logge in|Verified OK|
+|Input 7 shows log in screen|Selected 7|Verified OK|
+|Input 7 shows user name if logged in|logged in|Verified OK|
+|Input 8 end app and returns to CLI|Selected 8|Verified OK|
+|Change question accepts only 1-50|Typed letter and 0 or 51+|Verified OK|
+|No of questions is updated in main menu|Updated number|Verified OK|
+|Change difficulty menu displayed correctly|Selected 6|Verified OK|
+|New Difficulty displayed in Main menu|Changed Difficulty|Verified OK|
+|Change type menu displays correctly|Selected 4|Verified OK|
+|New Type displayed in Menu|Changed Type|Verified OK|
+|Type correctly displays True/False, not boolean|Change to T/F|Verified OK|
+|Change category menu displays correctly|Selected 5|Verified OK|
+|Categories recieved from API|Selected 5|List displays correctly|
+|New category displays name in Menu (not number)|Changed Category|Verified OK|
+|Training mode only toggles if logged in|Selected 7 logged out|Verified OK|
+|Training mode displays correctly in main menu|Selected 7 logged in|Verified OK|
+|User login displayed correctly|Selected 7|Verified OK|
+|Once logged in, user name displays in main menu|logged in|Verified OK|
 
 ### 3. LOGIN / USER ACCOUNT TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-|User can log in|||
-|Password entry is checked|||
-|Wrong password x3 = back to menu|||
-|User recognized|||
-|Username validation rejects special characters|||
-|Unreconized User triggers 'create new'|||
-|New user name checked is available|||
-|New user can enter password|||
-|New password is checked matching|||
-|Feedback given to user|||
+|User can log in|input dummy user and pw|Verified OK|
+|Password entry is checked|typed correct and wrong pw|Verified OK|
+|Wrong password x3 = back to menu|type 3 wrong pw|Verified OK|
+|User recognized|logged in correectly|Verified OK|
+|Username validation rejects special characters|input @$_ etc|Verified OK|
+|Unreconized User triggers 'create new'|typed a new username|Verified OK|
+|New user name checked is available|typed known username again|**check if still needed!!**|
+|New user can enter password|new user name + password input|Verified OK|
+|New password is checked matching|typed wrong and correct repeat pw|Verified OK|
+|Feedback given to user|typed all options|Verified OK|
 
 ### 4. API TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-|Connect to Trivia API|||
-|Trivia token recognized for unique session|||
-|Connect to Google Drive|||
-|Connect to Google Sheets|||
-|Trivia API returns correct object|||
-|Training mode checks available questions|||
-|Training mode returns error if requested number > available|||
-|Number of questions reset to max available|||
-|Error returns user back to main menu|||
-|Training questions correctly received from google sheet|||
-|After quiz, wrong questions added to user sheet|||
+|Connect to Trivia API|start quiz|Verified OK|
+|Trivia token recognized for unique session|start quiz|Verified OK|
+|Connect to Google Drive|start quiz in training mode|Verified OK|
+|Connect to Google Sheets|add new user|Verified OK|
+|Trivia API returns correct object|start quiz|Verified OK|
+|Error returns user back to main menu|input more qs than on sheet|Verified OK|
+|Training questions correctly received from google sheet|start training quiz|Verified OK|
+|After quiz, wrong questions added to user sheet|deliberately answer wrong|Verified OK|
 
 ### 5. QUIZ MECHANICS TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-|Quiz Starts as expected|||
-|Number of question displayed correctly|||
-|Total number of questions displayed|||
-|Right and Wrong counters start at 0|||
-|Question is displayed correctly|||
-|Correct question category displayed|||
-|Correct question difficulty displayed|||
-|Possible answers are displayed correctly|||
-|All text is decoded when HTML codes present|||
-|Correct answer is at random position|||
-|True False question changes input promt|||
-|Input only allows 1-4 or 1-2|||
-|Correct answer is recognized|||
-|Correct answer updates correct counter|||
-|Correct answer user feedback is shown in green|||
-|Wrong answer is flagged|||
-|Wrong answer updates wrong counter|||
-|Wrong answer shows correct answer in green|||
-|Percentage calculates correctly|||
-|Quiz ends after the expected number of questions|||
-|Quiz feedbck is shown at the end with total score|||
-|Feedback is different based on percentage|||
-|User can end app or return to play again|||
-|User is shown feedback that wrong questions are being saved|||
+|Quiz Starts as expected|Input 1|Verified OK|
+|Number of question displayed correctly|start quiz check for 1|Verified OK|
+|Total number of questions displayed|start quizzes with different n|Verified OK|
+|Right and Wrong counters start at 0|start quiz|Verified OK|
+|Question is displayed correctly|play many quizzes and check|Verified OK|
+|Correct question category displayed|start quiz compare category|Verified OK|
+|Correct question difficulty displayed|start quiz compare difficulty|Verified OK|
+|Possible answers are displayed correctly|start quiz|Verified OK|
+|All text is decoded when HTML codes present|play many quizzes to check examples|Verified OK|
+|Correct answer is at random position|play many quizzes|Verified OK|
+|True False question changes input promt|checked on boolean questions|Verified OK|
+|Input only allows 1-4 or 1-2|played many quizzes|Verified OK|
+|Correct answer is recognized|Input correct answer|Verified OK|
+|Correct answer updates correct counter|Input correct answer|Verified OK|
+|Correct answer user feedback is shown in green|input correct answer|Verified OK|
+|Wrong answer is flagged|input wrong answer|Verified OK|
+|Wrong answer updates wrong counter|input wrong answer|Verified OK|
+|Wrong answer shows correct answer in green|input wrong answer|Verified OK|
+|Percentage calculates correctly|input right and wrong answers|Verified OK|
+|Quiz ends after the expected number of questions|played different num quizzes to end|Verified OK|
+|Quiz feedback is shown at the end with total score|played quizzes to end|Verified OK|
+|Feedback is different based on percentage|adjusted how many wrong answers given|Verified OK|
+|User can end app or return to play again|press 1 and 2|Verified OK|
+|User is shown feedback that wrong questions are being saved|answered wrong in training mode|Verified OK|
 
 ### 5. TRAINING MODE TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-|Questions retrieved from google sheet correctly|||
-|Questions converted into correct data object|||
-|Quiz correctly displays previous wrong questions|||
-|Wroog questions from 'wrong' list arent added to sheet again (no doubles)|||
-|Questions render correctly with decoded HTML escape tags|||
-|Wrong questions are saved to correct user sheet|||
-|Correct date recorded with each wrong question|||
-||||
+|Questions retrieved from google sheet correctly|start training quiz|Verified OK|
+|Questions converted into correct data object|start many training quizzes|Verified OK|
+|Training mode checks available questions|start training cat with more/less questions than avail|Verified OK|
+|Training mode returns error if requested number > available|input more qs than on sheet|Verified OK|
+|Number of questions reset to max available|input more qs than on sheet|Verified OK|
+|Quiz correctly displays previous wrong questions|compare google sheet with quiz|Verified OK|
+|Wrong questions from 'wrong' list arent added to sheet again (no doubles)|anser training quiz q wrong compare sheet|Verified OK|
+|Questions render correctly with decoded HTML escape tags|repeat quizzes and check|Verified OK|
+|Wrong questions are saved to correct user sheet|answer wonrg questions and check user sheet|Verified OK|
+|Correct date recorded with each wrong question|not tested yet|**TBD**|
+|User gets feedback if no questions saved yet|select cat 7 before wrong qs added|Verified OK|
 
 
 
