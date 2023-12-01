@@ -470,12 +470,12 @@ To clone the repository:
 ### 1. GENERAL TESTS / LOGIC
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-|App starts after run.py|||
-|App starts in Heroku CLI|||
-|App accepts keyboard input|||
-|Input validation blank input|||
-|Input validation no number|||
-|Input validation wrong number|||
+|App starts after run.py|Enter command in CLI|Verified OK|
+|App starts in Heroku CLI|Click run app on page|Verified OK|
+|App accepts keyboard input|Type keyboard input|Verfied except Safari in Heroku|
+|Input validation blank input|Type Enter w/ no num |Verified OK|
+|Input validation no number|Type letter & special characters|Verified OK|
+|Input validation wrong number|Typed 0 and 9+|Verified OK|
 |New user creates new sheet in google|||
 |New sheet is correctly named|||
 |Google users sheet is updated with new user + pw|||
@@ -519,6 +519,7 @@ To clone the repository:
 |Password entry is checked|||
 |Wrong password x3 = back to menu|||
 |User recognized|||
+|Username validation rejects special characters|||
 |Unreconized User triggers 'create new'|||
 |New user name checked is available|||
 |New user can enter password|||

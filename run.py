@@ -202,7 +202,7 @@ def log_in():
         if user_input.isalnum():
             break
         else:    
-            print("Please use only alphanumeric input (a-Z or 0-9)")
+            print("Please use only alphanumeric input (a-Z and 0-9)")
 
     if user_input in user_list:
         i = 1
@@ -540,7 +540,7 @@ def get_wrong_questions(n):
     Data is then reconfigured into the same format recieved from Trivia API
     this can be passed to normal quiz functions to generate a quiz.
     '''
-    global num  # change num if not enouigh wrong questions for quiz
+    global num, category
 
     # build dict in same format as returned from the API
     wrong_questions_dict = {'response_code': 0, 'results': []}
@@ -550,9 +550,11 @@ def get_wrong_questions(n):
 
     if len(data) <= 1:
         # no questions saved in google sheet yet
-        print(f"Sorry, no questions have been saved yet."
-              f"Ensure Training Mode is on to remember wrong questions")
+        print(f"Sorry, no questions have been saved yet.\n"
+              f"Play other category with Training Mode on to"
+              f" remember wrong questions")
         input("Press enter to continue\n")
+        category = 9
         display_main_menu()
         return
     elif n > (len(data) - 1):
