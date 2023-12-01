@@ -196,7 +196,14 @@ def log_in():
 
     reset_cli('Log in...')
     user_list = get_users()
-    user_input = input("Enter your username: ")
+
+    while True:
+        user_input = input("Enter your username: ")
+        if user_input.isalnum():
+            break
+        else:    
+            print("Please use only alphanumeric input (a-Z or 0-9)")
+
     if user_input in user_list:
         i = 1
         print(f"Welcome back, {user_input}!\n")

@@ -479,8 +479,10 @@ To clone the repository:
 |New user creates new sheet in google|||
 |New sheet is correctly named|||
 |Google users sheet is updated with new user + pw|||
+|User can exit gracefully|||
+|Exit shows goodbye message|||
 
-### 2. MAIN MENU TESTS
+### 2. MENU TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
 |Main Menu displays correct in CLI|||
@@ -495,10 +497,20 @@ To clone the repository:
 |Input 7 shows log in screen|||
 |Input 7 shows user name if logged in|||
 |Input 8 end app and returns to CLI|||
-||||
-||||
-||||
-||||
+|Change question accepts only 1-50|||
+|No of questions is updated in main menu|||
+|Change difficulty menu displayed correctly|||
+|New Difficulty displayed in Main menu|||
+|Change type menu displays correctly|||
+|New Type displayed in Menu|||
+|Type correctly displays True/False, not boolean|||
+|Change category menu displays correctly|||
+|Categories recieved from API|||
+|New category displays name in Menu (not number)|||
+|Training mode only toggles if logged in|||
+|Training mode displays correctly in main menu|||
+|User login displayed correctly|||
+|Once logged in, user name displays in main menu|||
 
 ### 3. LOGIN / USER ACCOUNT TESTS
 | Feature/Story       | Action | Result |
@@ -511,23 +523,63 @@ To clone the repository:
 |New user name checked is available|||
 |New user can enter password|||
 |New password is checked matching|||
-|New user Feedback given to user|||
-||||
+|Feedback given to user|||
 
 ### 4. API TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-||||
+|Connect to Trivia API|||
+|Trivia token recognized for unique session|||
+|Connect to Google Drive|||
+|Connect to Google Sheets|||
+|Trivia API returns correct object|||
+|Training mode checks available questions|||
+|Training mode returns error if requested number > available|||
+|Number of questions reset to max available|||
+|Error returns user back to main menu|||
+|Training questions correctly received from google sheet|||
+|After quiz, wrong questions added to user sheet|||
 
 ### 5. QUIZ MECHANICS TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
-||||
+|Quiz Starts as expected|||
+|Number of question displayed correctly|||
+|Total number of questions displayed|||
+|Right and Wrong counters start at 0|||
+|Question is displayed correctly|||
+|Correct question category displayed|||
+|Correct question difficulty displayed|||
+|Possible answers are displayed correctly|||
+|All text is decoded when HTML codes present|||
+|Correct answer is at random position|||
+|True False question changes input promt|||
+|Input only allows 1-4 or 1-2|||
+|Correct answer is recognized|||
+|Correct answer updates correct counter|||
+|Correct answer user feedback is shown in green|||
+|Wrong answer is flagged|||
+|Wrong answer updates wrong counter|||
+|Wrong answer shows correct answer in green|||
+|Percentage calculates correctly|||
+|Quiz ends after the expected number of questions|||
+|Quiz feedbck is shown at the end with total score|||
+|Feedback is different based on percentage|||
+|User can end app or return to play again|||
+|User is shown feedback that wrong questions are being saved|||
 
 ### 5. TRAINING MODE TESTS
 | Feature/Story       | Action | Result |
 | :-------------- |:------ | :------ |
+|Questions retrieved from google sheet correctly|||
+|Questions converted into correct data object|||
+|Quiz correctly displays previous wrong questions|||
+|Wroog questions from 'wrong' list arent added to sheet again (no doubles)|||
+|Questions render correctly with decoded HTML escape tags|||
+|Wrong questions are saved to correct user sheet|||
+|Correct date recorded with each wrong question|||
 ||||
+
 
 
 
@@ -535,7 +587,7 @@ To clone the repository:
 
 The deployed app on heroku was tested on the three most popular browsers for functionality:
 * Chrome
-* Safari
+* Safari - CI CLI app doens not accept keyboard input on macOS/iOS Safari and iOS Chrome!
 * Edge
 
 ### Known / Fixed Bugs
