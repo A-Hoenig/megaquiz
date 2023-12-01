@@ -16,13 +16,13 @@ To create your own google sheet to act as a database for users' wrong questions 
 </details>
 
 * For MegaQuiz to work without modifying source code, name the sheet : **'training_questions'**
+* At the bottom tab, rename Sheet1 to **'users'**
 <details>
 
 ![GitHub](/assets/images/googleapi/google-sheet-2.jpg)
 ![GitHub](/assets/images/googleapi/google-sheet-3.jpg)
 </details>
 
-* At the bottom tab, rename Sheet1 to **'users'**
 * All other required sheets and entries are handled by the app
 * Keep the sheet open - you'll come back to it when its time to share it
 
@@ -163,8 +163,8 @@ To create your own google sheet to act as a database for users' wrong questions 
 </details>
 
 * File will be created and downloaded to your computer.
-* Navigate to file and rename it: **'CREDS.json'**
-* **make sure you have the same capitalization**
+* Navigate to file and rename it: **'creds.json'**
+* **make sure it's all lowercase**
 <details>
 
 ![GitHub](/assets/images/googleapi/google-api-24.jpg)
@@ -211,9 +211,11 @@ To create your own google sheet to act as a database for users' wrong questions 
 ![GitHub](/assets/images/googleapi/google-api-30.jpg)
 </details>
 
-* Paste the email address and uncheck Notify people
+* Paste the email address and uncheck **Notify people**
 * Click **SEND**
 <details>
 
 ![GitHub](/assets/images/googleapi/google-api-31.jpg)
 </details>
+
+### Congratulations, you (most likely) successfully created an API accessible google sheet!

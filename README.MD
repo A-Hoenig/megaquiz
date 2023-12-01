@@ -36,13 +36,13 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/megaquiz">MEGA-QUIZ</a>
 ## About The Project
 
 The OpenTriviaDatabase is an online database of thousands of trivia questions which can be accessed via an API.
-The website itself has no front end and is only setup to allow users to create accounts and contribute questions to the database. User suggested questions are added once they are verified.  
+The website itself has no option to display a quiz and is only setup to allow users to create accounts and contribute questions to the database. User suggested questions are added once they are verified.  
 
 MEGA-QUIZ gives the user the ability to customize the parameters for a quiz and generate a trivia quiz of random questions from the site.
 
-Additionally, Mega-Quiz offers a training option. In this case, the user can log in and create a user profile.
-Once training mode is selected, any questions the user gets wrong are stored in a private google sheet.
-This self generated database of 'wrong questions' can then be selected as a category, so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics.
+Additionally, Mega-Quiz offers a training option. In this case, the user can log in and create a user profile.  
+As long as training mode is activated, any questions the user gets wrong are stored in a private google sheet.
+This self generated database of 'wrong questions' can then be selected as a category so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics.
 
 ## User stories
   
@@ -61,7 +61,7 @@ the role will always be **"user/player..."**
 * ...change the type of questions so I can focus on only true or false if I want"
 * ...change the category so I can focus on a specific quiz topic"
 * ...turn on Training Mode so I can store wrong questions"
-* ...select training cateogy so I can revisit wrong question and improve my knowledge"
+* ...select training category so I can revisit wrong questions and improve my knowledge"
 * ...exit the menu so I can finish the quiz when I am done"
 * ...start a quiz so I can display questions based on my quiz parameters"
 * ...enter an answer so I can guess the correct answer to the question"
@@ -116,7 +116,7 @@ ie -- if no category is provided, questions will be sourced from ALL categories 
 
 The numbering of the categories is defined by the API which startes at 9-32. These integers must be passed to the site to specifiy the desired category. Adding 7 and 8 were a logical continuation of this fact: these are added by the program to allow the user to select ANY category (ie no category will be passed to the API) or TRAINING. Therefore category 7 and 8 are NOT passed to the API.
 
-When training category is selected, the source of questions becomes the linked google sheet that is accessed via a different API. Using this mode requires that previously, a user has generated a profile and stored wrong questions in Training mode.
+When training category is selected, the source of questions becomes the linked google sheet that is accessed via the google gspread and google sheets APIs. Using this mode requires that a user has previously generated a profile, and wrong questions were already stored in Training mode.
 
 The specific API documantation can be referenced <a href="https://opentdb.com/api_config.php">HERE</a>
 
@@ -184,7 +184,7 @@ Extracted text therefore needs to interpret special characters using the html.un
 
 Since this is part of a course user project, the directive was to design a user font end using python only in a commandline environment. A full HTML/CSS/JS based front end is recommended eventually to drastically improve the user UX/UI experience.
 
-Design choices were made to ensure ease of use inside an 80x44 character CLI window using a keyboard only input device. This drove all choices in how the interface would be structured.
+Design choices were made to ensure ease of use inside an 80x44 character CLI window using a keyboard only input device. This drove all choices in how the interface would be structured. The CI CLI index.html template deployed to Heroku was modified from 24 to 44 rows of text to allow more screen realestate for displaying quiz graphics and menu items.
 
 ## Main application logic (Flowchart)
 Below is the main logic decided upon for the flow of the game interaction.
@@ -193,10 +193,10 @@ Below is the main logic decided upon for the flow of the game interaction.
 
 The main structure is a single function that pauses for a user input. All options are captured and then call additional functions to display submenus, change parameters or start the quiz.
 
-The main quiz function is a simple loop that iterates through the question dictionary and builds each question to display it. The correct answer is compared with the user input and then repeated until all questions have been presented.
+The main quiz function is a single loop that iterates through the question dictionary and builds each question to display it. The correct answer is compared with the user input and then repeated until all questions have been presented.
 
 For simplicity and ease of use, all inputs are digits from 1-8 (with the exeption of when the user can input the number of questions: 1-50)  
-This means once started, the user can keep his hand on the numberpad or numbers 1-4 and easily interact with the quiz without needing to navigate the keyboard.
+This means once started, the user can keep his or her hand on the numberpad or numbers 1-4 and easily interact with the quiz without needing to navigate the keyboard.
 
 All inputs are verified to allow only the applicable numbers to be input.
 
@@ -337,6 +337,9 @@ The finished app is hosted with HEROKU here:
 <a href="https://mega-quiz-c93f32d70f60.herokuapp.com/">MEGA-QUIZ</a>
 <br/>
 
+For full app functionality, a google sheet needs to be set up with API credentials as well.
+A step by step guide on how to do this can be referenced [Here (README_googleAPI)](README_googleAPI.md)
+
 ## Repository
 
 ###  **Deploying to Heroku**
@@ -433,7 +436,9 @@ To fork the repository:
 1. Log in (or sign up) to Github.
 2. Go to the repository for this project, [A-Hoenig/megaquiz](https://github.com/A-Hoenig/megaquiz)
 3. Click the Fork button in the top right corner.
-4. To run the quiz type: python3 run.py in the command line / terminal
+4. Drag and drop the CREDS.json file into the root directory
+5. Make sure to add CREDS.json to the .gitignore file to prevent the secure key being commited to github
+6. To run the quiz type: **python3 run.py** in the command line / terminal
 
 #### How to Clone
 
@@ -444,6 +449,7 @@ To clone the repository:
 3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
 4. Open the terminal in your code editor and change the current working directory to the location you want to use for the cloned directory.
 5. Type 'git clone' into the terminal and then paste the link you copied in step 3. Press enter.
+6. Ensure the CREDS.json file is uploaded and ignored as mentioned above.
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
@@ -485,7 +491,7 @@ To clone the repository:
 The deployed app on heroku was tested on the three most popular browsers for functionality:
 * Chrome
 * Safari
-* Firefox
+* Edge
 
 ### Known / Fixed Bugs
 

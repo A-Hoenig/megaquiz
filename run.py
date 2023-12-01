@@ -144,7 +144,7 @@ def display_main_menu():
     # get user menu selection and validate input
     while True:
         try:
-            user_input = int(input('Select option & press Enter: \n'))
+            user_input = int(input('Select option & press Enter:\n'))
             if 1 <= user_input <= 8:
                 match user_input:
                     case 1:
@@ -198,8 +198,9 @@ def log_in():
     user_list = get_users()
     user_input = input("Enter your username: ")
     if user_input in user_list:
+        i = 1
         print(f"Welcome back, {user_input}!\n")
-        while True:
+        while i < 4:
             user_pw = getpass.getpass("Enter your password: \n")
             correct_pw = check_password(user_list, user_input, user_pw)
             if correct_pw:
@@ -208,6 +209,13 @@ def log_in():
                 break
             else:
                 print("Incorrect Password. Please try again")
+                i += 1
+        if i == 4:
+            print(f"\n"
+                  f"Sorry, 3 wrong attempts.\n"
+                  f"Please contact admin to reset password")
+            time.sleep(3)
+            display_main_menu()
     else:
         print("User does not exist!")
         # get user selection and validate input
