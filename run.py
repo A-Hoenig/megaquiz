@@ -176,7 +176,7 @@ def display_main_menu():
                     case 6:
                         toggle_training_mode()
                     case 7:
-                        log_in()
+                        log_in_menu()
                     case 8:
                         show_goodbye()
                         exit()
@@ -185,6 +185,30 @@ def display_main_menu():
                 print("Please enter 1 - 8!")
         except ValueError:
             print('Please enter a number!')
+
+
+def log_in_menu():
+    '''
+    let user choose to log in or create a new profile
+    '''
+    reset_cli('Log in...')
+    print(f'\n1. Log In\n'
+          f'2. Create New Profile\n')
+    while True:
+            try:
+                user_selection = int(input('\nSelect option 1 or 2:\n'))
+                if 1 <= user_selection <= 2:
+                    match user_selection:
+                        case 1:
+                            log_in()
+                        case 2:
+                            user_input = get_valid_username()
+                            create_user(user_input)
+                    break
+                else:
+                    print("Please enter 1 or 2!")
+            except ValueError:
+                print('Please enter a number!')
 
 
 def log_in():
@@ -243,6 +267,24 @@ def log_in():
             except ValueError:
                 print('Please enter a number!')
     exit()
+
+
+def get_valid_username():
+    '''
+    request a valid username from new user
+    checks the name is not already taken
+    '''
+    while True:
+        users = get_users()
+        user_input = input("Enter your username: ")
+        if user_input.isalnum():
+            break
+        else:    
+            print("Please use only alphanumeric input (a-Z and 0-9)")
+    if user_input in users:
+        print('Sorry, that name is already taken, please choose a different one')
+    else:
+        return user_input
 
 
 def check_password(user_list, username, pw):
