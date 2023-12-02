@@ -34,6 +34,8 @@ def generate_new_token():
     response_json = response.json()
     return response_json['token']  # prevent duplicate questions
 
+def reset_token():
+    url ='https://opentdb.com/api_token.php?command=reset&token=YOURTOKENHERE'
 
 def get_categories():
     """
@@ -77,8 +79,8 @@ def get_questions(number, category, question_type, difficulty, token):
                      + url_no_of_questions
                      + url_category
                      + url_difficulty
-                     + url_type
-                     + url_token)  # build complete API URL
+                     + url_type)
+                    #  + url_token)  # build complete API URL
 
     questions = requests.get(questions_url)  # get the questions
     questions_json = questions.json()
@@ -565,27 +567,40 @@ def get_wrong_questions(n):
     '''
     global num, category
 
+    # build dict in same format as returned from the API
+    wrong_questions_dict = {'response_code': 0, 'results': []}
     questions = SHEET.worksheet(user)
-    data = questions.get_all_values()[1:]  # ignore header
-    original_rows = list(range(1,len(data)+1))
-    question_list = list(zip(data, original_rows))
+    data = questions.get_all_values()
+    max_questions = 0
 
-    max_questions = min(n, len(data))
-
-    # shuffle the questions
-    random.shuffle(question_list)
+    if len(data) <= 1:
+        # no questions saved in google sheet yet
+        print(f"Sorry, no questions have been saved yet.\n"
+              f"Play other category with Training Mode on to"
+              f" remember wrong questions")
+        input("Press enter to continue\n")
+        category = 9
+        display_main_menu()
+        return
+    elif n > (len(data) - 1):
+        # use number of available questions if n is greater
+        print(f'Not enough data to create training quiz with {n} questions.\n'
+              f'Max available is {len(data)-1}')
+        max_questions = len(data) - 1
+        num = len(data)-1
+        time.sleep(4)
+        display_main_menu()
+        return
+    else:
+        max_questions = n
 
     # create maximum random indices either n or max of wrong questions
     random_indices = random.sample(range(1, len(data)), max_questions)
-    
-    # build dict in same format as returned from the API
-    wrong_questions_dict = {'response_code': 0, 'results': []}
 
     # iterate through sheet data and append to new dictionary
-    for item, orignial_row in question_list[:max_questions]:
-        
+    for index in random_indices:
+        item = data[index]  # pick a question based on random index list
         temp_dict = {
-            'source_row': original_row,
             'type': item[0],
             'difficulty': item[1],
             'category': item[2],
@@ -594,6 +609,7 @@ def get_wrong_questions(n):
             'incorrect_answers': item[5:8]
         }
         wrong_questions_dict['results'].append(temp_dict)
+
     print(wrong_questions_dict)
     return wrong_questions_dict
 
@@ -640,7 +656,7 @@ def run_quiz(raw_question_list):
     a list of the incorrect answers and export to google sheet
     '''
 
-    global correct, wrong, training_mode, num, user, category
+    global correct, wrong, training_mode, num, user, category, status
     wrong_qs = []  # remember which questions were wrong
     
     # start loop, display first question as 1, not 0
@@ -702,16 +718,10 @@ def run_quiz(raw_question_list):
                       f' Correct: {correct} / Wrong: {wrong}.'
                       f' ({round(percentage,1)}%)'
                       )
-        percentage = correct / num * 100  # final calc after last question
-        status = (f'Question {q_count} of {num}.'
-                  f' Correct: {correct} / Wrong: {wrong}.'
-                  f' ({round(percentage,1)}%)')
-    reset_cli(f'{status}')  # update cli after last question
-    show_result(percentage)
     # ###########################    end of loop
 
     # export wrong questions to google sheet
-    # do not save wrong qeustions from previous wrong q's
+    # do not save wrong questions from previous wrong q's
     if training_mode == "ON" and category != "Training":
         add_question_to_sheet(wrong_qs)
 
@@ -741,7 +751,7 @@ def run_quiz(raw_question_list):
 
 user = "Not Logged In"
 category_list = get_categories()
-category = 7  # number of category or ANY, dafault is 9, General Knowledge
+category = 9  # number of category or ANY, dafault is 9, General Knowledge
 question_type = 'ANY'  # multiple, boolean, ANY
 difficulty = 'ANY'  # easy, medium, hard, ANY
 num = 10  # default number of questions. Do not set to 0!
