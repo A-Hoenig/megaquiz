@@ -413,12 +413,17 @@ def change_category():
             user_input = int(input(f'\nPlease type the '
                                    f'number of the category:\n'))
             if 7 <= user_input <= 32:
-                if user_input == 7:
-                    category = 'Training'
-                elif user_input == 8:
-                    category = 'ANY'
-                else:
-                    category = user_input
+                match user_input:
+                    case 7:
+                        if user_input == 7 and user == "Not Logged In":
+                            print('Please log in first\n')
+                            time.sleep(2)
+                        else:
+                            category = 'Training'
+                    case 8:
+                        category = 'ANY'
+                    case _:
+                        category = user_input
                 display_main_menu()
             else:
                 print("Please enter a valid category number!")
@@ -560,40 +565,27 @@ def get_wrong_questions(n):
     '''
     global num, category
 
-    # build dict in same format as returned from the API
-    wrong_questions_dict = {'response_code': 0, 'results': []}
     questions = SHEET.worksheet(user)
-    data = questions.get_all_values()
-    max_questions = 0
+    data = questions.get_all_values()[1:]  # ignore header
+    original_rows = list(range(1,len(data)+1))
+    question_list = list(zip(data, original_rows))
 
-    if len(data) <= 1:
-        # no questions saved in google sheet yet
-        print(f"Sorry, no questions have been saved yet.\n"
-              f"Play other category with Training Mode on to"
-              f" remember wrong questions")
-        input("Press enter to continue\n")
-        category = 9
-        display_main_menu()
-        return
-    elif n > (len(data) - 1):
-        # use number of available questions if n is greater
-        print(f'Not enough data to create training quiz with {n} questions.\n'
-              f'Max available is {len(data)-1}')
-        max_questions = len(data) - 1
-        num = len(data)-1
-        time.sleep(4)
-        display_main_menu()
-        return
-    else:
-        max_questions = n
+    max_questions = min(n, len(data))
+
+    # shuffle the questions
+    random.shuffle(question_list)
 
     # create maximum random indices either n or max of wrong questions
     random_indices = random.sample(range(1, len(data)), max_questions)
+    
+    # build dict in same format as returned from the API
+    wrong_questions_dict = {'response_code': 0, 'results': []}
 
     # iterate through sheet data and append to new dictionary
-    for index in random_indices:
-        item = data[index]  # pick a question based on random index list
+    for item, orignial_row in question_list[:max_questions]:
+        
         temp_dict = {
+            'source_row': original_row,
             'type': item[0],
             'difficulty': item[1],
             'category': item[2],
@@ -602,7 +594,6 @@ def get_wrong_questions(n):
             'incorrect_answers': item[5:8]
         }
         wrong_questions_dict['results'].append(temp_dict)
-
     print(wrong_questions_dict)
     return wrong_questions_dict
 
@@ -649,7 +640,7 @@ def run_quiz(raw_question_list):
     a list of the incorrect answers and export to google sheet
     '''
 
-    global correct, wrong, training_mode, num
+    global correct, wrong, training_mode, num, user, category
     wrong_qs = []  # remember which questions were wrong
     
     # start loop, display first question as 1, not 0
@@ -661,7 +652,6 @@ def run_quiz(raw_question_list):
                   f' ({round(percentage,1)}%)')
         reset_cli(f'{status}')  # reset CLI before showing first question
 
-        # get formatted question
         # returns formatted question, answers, as well as correct answer
         result = format_question(raw_question_list, q_count-1)
         # first tuple result from format function - prints question to CLI
@@ -673,7 +663,6 @@ def run_quiz(raw_question_list):
         # print(f'Debug: CorrectAnswerNo: {correct_answer}')
 
         # get user answer and validate
-        # set how many valid answers there are
         if raw_question_list['results'][q_count-1]['type'] == 'boolean':
             qs = 2
         else:
@@ -727,8 +716,6 @@ def run_quiz(raw_question_list):
         add_question_to_sheet(wrong_qs)
 
     print('Would you like to play again?\n')
-
-    # ask user if they want to play again
     while True:
         try:
             user_input = int(input('1. YES\n2. NO\n'))
@@ -754,7 +741,7 @@ def run_quiz(raw_question_list):
 
 user = "Not Logged In"
 category_list = get_categories()
-category = 9  # number of category or ANY, dafault is 9, General Knowledge
+category = 7  # number of category or ANY, dafault is 9, General Knowledge
 question_type = 'ANY'  # multiple, boolean, ANY
 difficulty = 'ANY'  # easy, medium, hard, ANY
 num = 10  # default number of questions. Do not set to 0!
