@@ -284,7 +284,7 @@ def get_users():
 
 def create_user(user_name):
     '''
-    create new user and add data to googlel sheet
+    create new user and add data to google sheet
     '''
     header_row = ['type', 'difficulty', 'category', 'question',
                   'correct_answer', 'incorrect_answers1',
@@ -717,8 +717,8 @@ def run_quiz(raw_question_list):
         status = (f'Question {q_count} of {num}.'
                   f' Correct: {correct} / Wrong: {wrong}.'
                   f' ({round(percentage,1)}%)')
-        reset_cli(f'{status}')  # update cli after last question
-        show_result(percentage)
+    reset_cli(f'{status}')  # update cli after last question
+    show_result(percentage)
     # ###########################    end of loop
 
     # export wrong questions to google sheet
