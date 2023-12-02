@@ -291,7 +291,7 @@ def create_user(user_name):
     header_row = ['type', 'difficulty', 'category', 'question',
                   'correct_answer', 'incorrect_answers1',
                   'incorrect_answers2','incorrect_answers3',
-                  'date added', 'correct_count']
+                  'date added']
     while True:
         pass1 = getpass.getpass("Enter a password:\n")
         if not pass1.strip():
