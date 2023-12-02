@@ -621,7 +621,7 @@ def show_result(score):
     reset_cli('End of Quiz!')
     custom_ascii_font = Figlet(font='broadway')  # set font name
     print(custom_ascii_font.renderText('END!'))
-    print(f'Your Final Score:  {round(score,1)}%\n')
+    print(f'Your Final Score: {correct} out of {num} = {round(score,1)}%\n')
     match score:
         case _ if score == 100:
             print("You aced it! Awesome!\n")
@@ -719,6 +719,9 @@ def run_quiz(raw_question_list):
                       f' ({round(percentage,1)}%)'
                       )
     # ###########################    end of loop
+    percentage = correct / num * 100
+    show_result(percentage)
+
 
     # export wrong questions to google sheet
     # do not save wrong questions from previous wrong q's
