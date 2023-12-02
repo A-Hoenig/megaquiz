@@ -587,7 +587,7 @@ def get_wrong_questions(n):
         print(f'Not enough data to create training quiz with {n} questions.\n'
               f'Max available is {len(data)-1}')
         max_questions = len(data) - 1
-        num = len(data)-1
+        num = len(data) - 1
         time.sleep(4)
         display_main_menu()
         return
@@ -596,21 +596,29 @@ def get_wrong_questions(n):
 
     # create maximum random indices either n or max of wrong questions
     random_indices = random.sample(range(1, len(data)), max_questions)
+    # iterate q-list and remember original row number
+    question_list = []
+    for index in range(1, len(data)):
+        item = data[index]
+        question_tuple = (item, index)
+        question_list.append(question_tuple)
 
-    # iterate through sheet data and append to new dictionary
-    for index in random_indices:
-        item = data[index]  # pick a question based on random index list
+    # shuffle the list of tuples
+    random.shuffle(question_list)
+
+    # iterate through shuffled data and create final dictionary
+    for item, original_index in question_list[:max_questions]:
         temp_dict = {
             'type': item[0],
             'difficulty': item[1],
             'category': item[2],
             'question': item[3],
             'correct_answer': item[4],
-            'incorrect_answers': item[5:8]
+            'incorrect_answers': item[5:8],
+            'original_row': original_index + 1
         }
         wrong_questions_dict['results'].append(temp_dict)
 
-    print(wrong_questions_dict)
     return wrong_questions_dict
 
 
