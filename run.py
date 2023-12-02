@@ -291,7 +291,7 @@ def create_user(user_name):
     header_row = ['type', 'difficulty', 'category', 'question',
                   'correct_answer', 'incorrect_answers1',
                   'incorrect_answers2','incorrect_answers3',
-                  'date added']
+                  'date added', 'correct_count']
     while True:
         pass1 = getpass.getpass("Enter a password:\n")
         if not pass1.strip():
@@ -555,6 +555,22 @@ def add_question_to_sheet(question_list):
     print("Questions saved")
 
 
+def update_sheet_answer(sheet, row):
+    '''
+    increments the number of times a training question
+    was answered correctly
+    '''
+    destination = SHEET.worksheet(sheet)
+    current_value = destination.cell(row, 10).value
+    if current_value is not None:
+        current_value = int(current_value)
+    else:
+        current_value = 0
+    new_value = current_value + 1
+    destination.update_cell(row, 10, new_value)
+    return True
+
+
 def get_wrong_questions(n):
     '''
     Function retrieves n questions from the saved data
@@ -594,7 +610,7 @@ def get_wrong_questions(n):
     else:
         max_questions = n
 
-    # create maximum random indices either n or max of wrong questions
+    # create indices of either n or max of wrong questions
     random_indices = random.sample(range(1, len(data)), max_questions)
     # iterate q-list and remember original row number
     question_list = []
@@ -636,11 +652,11 @@ def show_result(score):
         case _ if score > 90:
             print("Great effort! You're a trivia master!\n")
         case _ if score > 75:
-            print('Not too bad! Keep practicing\n')
+            print('Not too bad! Congrats!\n')
         case _ if score > 50:
-            print('Good effort. Have you tried Training mode yet?\n')
+            print('OK effort. Keep practicing!?\n')
         case _ if score >= 25:
-            print('These topics were not your strongpoint. Try again!\n')
+            print('These topics were definitely not your strongpoint. Try again!\n')
         case _ if score < 25:
             print('Sorry, you need to brush up on this topic!\n')
     return
@@ -702,6 +718,10 @@ def run_quiz(raw_question_list):
                     if user_answer == correct_answer:
                         correct += 1
                         print(f'{grn}CORRECT!{rst}')
+                        if category == "Training":
+                            print("Logging result...")
+                            dest_row = raw_question_list['results'][q_count-1]['original_row']
+                            update_sheet_answer(user, dest_row)
                         time.sleep(2)
                     else:
                         wrong += 1
