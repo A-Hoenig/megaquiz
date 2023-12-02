@@ -62,6 +62,7 @@ the role will always be **"user/player..."**
 * ...change the category so I can focus on a specific quiz topic"
 * ...turn on Training Mode so I can store wrong questions"
 * ...select training category so I can revisit wrong questions and improve my knowledge"
+* ...can elect to have previous wrong questions removed if I get them right n times"
 * ...exit the menu so I can finish the quiz when I am done"
 * ...start a quiz so I can display questions based on my quiz parameters"
 * ...enter an answer so I can guess the correct answer to the question"
@@ -241,6 +242,10 @@ If the number is out of range, the input is repeated and feedback is given.
 
 <img src="./assets/screenshot7.jpg" alt="login" width="600"/>
 
+#### Create new user profile
+
+<img src="./assets/screens.jpg" alt="CREATE USER" width="600"/>
+
 #### Main Menu User Logged In
 
 <img src="./assets/screenshot8.jpg" alt="logged in" width="600"/>
@@ -280,16 +285,16 @@ If the number is out of range, the input is repeated and feedback is given.
 
 ### Future Development
 
-* Since the API will only return a singe category or ALL categories, use the front end to allow the user to select multiple categories. Then manually pull a set of the requested topics from the database. eg user wants 20 questions and selected 3 categories, app would then request (20 / 3) + 1 questions from each topic and then build a random quiz using those quesitions.
-* use the date of when questions were added to prioritize older questions rather than recently added ones (user option selectable)
+* Since the API will only return a singe category or ALL categories, use the front end to allow the user to select multiple categories. Then manually pull a set of the requested topics from the database. eg user wants 20 questions and selected 3 categories, app would then request (20 / 3) + 1 questions from each topic and then build a random quiz using those questions.
+* use the date of when questions were added to prioritise older questions rather than recently added ones (user option selectable)
 * allow user to set a threshold when to remove training questions from the stored list - eg if the user has answered a specific question correctly x times, it can be removed
-* improve the funciton that gets the google sheets questions to only collect questions of the specificed type, category and difficulty
+* improve the function that gets the google sheets questions to only collect questions of the specificed type, category and difficulty
 * store the user settings in their profile so that the app defaults can be remembered
 * add user feedback of how many wrong questions are stored and what categories
-* store a high score for each category in the user profile and track some basic useage statisics - number of questions, overall percentage etc
+* store a high score for each category in the user profile and track some basic useage statistics - number of questions, overall percentage etc
 * add a user change password option
 * add password encryption to keep everything secure
-* instead of googe sheets, store user data in an actual back end database
+* instead of google sheets, store user data in an actual back end database
 * integrate app into a well designed graphical front end that allows keyboard and mouse user input with engaging graphics
 
 ## Technologies Used
@@ -496,7 +501,8 @@ To clone the repository:
 |Input 6 flags error if not logged in|Selected 6 not logge in|Verified OK|
 |Input 7 shows log in screen|Selected 7|Verified OK|
 |Input 7 shows user name if logged in|logged in|Verified OK|
-|Input 8 end app and returns to CLI|Selected 8|Verified OK|
+|Input 8 enters create new user menu|Selected 8|Verified OK|
+|Input 9 end app and returns to CLI|Selected 8|Verified OK|
 |Change question accepts only 1-50|Typed letter and 0 or 51+|Verified OK|
 |No of questions is updated in main menu|Updated number|Verified OK|
 |Change difficulty menu displayed correctly|Selected 6|Verified OK|
@@ -518,12 +524,15 @@ To clone the repository:
 |User can log in|input dummy user and pw|Verified OK|
 |Password entry is checked|typed correct and wrong pw|Verified OK|
 |Wrong password x3 = back to menu|type 3 wrong pw|Verified OK|
+|Password blank entry rejected|Type enter without text|Verified OK|
 |User recognized|logged in correectly|Verified OK|
 |Username validation rejects special characters|input @$_ etc|Verified OK|
 |Unreconized User triggers 'create new'|typed a new username|Verified OK|
 |New user can enter password|new user name + password input|Verified OK|
 |New password is checked matching|typed wrong and correct repeat pw|Verified OK|
 |Feedback given to user|typed all options|Verified OK|
+|User can create a new profile|select 8 and chose user+ PW|Verified OK|
+|New user name checked available|input known and unknown name|Verified OK|
 
 ### 4. API TESTS
 | Feature/Story       | Action | Result |
@@ -579,6 +588,7 @@ To clone the repository:
 |Wrong questions are saved to correct user sheet|answer wonrg questions and check user sheet|Verified OK|
 |Correct date recorded with each wrong question|not tested yet|**TBD**|
 |User gets feedback if no questions saved yet|select cat 7 before wrong qs added|Verified OK|
+|Correct answer gets logged in google sheet|answered wrong and right q's|Verified OK|
 
 ### Browser Compatibility
 
