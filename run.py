@@ -133,7 +133,8 @@ def display_main_menu():
         f'5. Change Category:\u0009{display_category(category,category_list)}'
         f'\n6. Training Mode:\u0009{training_mode}\n'
         f'7. Log In\u0009\u0009{user}\n'
-        f'8. Exit MegaQuiz\n'
+        f'8. Create New User\n'
+        f'9. Exit MegaQuiz\n'
         )
 
     print(
@@ -145,7 +146,7 @@ def display_main_menu():
     while True:
         try:
             user_input = int(input('Select option & press Enter:\n'))
-            if 1 <= user_input <= 8:
+            if 1 <= user_input <= 9:
                 match user_input:
                     case 1:
                         if category == 'Training':
@@ -176,39 +177,22 @@ def display_main_menu():
                     case 6:
                         toggle_training_mode()
                     case 7:
-                        log_in_menu()
+                        log_in()
                     case 8:
+                        reset_cli("Create New User...")
+                        while True:
+                            user_input = get_valid_username()
+                            if user_input != None:
+                                create_user(user_input)
+                                break
+                    case 9:
                         show_goodbye()
                         exit()
 
             else:
-                print("Please enter 1 - 8!")
+                print("Please enter 1 - 9!")
         except ValueError:
             print('Please enter a number!')
-
-
-def log_in_menu():
-    '''
-    let user choose to log in or create a new profile
-    '''
-    reset_cli('Log in...')
-    print(f'\n1. Log In\n'
-          f'2. Create New Profile\n')
-    while True:
-            try:
-                user_selection = int(input('\nSelect option 1 or 2:\n'))
-                if 1 <= user_selection <= 2:
-                    match user_selection:
-                        case 1:
-                            log_in()
-                        case 2:
-                            user_input = get_valid_username()
-                            create_user(user_input)
-                    break
-                else:
-                    print("Please enter 1 or 2!")
-            except ValueError:
-                print('Please enter a number!')
 
 
 def log_in():
@@ -248,24 +232,9 @@ def log_in():
             time.sleep(3)
             display_main_menu()
     else:
-        print(f"Username {user_input} does not exist!")
-        # get user selection and validate input
-        while True:
-            try:
-                print(f'\n1. Add as new user profile\n'
-                      f'2. Abort / Back to Menu\n')
-                user_selection = int(input('\nSelect option 1 or 2:\n'))
-                if 1 <= user_selection <= 2:
-                    match user_selection:
-                        case 1:
-                            create_user(user_input)
-                        case 2:
-                            display_main_menu()
-                    break
-                else:
-                    print("Please enter 1 or 2!")
-            except ValueError:
-                print('Please enter a number!')
+        print(f"Sorry, username {user_input} not recognized")
+        time.sleep(3)
+        display_main_menu()
     exit()
 
 
@@ -282,7 +251,8 @@ def get_valid_username():
         else:    
             print("Please use only alphanumeric input (a-Z and 0-9)")
     if user_input in users:
-        print('Sorry, that name is already taken, please choose a different one')
+        print('Sorry, that name is already taken, please choose a different one\n')
+        return None
     else:
         return user_input
 
@@ -292,7 +262,6 @@ def check_password(user_list, username, pw):
     compares user input pw with saved one from user_list
     '''
     correct_pw = user_list.get(username, None)
-
     if correct_pw is not None and correct_pw == pw:
         return True
     else:
@@ -315,23 +284,25 @@ def get_users():
 
 def create_user(user_name):
     '''
-    if user does not exist, add a new one and create a sheet
+    create new user and add data to googlel sheet
     '''
-    print(f'Creating new user {user_name}')
-
     while True:
         pass1 = getpass.getpass("Enter a password:\n")
-        pass2 = getpass.getpass("Repeat password:\n")
-        if pass1 == pass2:
-            # add user to password list
-            SHEET.worksheet('users').append_row([user_name, pass1])
-            # create new user sheet to store their wrong questions
-            print("Creating new user profile...")
-            new_tab = SHEET.add_worksheet(title=user_name, rows="2000", cols="10")
-            display_main_menu()
-            break
+        if not pass1.strip():
+            print("Password cannot be blank!")
         else:
-            print('Passwords do not match. Please try again!')
+            pass2 = getpass.getpass("Repeat password:\n")
+            
+            if pass1 == pass2:  # don't allow empty input
+                # add user to password list
+                SHEET.worksheet('users').append_row([user_name, pass1])
+                # create new user sheet to store their wrong questions
+                print("Creating new user profile...")
+                new_tab = SHEET.add_worksheet(title=user_name, rows="2000", cols="10")
+                display_main_menu()
+                break
+            else:
+                print('Passwords do not match. Please try again!')
 
 
 def no_of_questions():
