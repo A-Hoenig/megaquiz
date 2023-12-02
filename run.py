@@ -286,6 +286,10 @@ def create_user(user_name):
     '''
     create new user and add data to googlel sheet
     '''
+    header_row = ['type', 'difficulty', 'category', 'question',
+                  'correct_answer', 'incorrect_answers1',
+                  'incorrect_answers2','incorrect_answers3',
+                  'date added', 'correct_count']
     while True:
         pass1 = getpass.getpass("Enter a password:\n")
         if not pass1.strip():
@@ -299,6 +303,7 @@ def create_user(user_name):
                 # create new user sheet to store their wrong questions
                 print("Creating new user profile...")
                 new_tab = SHEET.add_worksheet(title=user_name, rows="2000", cols="10")
+                SHEET.worksheet(user_name).append_row(header_row)
                 display_main_menu()
                 break
             else:
