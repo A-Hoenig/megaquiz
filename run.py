@@ -616,9 +616,9 @@ def update_sheet_answer(sheet, row):
 
 def remove_sheet_rows(sheet, threshold):
     '''
-    takes a list of row nunbers and deletes the respective
-    row from the linked google sheet in reverse order
-    to preserve row numbers
+    checks the google sheet column J for question count
+    then deletes any rows in reverse where the value
+    is above the user set threshold
     '''
     destination = SHEET.worksheet(sheet)
     question_values = destination.col_values(10)
@@ -627,9 +627,12 @@ def remove_sheet_rows(sheet, threshold):
         for index, value in enumerate(question_values)
         if value.isdigit() and int(value) >= threshold
     ]
+    if not filtered_rows:
+        # no questions above threshold yet
+        return
     # delete list of rows in reverse
     for row in reversed(filtered_rows):
-        print(row)
+        destination.delete_rows(row)
     return
 
 
