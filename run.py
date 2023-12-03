@@ -138,7 +138,7 @@ def display_main_menu():
         )
 
     print(
-        f'Turn on training mode to track wrong questions\n'
+        f'Log in and turn on training mode to track wrong questions\n'
         f'Then select "Training" category to practice them\n'
         )
 
@@ -297,13 +297,13 @@ def create_user(user_name):
             print("Password cannot be blank!")
         else:
             pass2 = getpass.getpass("Repeat password:\n")
-            if pass1 == pass2:  # don't allow empty input
+            if pass1 == pass2:
                 # add user to password list
                 SHEET.worksheet('users').append_row([user_name, pass1])
                 # create new user sheet to store their wrong questions
                 print("Creating new user profile...")
                 new_tab = SHEET.add_worksheet(title=user_name,
-                                              rows="2000", cols="10")
+                                              rows="5000", cols="10")
                 SHEET.worksheet(user_name).append_row(header_row)
                 display_main_menu()
                 break
@@ -400,7 +400,8 @@ def change_type():
 
 def change_category():
     '''
-    Allow user to change the category.list pulled from open quiz DB.
+    Allow user to change the category.
+    List pulled from open quiz DB.
     Changes the global variable
     '''
     global category, category_list
@@ -447,7 +448,7 @@ def display_category(id, category_list):
     if id == "Training":
         return 'Training'
     else:
-        return 'ANY'   # if ID not found
+        return 'ANY'
 
 
 def create_category_list(categories):
@@ -473,7 +474,7 @@ def create_category_list(categories):
 def training_menu():
     '''
     Allow user to change toggle training mode.
-    And selecte when wrong questions are removed
+    And select when wrong questions are removed
     from the google sheet
     '''
     global remove_question_after
@@ -525,8 +526,8 @@ def toggle_training_mode():
     global user
 
     if user == "Not Logged In":
-        print(f'Sorry, you must be logged into your profile'
-              f' to use Training Mode (option 7)')
+        print(f'Sorry, you must be logged in'
+              f' to use Training Mode (Menu option 7)')
         time.sleep(3)
         display_main_menu()
         exit()
@@ -539,7 +540,7 @@ def toggle_training_mode():
 
 def format_question(raw_question_list, n):
     '''
-    returns the nth question from the given raw question list
+    returns the nth question from the given question list
     in a proper format as well as the correct answer number
     Answers are shuffled and category + difficulty added.
     '''
@@ -548,7 +549,7 @@ def format_question(raw_question_list, n):
 
     # add question first and add category and difficulty to it
     individual_question = (
-        f"{q['question']}\n"
+        f"\n{q['question']}\n"
         f"{q['category']} ({q['difficulty']})\n\n"
         )
 
@@ -561,9 +562,9 @@ def format_question(raw_question_list, n):
         random.shuffle(answers)  # shuffle so correct answer is not always 1
         # add answers underneath question string
         for i, ans in enumerate(answers, start=1):  # don't use 0 for first ans
-            individual_question += f'{i}. {ans}\n'  # number and add all ans
+            individual_question += f'{i}. {ans}\n'
             if ans == q['correct_answer']:
-                correct_answer_number = i  # remember correct answer number
+                correct_answer_number = i
 
     return html.unescape(individual_question), correct_answer_number
 
@@ -601,7 +602,7 @@ def add_question_to_sheet(question_list):
 def update_sheet_answer(sheet, row):
     '''
     increments the number of times a training question
-    was answered correctly
+    was answered correctly ()
     '''
     destination = SHEET.worksheet(sheet)
     current_value = destination.cell(row, 10).value
@@ -618,7 +619,7 @@ def remove_sheet_rows(sheet, threshold):
     '''
     checks the google sheet column J for question count
     then deletes any rows in reverse where the value
-    is above the user set threshold
+    is above the user set variable: remove_question_after
     '''
     destination = SHEET.worksheet(sheet)
     question_values = destination.col_values(10)
@@ -762,7 +763,7 @@ def run_quiz(raw_question_list):
         result = format_question(raw_question_list, q_count-1)
         # first tuple result from format function - prints question to CLI
         print(f'{result[0]}\n')
-        # second tuple result from format function - store correct answer
+        # second tuple result from format function - stored correct answer
         correct_answer = result[1]
 
         # UNCOMMENT FOR DEBUG / EVALUATION PURPOSES
@@ -776,6 +777,7 @@ def run_quiz(raw_question_list):
 
         while True:
             grn = '\033[92m'
+            red = '\033[31m'
             rst = '\033[0m'
             try:
                 user_answer = int(input(f"Select Answer: (type 1 - {qs})\n"))
@@ -792,7 +794,7 @@ def run_quiz(raw_question_list):
                         time.sleep(1)
                     else:
                         wrong += 1
-                        print(f"{grn}Correct answer: {correct_answer}: "
+                        print(f"{red}Correct answer: {correct_answer}: "
                               f"{html.unescape(q_data['correct_answer'])}"
                               f"{rst}")
                         time.sleep(2)
@@ -817,7 +819,8 @@ def run_quiz(raw_question_list):
                       f' Correct: {correct} / Wrong: {wrong}.'
                       f' ({round(percentage,1)}%)'
                       )
-    # ###########################    end of loop
+    # ########################## END OF LOOP ###############
+
     percentage = correct / num * 100
     show_result(percentage)
     # export wrong questions to google sheet
@@ -828,7 +831,7 @@ def run_quiz(raw_question_list):
         print("...removing any questions you have learned")
         remove_sheet_rows(user, remove_question_after)
 
-    print('Would you like to play again?\n')
+    print('\nWould you like to play again?\n')
     while True:
         try:
             user_input = int(input('1. YES\n2. NO\n'))
@@ -859,7 +862,7 @@ question_type = 'ANY'  # multiple, boolean, ANY
 difficulty = 'ANY'  # easy, medium, hard, ANY
 num = 10  # default number of questions. Do not set to 0!
 training_mode = "OFF"
-remove_question_after = 5  # remove wrong question after n correct attempts
+remove_question_after = 3  # remove wrong question after n correct attempts
 tok = generate_new_token()
 correct = 0
 wrong = 0
