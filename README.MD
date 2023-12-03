@@ -3,7 +3,7 @@ a CLI Interface to <a href="https://opentdb.com/">OpenTriviaDatabase</a>
 
 Find it on GitHub: <a href="https://github.com/A-Hoenig/megaquiz">MEGA-QUIZ</a>
 
-<img src="./assets/screenshot0.png" alt="MEGA-QUIZ" width="400"/>
+<img src="./assets/images/screenshot-0.png" alt="MEGA-QUIZ" width="400"/>
 
 ## CONTENTS
 
@@ -42,7 +42,7 @@ MEGA-QUIZ gives the user the ability to customize the parameters for a quiz and 
 
 Additionally, Mega-Quiz offers a training option. In this case, the user can log in and create a user profile.  
 As long as training mode is activated, any questions the user gets wrong are stored in a private google sheet.
-This self generated database of 'wrong questions' can then be selected as a category so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics.
+This self generated database of 'wrong questions' can then be selected as a category so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics. The user can decide to have questions deleted again if they were answered correctly a certain number of times, indicating that the answer has been committed to memory.
 
 ## User stories
   
@@ -119,7 +119,7 @@ The numbering of the categories is defined by the API which startes at 9-32. The
 
 When training category is selected, the source of questions becomes the linked google sheet that is accessed via the google gspread and google sheets APIs. Using this mode requires that a user has previously generated a profile, and wrong questions were already stored in Training mode.
 
-The specific API documantation can be referenced <a href="https://opentdb.com/api_config.php">HERE</a>
+The specific API documentation can be referenced <a href="https://opentdb.com/api_config.php">HERE</a>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
@@ -175,7 +175,7 @@ Each question dictionary contains the parameters, the question, the correct answ
 This structure must be iterated correctly to extract and build legible questions for the user.
 
 Finally, to handle special characters, all text from the site can be encoded by different means. The default is HTML encoding. (&#)  
-An exmple can be seen in the first wrong answer of the first question.
+An example can be seen in the first wrong answer of the first question.
 
 Extracted text therefore needs to interpret special characters using the html.unescape() method from the html library.
 
@@ -186,6 +186,17 @@ Extracted text therefore needs to interpret special characters using the html.un
 Since this is part of a course user project, the directive was to design a user font end using python only in a commandline environment. A full HTML/CSS/JS based front end is recommended eventually to drastically improve the user UX/UI experience.
 
 Design choices were made to ensure ease of use inside an 80x44 character CLI window using a keyboard only input device. This drove all choices in how the interface would be structured. The CI CLI index.html template deployed to Heroku was modified from 24 to 44 rows of text to allow more screen realestate for displaying quiz graphics and menu items.
+
+## Evaluation and Assessment
+For evaluation purposes, a print instruction in line 770 of the run.py file can be uncommented by removing the # and space after it.
+This will then output the correct answer with each displayed question to be able to deliberately answer questions wrong or right. 
+In a real world deployment, those lines of code would be unneccessary and can be removed.  
+
+```
+ 769 # UNCOMMENT FOR DEBUG / EVALUATION PURPOSES
+ 770 # print(f'Debug: CorrectAnswerNo: {correct_answer}')
+```
+To interrupt the app at any time, press CONTROL-C.  
 
 ## Main application logic (Flowchart)
 Below is the main logic decided upon for the flow of the game interaction.
@@ -208,44 +219,44 @@ If the number is out of range, the input is repeated and feedback is given.
 
 ## Design
 
-#### The Main Menu
+### The Main Menu
 
 <img src="./assets/images/screenshot-2.png" alt="main menu" width="600"/>
 
-#### Adjusting number of questions
+### Adjusting number of questions
 
 <img src="./assets/images/screenshot-3.png" alt="no of qs" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
-#### Setting the difficulty level
+### Setting the difficulty level
 
 <img src="./assets/images/screenshot-4.png" alt="difficulty" width="600"/>
 
-#### Selecting the question type
+### Selecting the question type
 
 <img src="./assets/images/screenshot-5.png" alt="type" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
-#### Selecting the category
+### Selecting the category
 
 <img src="./assets/images/screenshot-6.png" alt="category" width="600"/>
 
-#### Training Mode
+### Training Mode
 
 <img src="./assets/images/screenshot-7.png" alt="training mode" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
-#### User Login
+### User Login
 
 <img src="./assets/images/screenshot-8.png" alt="login" width="600"/>
 <img src="./assets/images/screenshot-9.png" alt="login" width="600"/>
 <img src="./assets/images/screenshot-10.png" alt="login" width="600"/>
 <img src="./assets/images/screenshot-11.png" alt="login" width="600"/>
 
-#### Create new user profile
+### Create new user profile
 
 <img src="./assets/images/screenshot-12.png" alt="CREATE USER" width="600"/>
 <img src="./assets/images/screenshot-13.png" alt="CREATE USER" width="600"/>
@@ -253,13 +264,13 @@ If the number is out of range, the input is repeated and feedback is given.
 <img src="./assets/images/screenshot-15.png" alt="CREATE USER" width="600"/>
 <img src="./assets/images/screenshot-16.png" alt="CREATE USER" width="600"/>
 
-#### Main Menu User Logged In
+### Main Menu User Logged In
 
 <img src="./assets/images/screenshot-28.png" alt="logged in" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
-#### Standard question format display
+### Standard question format display
 
 <img src="./assets/images/screenshot-17.png" alt="question" width="600"/>
 <img src="./assets/images/screenshot-18.png" alt="question" width="600"/>
@@ -267,33 +278,33 @@ If the number is out of range, the input is repeated and feedback is given.
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
-#### Question CORRECT ANSWER
+### Question CORRECT ANSWER
 
 <img src="./assets/images/screenshot-21.png" alt="correct" width="600"/>
 
-#### Question INCORRECT ANSWER
+### Question INCORRECT ANSWER
 
 <img src="./assets/images/screenshot-26.png" alt="wrong" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
-#### Quiz completed feedback
+### Quiz completed feedback
 
 <img src="./assets/images/screenshot-22.png" alt="end of quiz" width="600"/>
 <img src="./assets/images/screenshot-1.png" alt="end of quiz" width="600"/>
 
-#### User quit goodbye
+### User quit goodbye
 
 <img src="./assets/images/screenshot-30.png" alt="goodbye" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 
-### Future Development
+## Future Development
 
 * Since the API will only return a singe category or ALL categories, use the front end to allow the user to select multiple categories. Then manually pull a set of the requested topics from the database. eg user wants 20 questions and selected 3 categories, app would then request (20 / 3) + 1 questions from each topic and then build a random quiz using those questions.
-* use the date of when questions were added to prioritise older questions rather than recently added ones (user option selectable)
-* allow user to set a threshold when to remove training questions from the stored list - eg if the user has answered a specific question correctly x times, it can be removed
+* for training category, use the date of when questions were added to prioritise older questions rather than recently added ones (user option selectable)
+* allow user to set a threshold when to remove training questions from the stored list - eg if the user has answered a specific question correctly x times, it can be removed **(already implemented)**
 * improve the function that gets the google sheets questions to only collect questions of the specificed type, category and difficulty
 * store the user settings in their profile so that the app defaults can be remembered
 * add user feedback of how many wrong questions are stored and what categories
@@ -341,8 +352,8 @@ PYTHON FOR MAIN APP. HTML, CSS for mock CLI in HEROKU.
 
 for a quick run without google sheets integration:
 
-1. fork or clone the repository and enter your IDE
-2. In the terminal / command line type **python3 run.py** to run the app on your IDE
+1. Fork or clone the repository and enter your IDE
+2. In the terminal / command line type: **python3 run.py** to run the app on your IDE
 
 The finished app is hosted with HEROKU here:
 <br>
@@ -474,7 +485,7 @@ To clone the repository:
 
 #### PYTHON
   - No errors were returned when passing through the official [CI pep8 Linter](https://pep8ci.herokuapp.com/)
-
+<img src="./assets/images/linter-result.png" alt="Linter" width="700"/>
 
 ## Manual Testing
 
@@ -537,7 +548,7 @@ To clone the repository:
 |New user can enter password|new user name + password input|Verified OK|
 |New password is checked matching|typed wrong and correct repeat pw|Verified OK|
 |Feedback given to user|typed all options|Verified OK|
-|User can create a new profile|select 8 and chose user+ PW|Verified OK|
+|User can create a new profile|select 8 and chose user+PW|Verified OK|
 |New user name checked available|input known and unknown name|Verified OK|
 
 ### 4. API TESTS
@@ -604,9 +615,9 @@ The deployed app on heroku was tested on most popular browsers for functionality
 * Edge
 * Opera
 
-### Known / Fixed Bugs
+### Known Bugs
 
-The CI provided front end template used to simulate a Command Line Interface that is deployed with Heroku for some reason does not accept a keyboard input when opened with Safari. Research shows this is a known issue. Also, even Chrome running on iOS has the same issue.
+The CI provided front end template used to simulate a Command Line Interface that is deployed with Heroku for some reason does not accept a keyboard input when opened with Safari. **This is a known issue**. Also, even Chrome running on iOS has the same problem.
 Other browsers running on macOS and Windows work fine. 
 
 ## Credits
@@ -614,7 +625,6 @@ Other browsers running on macOS and Windows work fine.
 ### External Help
 
 * Google / Stackoverflow
-* TheQuizArms Pub Quiz project README was recommended as a baseline for this README. Many thanks. <a href="https://github.com/kera-cudmore/TheQuizArms/blob/main/README.md">The Quiz Arms README.md</a>
 * Thanks to https://github.com/AleksandarJavorovic for sharing the instructions on how best to deploy the app on Heroku.
 
 ## License
@@ -629,7 +639,7 @@ It is for educational use only.
 
 Alex Hönig -  LimeyDeveloper@pm.me
 
-Project Link: [https://github.com/A-Hoenig/Project-One/tree/main](https://github.com/A-Hoenig/Project-One/tree/main)
+Project Link: [MEGA-QUIZ](https://github.com/A-Hoenig/megaquiz)
 
 ## Acknowledgments
 
