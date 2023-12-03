@@ -823,12 +823,11 @@ def run_quiz(raw_question_list):
     # export wrong questions to google sheet
     # do not save wrong questions from previous wrong q's
     if training_mode == "ON" and category != "Training":
-        Print("...remembering wrong questions")
         add_question_to_sheet(wrong_qs)
     if category == "Training":
         print("...removing any questions you have learned")
         remove_sheet_rows(user, remove_question_after)
-        
+
     print('Would you like to play again?\n')
     while True:
         try:
