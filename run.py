@@ -175,7 +175,7 @@ def display_main_menu():
                     case 5:
                         change_category()
                     case 6:
-                        toggle_training_mode()
+                        training_menu()
                     case 7:
                         log_in()
                     case 8:
@@ -470,6 +470,51 @@ def create_category_list(categories):
     return str_categories
 
 
+def training_menu():
+    '''
+    Allow user to change toggle training mode.
+    And selecte when wrong questions are removed
+    from the google sheet
+    '''
+    global remove_question_after
+
+    reset_cli('Training Mode')
+
+    # get user selection and validate input
+    while True:
+        try:
+            print(f"\n1. Training Mode is:\u0009\u0009{training_mode}\n"
+                  f"2. Remove wrong Q's after:\u0009{remove_question_after} "
+                  f" correct guesses\n"
+                  f"3. Back to Main Menu\n")
+            user_input = int(input('\nSelect option:\n'))
+            if 1 <= user_input <= 3:
+                match user_input:
+                    case 1:
+                        toggle_training_mode()
+                        reset_cli('Training Mode')
+                    case 2:
+                        while True:
+                            try:
+                                user_input = int(input(f"\nType when to delete"
+                                                       f" Q's (1-10):\n"))
+                                if 1 <= user_input <= 10:
+                                    remove_question_after = user_input
+                                    reset_cli('Training Mode')
+                                    break
+                                else:
+                                    print("Please enter a value from 1 to 10!")
+                            except ValueError:
+                                print('Please enter a number!')
+                    case 3:
+                        display_main_menu()
+                        break
+            else:
+                print("Please enter 1-3!")
+        except ValueError:
+            print('Please enter a number!')
+
+
 def toggle_training_mode():
     '''
     toggle training more on or off
@@ -490,7 +535,7 @@ def toggle_training_mode():
         training_mode = 'ON'
     else:
         training_mode = 'OFF'
-    display_main_menu()
+    # display_main_menu()
 
 
 def format_question(raw_question_list, n):
@@ -790,6 +835,7 @@ question_type = 'ANY'  # multiple, boolean, ANY
 difficulty = 'ANY'  # easy, medium, hard, ANY
 num = 10  # default number of questions. Do not set to 0!
 training_mode = "OFF"
+remove_question_after = 5  # remove wrong question after n correct attempts
 tok = generate_new_token()
 correct = 0
 wrong = 0
