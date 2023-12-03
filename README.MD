@@ -210,75 +210,81 @@ If the number is out of range, the input is repeated and feedback is given.
 
 #### The Main Menu
 
-<img src="./assets/screenshot1.jpg" alt="main menu" width="600"/>
+<img src="./assets/images/screenshot-2.png" alt="main menu" width="600"/>
 
 #### Adjusting number of questions
 
-<img src="./assets/screenshot2.jpg" alt="no of qs" width="600"/>
+<img src="./assets/images/screenshot-3.png" alt="no of qs" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 #### Setting the difficulty level
 
-<img src="./assets/screenshot3.jpg" alt="difficulty" width="600"/>
+<img src="./assets/images/screenshot-4.png" alt="difficulty" width="600"/>
 
 #### Selecting the question type
 
-<img src="./assets/screenshot4.jpg" alt="type" width="600"/>
+<img src="./assets/images/screenshot-5.png" alt="type" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 #### Selecting the category
 
-<img src="./assets/screenshot5.jpg" alt="category" width="600"/>
+<img src="./assets/images/screenshot-6.png" alt="category" width="600"/>
 
 #### Training Mode
 
-<img src="./assets/screenshot6.jpg" alt="training mode" width="600"/>
+<img src="./assets/images/screenshot-7.png" alt="training mode" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 #### User Login
 
-<img src="./assets/screenshot7.jpg" alt="login" width="600"/>
+<img src="./assets/images/screenshot-8.png" alt="login" width="600"/>
+<img src="./assets/images/screenshot-9.png" alt="login" width="600"/>
+<img src="./assets/images/screenshot-10.png" alt="login" width="600"/>
+<img src="./assets/images/screenshot-11.png" alt="login" width="600"/>
 
 #### Create new user profile
 
-<img src="./assets/screens.jpg" alt="CREATE USER" width="600"/>
+<img src="./assets/images/screenshot-12.png" alt="CREATE USER" width="600"/>
+<img src="./assets/images/screenshot-13.png" alt="CREATE USER" width="600"/>
+<img src="./assets/images/screenshot-14.png" alt="CREATE USER" width="600"/>
+<img src="./assets/images/screenshot-15.png" alt="CREATE USER" width="600"/>
+<img src="./assets/images/screenshot-16.png" alt="CREATE USER" width="600"/>
 
 #### Main Menu User Logged In
 
-<img src="./assets/screenshot8.jpg" alt="logged in" width="600"/>
+<img src="./assets/images/screenshot-2.png" alt="logged in" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
-#### User Does not exist / Create new user
-
-<img src="./assets/screenshot9.jpg" alt="new user" width="600"/>
-
 #### Standard question format display
 
-<img src="./assets/screenshot10.jpg" alt="question" width="600"/>
+<img src="./assets/images/screenshot-17.png" alt="question" width="600"/>
+<img src="./assets/images/screenshot-18.png" alt="question" width="600"/>
+<img src="./assets/images/screenshot-19.png" alt="question" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 #### Question CORRECT ANSWER
 
-<img src="./assets/screenshot11.jpg" alt="correct" width="600"/>
+<img src="./assets/images/screenshot-21.png" alt="correct" width="600"/>
 
 #### Question INCORRECT ANSWER
 
-<img src="./assets/screenshot12.jpg" alt="wrong" width="600"/>
+<img src="./assets/images/screenshot-26.png" alt="wrong" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
 #### Quiz completed feedback
 
-<img src="./assets/screenshot13.jpg" alt="end of quiz" width="600"/>
+<img src="./assets/images/screenshot-22.png" alt="end of quiz" width="600"/>
+<img src="./assets/images/screenshot-1.png" alt="end of quiz" width="600"/>
 
 #### User quit goodbye
 
-<img src="./assets/screenshot14.jpg" alt="goodbye" width="600"/>
+<img src="./assets/images/screenshot-30.png" alt="goodbye" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 

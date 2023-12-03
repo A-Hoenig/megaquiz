@@ -722,7 +722,7 @@ def run_quiz(raw_question_list):
                             print("Logging result...")
                             dest_row = raw_question_list['results'][q_count-1]['original_row']
                             update_sheet_answer(user, dest_row)
-                        time.sleep(2)
+                        time.sleep(1)
                     else:
                         wrong += 1
                         print(f"{grn}Correct answer: {correct_answer}: "
