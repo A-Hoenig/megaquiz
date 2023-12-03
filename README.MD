@@ -255,7 +255,7 @@ If the number is out of range, the input is repeated and feedback is given.
 
 #### Main Menu User Logged In
 
-<img src="./assets/images/screenshot-2.png" alt="logged in" width="600"/>
+<img src="./assets/images/screenshot-28.png" alt="logged in" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
 
@@ -483,7 +483,7 @@ To clone the repository:
 | :-------------- |:------ | :------ |
 |App starts after run.py|Enter command in CLI|Verified OK|
 |App starts in Heroku CLI|Click run app on page|Verified OK|
-|App accepts keyboard input|Type keyboard input|**Verfied except Safari in Heroku**|
+|App accepts keyboard input|Type keyboard input|<span style="color:red">**Verified except Heroku on Sarafi.**</span>|
 |Input validation blank input|Type Enter w/ no num |Verified OK|
 |Input validation no number|Type letter & special characters|Verified OK|
 |Input validation wrong number|Typed 0 and 9+|Verified OK|
@@ -508,7 +508,7 @@ To clone the repository:
 |Input 7 shows log in screen|Selected 7|Verified OK|
 |Input 7 shows user name if logged in|logged in|Verified OK|
 |Input 8 enters create new user menu|Selected 8|Verified OK|
-|Input 9 end app and returns to CLI|Selected 8|Verified OK|
+|Input 9 ends app and returns to CLI|Selected 9|Verified OK|
 |Change question accepts only 1-50|Typed letter and 0 or 51+|Verified OK|
 |No of questions is updated in main menu|Updated number|Verified OK|
 |Change difficulty menu displayed correctly|Selected 6|Verified OK|
@@ -592,20 +592,22 @@ To clone the repository:
 |Wrong questions from 'wrong' list arent added to sheet again (no doubles)|anser training quiz q wrong compare sheet|Verified OK|
 |Questions render correctly with decoded HTML escape tags|repeat quizzes and check|Verified OK|
 |Wrong questions are saved to correct user sheet|answer wonrg questions and check user sheet|Verified OK|
-|Correct date recorded with each wrong question|not tested yet|**TBD**|
+|Correct date recorded with each wrong question|add qs to sheet|Verified OK|
 |User gets feedback if no questions saved yet|select cat 7 before wrong qs added|Verified OK|
 |Correct answer gets logged in google sheet|answered wrong and right q's|Verified OK|
 
 ### Browser Compatibility
 
-The deployed app on heroku was tested on the three most popular browsers for functionality:
+The deployed app on heroku was tested on most popular browsers for functionality:
 * Chrome
-* Safari - CI CLI app doens not accept keyboard input on macOS/iOS Safari and iOS Chrome!
+* Safari - CI CLI app does not accept keyboard input on macOS/iOS Safari and iOS Chrome!
 * Edge
+* Opera
 
 ### Known / Fixed Bugs
 
-No bugs found impacting playability or styling.
+The CI provided front end template used to simulate a Command Line Interface that is deployed with Heroku for some reason does not accept a keyboard input when opened with Safari. Research shows this is a known issue. Also, even Chrome running on iOS has the same issue.
+Other browsers running on macOS and Windows work fine. 
 
 ## Credits
 

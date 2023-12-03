@@ -34,8 +34,6 @@ def generate_new_token():
     response_json = response.json()
     return response_json['token']  # prevent duplicate questions
 
-def reset_token():
-    url ='https://opentdb.com/api_token.php?command=reset&token=YOURTOKENHERE'
 
 def get_categories():
     """
@@ -79,8 +77,8 @@ def get_questions(number, category, question_type, difficulty, token):
                      + url_no_of_questions
                      + url_category
                      + url_difficulty
-                     + url_type)
-                    #  + url_token)  # build complete API URL
+                     + url_type
+                     + url_token)  # build complete API URL
 
     questions = requests.get(questions_url)  # get the questions
     questions_json = questions.json()
@@ -134,7 +132,7 @@ def display_main_menu():
         f'4. Change Type:\u0009\u0009{str_question_type}\n'
         f'5. Change Category:\u0009{display_category(category,category_list)}'
         f'\n6. Training Mode:\u0009{training_mode}\n'
-        f'7. Log In\u0009\u0009{user}\n'
+        f'7. Logged in as:\u0009{user}\n'
         f'8. Create New User\n'
         f'9. Exit MegaQuiz\n'
         )
@@ -184,7 +182,7 @@ def display_main_menu():
                         reset_cli("Create New User...")
                         while True:
                             user_input = get_valid_username()
-                            if user_input != None:
+                            if user_input is not None:
                                 create_user(user_input)
                                 break
                     case 9:
@@ -211,7 +209,7 @@ def log_in():
         user_input = input("Enter your username: ")
         if user_input.isalnum():
             break
-        else:    
+        else:
             print("Please use only alphanumeric input (a-Z and 0-9)")
 
     if user_input in user_list:
@@ -250,10 +248,11 @@ def get_valid_username():
         user_input = input("Enter your username: ")
         if user_input.isalnum():
             break
-        else:    
+        else:
             print("Please use only alphanumeric input (a-Z and 0-9)")
     if user_input in users:
-        print('Sorry, that name is already taken, please choose a different one\n')
+        print(f'Sorry, that name is already taken,'
+              f' please choose a different one\n')
         return None
     else:
         return user_input
@@ -290,7 +289,7 @@ def create_user(user_name):
     '''
     header_row = ['type', 'difficulty', 'category', 'question',
                   'correct_answer', 'incorrect_answers1',
-                  'incorrect_answers2','incorrect_answers3',
+                  'incorrect_answers2', 'incorrect_answers3',
                   'date added', 'correct_count']
     while True:
         pass1 = getpass.getpass("Enter a password:\n")
@@ -298,13 +297,13 @@ def create_user(user_name):
             print("Password cannot be blank!")
         else:
             pass2 = getpass.getpass("Repeat password:\n")
-            
             if pass1 == pass2:  # don't allow empty input
                 # add user to password list
                 SHEET.worksheet('users').append_row([user_name, pass1])
                 # create new user sheet to store their wrong questions
                 print("Creating new user profile...")
-                new_tab = SHEET.add_worksheet(title=user_name, rows="2000", cols="10")
+                new_tab = SHEET.add_worksheet(title=user_name,
+                                              rows="2000", cols="10")
                 SHEET.worksheet(user_name).append_row(header_row)
                 display_main_menu()
                 break
@@ -656,7 +655,8 @@ def show_result(score):
         case _ if score > 50:
             print('OK effort. Keep practicing!?\n')
         case _ if score >= 25:
-            print('These topics were definitely not your strongpoint. Try again!\n')
+            print(f'These topics were definitely not your strongpoint.'
+                  f' Try again!\n')
         case _ if score < 25:
             print('Sorry, you need to brush up on this topic!\n')
     return
@@ -682,7 +682,7 @@ def run_quiz(raw_question_list):
 
     global correct, wrong, training_mode, num, user, category, status
     wrong_qs = []  # remember which questions were wrong
-    
+
     # start loop, display first question as 1, not 0
     for q_count, q_data in enumerate(raw_question_list['results'],
                                      start=1):
@@ -720,21 +720,26 @@ def run_quiz(raw_question_list):
                         print(f'{grn}CORRECT!{rst}')
                         if category == "Training":
                             print("Logging result...")
-                            dest_row = raw_question_list['results'][q_count-1]['original_row']
+                            dest_row = raw_question_list['results'][
+                                q_count-1]['original_row']
                             update_sheet_answer(user, dest_row)
                         time.sleep(1)
                     else:
                         wrong += 1
                         print(f"{grn}Correct answer: {correct_answer}: "
-                              f"{html.unescape(q_data['correct_answer'])}{rst}")
+                              f"{html.unescape(q_data['correct_answer'])}"
+                              f"{rst}")
                         time.sleep(2)
                         if training_mode == "ON":
                             wrong_qs.append({'type': q_data['type'],
-                                             'difficulty': q_data['difficulty'],
+                                             'difficulty': q_data[
+                                                'difficulty'],
                                              'category': q_data['category'],
                                              'question': q_data['question'],
-                                             'correct_answer': q_data['correct_answer'],
-                                             'incorrect_answers': q_data['incorrect_answers']})
+                                             'correct_answer': q_data[
+                                                'correct_answer'],
+                                             'incorrect_answers': q_data[
+                                                'incorrect_answers']})
                     break
                 else:
                     print(f"Please enter 1 or {qs}!")
@@ -749,8 +754,6 @@ def run_quiz(raw_question_list):
     # ###########################    end of loop
     percentage = correct / num * 100
     show_result(percentage)
-
-
     # export wrong questions to google sheet
     # do not save wrong questions from previous wrong q's
     if training_mode == "ON" and category != "Training":
