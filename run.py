@@ -535,7 +535,6 @@ def toggle_training_mode():
         training_mode = 'ON'
     else:
         training_mode = 'OFF'
-    # display_main_menu()
 
 
 def format_question(raw_question_list, n):
@@ -613,6 +612,25 @@ def update_sheet_answer(sheet, row):
     new_value = current_value + 1
     destination.update_cell(row, 10, new_value)
     return True
+
+
+def remove_sheet_rows(sheet, threshold):
+    '''
+    takes a list of row nunbers and deletes the respective
+    row from the linked google sheet in reverse order
+    to preserve row numbers
+    '''
+    destination = SHEET.worksheet(sheet)
+    question_values = destination.col_values(10)
+    filtered_rows = [
+        index + 1
+        for index, value in enumerate(question_values)
+        if value.isdigit() and int(value) >= threshold
+    ]
+    # delete list of rows in reverse
+    for row in reversed(filtered_rows):
+        print(row)
+    return
 
 
 def get_wrong_questions(n):
@@ -841,4 +859,5 @@ correct = 0
 wrong = 0
 
 # launch quiz CLI app
-display_main_menu()
+# display_main_menu()
+remove_sheet_rows('qaz', remove_question_after)
