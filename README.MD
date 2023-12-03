@@ -41,37 +41,37 @@ The website itself has no option to display a quiz and is only setup to allow us
 
 MEGA-QUIZ gives the user the ability to customize the parameters for a quiz and generate a trivia quiz of random questions from the site.
 
-Additionally, Mega-Quiz offers a training option. In this case, the user can log in and create a user profile.  
+Additionally, MEGA-QUIZ offers a training option. In this case, the user can log in and create a user profile.  
 As long as training mode is activated, any questions the user gets wrong are stored in a private google sheet.
-This self generated database of 'wrong questions' can then be selected as a category so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics. The user can decide to have questions deleted again if they were answered correctly a certain number of times, indicating that the answer has been committed to memory.
+This self-generated database of 'wrong questions' can then be selected as a category so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics. The user can decide to have questions deleted again if they were answered correctly a certain number of times, indicating that the answer has been committed to memory.
 
 <!-- USER STORIES -->
 ## User stories
   
 template:  
-As a **'role'**, I can **'capability'**, so that **'receive benefit'**
+As a **'Role'**, I can **'Capability'**, so that **'Receive benefit'**
 
 the role will always be **"user/player..."**
 
 "As a user, I can... 
 
-* ...view the menu and select an option to quickly change parameters and start a game"
-* ...log in to a user profile so my wrong answers can be stored"
-* ...create a user profile if I am new and setup a password"
-* ...change the number of questions per quiz so I can decide how long the quiz will be"
-* ...change the difficulty level so I can challenge myself or not"
-* ...change the type of questions so I can focus on only true or false if I want"
-* ...change the category so I can focus on a specific quiz topic"
-* ...turn on Training Mode so I can store wrong questions"
-* ...select training category so I can revisit wrong questions and improve my knowledge"
-* ...can elect to have previous wrong questions removed if I get them right n times"
-* ...exit the menu so I can finish the quiz when I am done"
-* ...start a quiz so I can display questions based on my quiz parameters"
-* ...enter an answer so I can guess the correct answer to the question"
-* ...receive feedback if my answer was right or wrong"
-* ...see the correct answer if I got it wrong"
-* ...get a final summary of my quiz performance including a percentage"
-* ...decide if I want to play again or leave the app"
+* ...view the menu and select an option to quickly change parameters and start a game."
+* ...log in to a user profile so my wrong answers can be stored."
+* ...create a user profile if I am new and setup a password."
+* ...change the number of questions per quiz so I can decide how long the quiz will be."
+* ...change the difficulty level so I can challenge myself or not."
+* ...change the type of questions so I can focus on only true or false if I want."
+* ...change the category so I can focus on a specific quiz topic."
+* ...turn on Training Mode so I can store wrong questions."
+* ...select training category so I can revisit wrong questions and improve my knowledge."
+* ...can elect to have previous wrong questions removed if I get them right n times."
+* ...exit the menu so I can finish the quiz when I am done."
+* ...start a quiz so I can display questions based on my quiz parameters."
+* ...enter an answer so I can guess the correct answer to the question."
+* ...receive feedback if my answer was right or wrong."
+* ...see the correct answer if I got it wrong."
+* ...get a final summary of my quiz performance including a percentage."
+* ...decide if I want to play again or leave the app."
 
 ## Underlying Functionality
 
@@ -84,9 +84,8 @@ the role will always be **"user/player..."**
 </ol>
 
 These parameters can be passed to the API which will then return an object containing random questions.
-If the parameters are not provided (except number of questions), the site will return a random selection of ANY of the options
-
-ie -- if no category is provided, questions will be sourced from ALL categories or only the one that is selected. The API does not allow selection of multiple different categories.
+If the parameters are not provided (except number of questions), the site will return a random selection of ANY of the options,
+e.g. if no category is provided, questions will be sourced from ALL categories or only the one that is selected. The API does not allow selection of multiple different categories.
 
 ### Available categories:
 
@@ -117,9 +116,9 @@ ie -- if no category is provided, questions will be sourced from ALL categories 
 * 31 -- Entertainment: Japanese Anime & Manga
 * 32 -- Entertainment: Cartoon & Animations
 
-The numbering of the categories is defined by the API which startes at 9-32. These integers must be passed to the site to specifiy the desired category. Adding 7 and 8 were a logical continuation of this fact: these are added by the program to allow the user to select ANY category (ie no category will be passed to the API) or TRAINING. Therefore category 7 and 8 are NOT passed to the API.
+The numbering of the categories is defined by the API which starts at 9-32. These integers must be passed to the site to specifiy the desired category. Adding 7 and 8 were a logical continuation of this fact: these are added by the program to allow the user to select ANY category (e.g. no category will be passed to the API) or TRAINING. Therefore category 7 and 8 are NOT passed to the API.
 
-When training category is selected, the source of questions becomes the linked google sheet that is accessed via the google gspread and google sheets APIs. Using this mode requires that a user has previously generated a profile, and wrong questions were already stored in Training mode.
+When the Training category is selected, the source of questions becomes the linked google sheet that is accessed via the google gspread and google sheets APIs. Using this mode requires that a user has previously generated a profile, and wrong questions were already stored in Training mode.
 
 The specific API documentation can be referenced <a href="https://opentdb.com/api_config.php">HERE</a>
 
@@ -304,17 +303,17 @@ If the number is out of range, the input is repeated and feedback is given.
 
 ## Future Development
 
-* Since the API will only return a singe category or ALL categories, use the front end to allow the user to select multiple categories. Then manually pull a set of the requested topics from the database. eg user wants 20 questions and selected 3 categories, app would then request (20 / 3) + 1 questions from each topic and then build a random quiz using those questions.
-* for training category, use the date of when questions were added to prioritise older questions rather than recently added ones (user option selectable)
-* allow user to set a threshold when to remove training questions from the stored list - eg if the user has answered a specific question correctly x times, it can be removed **(already implemented)**
-* improve the function that gets the google sheets questions to only collect questions of the specificed type, category and difficulty
-* store the user settings in their profile so that the app defaults can be remembered
-* add user feedback of how many wrong questions are stored and what categories
-* store a high score for each category in the user profile and track some basic useage statistics - number of questions, overall percentage etc
-* add a user change password option
-* add password encryption to keep everything secure
-* instead of google sheets, store user data in an actual back end database
-* integrate app into a well designed graphical front end that allows keyboard and mouse user input with engaging graphics
+* Since the API will only return a singe category or ALL categories, use the front-end to allow the user to select multiple categories. Then manually pull a set of the requested topics from the database, e.g. user wants 20 questions and selected 3 categories, app would then request (20 / 3) + 1 questions from each topic and then build a random quiz using those questions.
+* For training category, use the date of when questions were added to prioritise older questions rather than recently added ones (user option selectable).
+* Allow user to set a threshold when to remove training questions from the stored list, e.g. if the user has answered a specific question correctly x times, it can be removed **(already implemented)**.
+* Improve the function that gets the Google sheets questions to only collect questions of the specificed type, category and difficulty.
+* Store the user settings in their profile so that the app defaults can be remembered.
+* Add user feedback of how many wrong questions are stored and which categories.
+* Store a high score for each category in the user profile and track some basic useage statistics, number of questions, overall percentage, etc.
+* Add a user change password option.
+* Add password encryption to keep everything secure.
+* Instead of Google sheets, store user data in an actual back-end database.
+* Integrate app into a well designed graphical front-end that allows keyboard and mouse user input with engaging graphics.
 
 ## Technologies Used
 
@@ -352,14 +351,14 @@ PYTHON FOR MAIN APP. HTML, CSS for mock CLI in HEROKU.
 <!-- GETTING STARTED -->
 ## Running the app
 
-for a quick run without google sheets integration:
+for a quick run without Google sheets integration:
 
 1. Fork or clone the repository and enter your IDE
 2. In the terminal / command line type: **python3 run.py** to run the app on your IDE
 
 The finished app is hosted with HEROKU here:
 <br>
-<a href="https://mega-quiz-c93f32d70f60.herokuapp.com/">MEGA-QUIZ</a>
+<a href="https://MEGA-QUIZ-c93f32d70f60.herokuapp.com/">MEGA-QUIZ</a>
 <br/>
 
 For full app functionality, a google sheet needs to be set up with API credentials as well.
