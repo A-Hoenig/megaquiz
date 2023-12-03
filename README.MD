@@ -12,12 +12,13 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/megaquiz">MEGA-QUIZ</a>
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#about-the-project">About The Project</a></li>
-    <li><a href="#user-experience">User Experience</a></li>
+    <li><a href="#user-stories">User Stories</a></li>
     <li><a href="#design">Design</a></li>
     <li><a href="#technologies-used">Technologies</a></li>
+    <li><a href="#evaluation-and-assessment">Project Evaluation</a></li>
     <li><a href="#repository">Deployment</a></li>
+    <li><a href="#future-development">Future Development</a></li>
     <li><a href="#license">License</a></li>
-    <li><a href="#image-credits">Image Credits</a></li>
     <li><a href="#testing">Testing</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -44,6 +45,7 @@ Additionally, Mega-Quiz offers a training option. In this case, the user can log
 As long as training mode is activated, any questions the user gets wrong are stored in a private google sheet.
 This self generated database of 'wrong questions' can then be selected as a category so that previously wrong questions can be specifically trained in order to increase ones knowlege on desired topics. The user can decide to have questions deleted again if they were answered correctly a certain number of times, indicating that the answer has been committed to memory.
 
+<!-- USER STORIES -->
 ## User stories
   
 template:  
