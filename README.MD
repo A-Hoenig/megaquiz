@@ -36,7 +36,7 @@ Find it on GitHub: <a href="https://github.com/A-Hoenig/megaquiz">MEGA-QUIZ</a>
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-The OpenTriviaDatabase is an online database of thousands of trivia questions which can be accessed via an API.
+The <a href="https://opentdb.com/">OpenTriviaDatabase</a> is an online database of thousands of trivia questions which can be accessed via an API.
 The website itself has no option to display a quiz and is only setup to allow users to create accounts and contribute questions to the database. User suggested questions are added once they are verified.  
 
 MEGA-QUIZ gives the user the ability to customize the parameters for a quiz and generate a trivia quiz of random questions from the site.
@@ -123,6 +123,10 @@ When the Training category is selected, the source of questions becomes the link
 The specific API documentation can be referenced <a href="https://opentdb.com/api_config.php">HERE</a>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
+
+### Input Validation
+Since all inputs except passwords are numerical. Data input validation is relatively straight forward. All menu option and data entry only use digits 0-9. Empty inputs and text inputs are rejected. Each menu also cleary displays to the user which options are valid and so number 0 or an input above the maximum value is also rejected.
+For password entry, a blank input is immediately rejected. Passwords that do not match are also flagged to the user.
 
 ### Datamodel
 
@@ -253,16 +257,28 @@ If the number is out of range, the input is repeated and feedback is given.
 ### User Login
 
 <img src="./assets/images/screenshot-8.png" alt="login" width="600"/>
-<img src="./assets/images/screenshot-9.png" alt="login" width="600"/>
-<img src="./assets/images/screenshot-10.png" alt="login" width="600"/>
-<img src="./assets/images/screenshot-11.png" alt="login" width="600"/>
+
+**Unknown Username:**
+<img src="./assets/images/screenshot-9.png" alt="user unknown" width="600"/>
+
+**User Recognized:**
+<img src="./assets/images/screenshot-10.png" alt="User Known" width="600"/>
+
+**Wrong Password:**
+<img src="./assets/images/screenshot-11.png" alt="Wrong Password" width="600"/>
 
 ### Create new user profile
 
 <img src="./assets/images/screenshot-12.png" alt="CREATE USER" width="600"/>
+
+**Username is taken:**
 <img src="./assets/images/screenshot-13.png" alt="CREATE USER" width="600"/>
 <img src="./assets/images/screenshot-14.png" alt="CREATE USER" width="600"/>
+
+**Validation: blank password:**
 <img src="./assets/images/screenshot-15.png" alt="CREATE USER" width="600"/>
+
+**Validation: Passwords do not match:**
 <img src="./assets/images/screenshot-16.png" alt="CREATE USER" width="600"/>
 
 ### Main Menu User Logged In
@@ -274,7 +290,11 @@ If the number is out of range, the input is repeated and feedback is given.
 ### Standard question format display
 
 <img src="./assets/images/screenshot-17.png" alt="question" width="600"/>
+
+**Validation: Wrong Number input:**
 <img src="./assets/images/screenshot-18.png" alt="question" width="600"/>
+
+**Validation: Input not a number:**
 <img src="./assets/images/screenshot-19.png" alt="question" width="600"/>
 
 <p align="right">(<a href="#contents">back to top</a>)</p>
@@ -292,6 +312,8 @@ If the number is out of range, the input is repeated and feedback is given.
 ### Quiz completed feedback
 
 <img src="./assets/images/screenshot-22.png" alt="end of quiz" width="600"/>
+
+**End of Quiz: Training Mode ON:**
 <img src="./assets/images/screenshot-1.png" alt="end of quiz" width="600"/>
 
 ### User quit goodbye

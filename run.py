@@ -56,31 +56,34 @@ def get_questions(number, category, question_type, difficulty, token):
     """
     url_no_of_questions = f'amount={number}'  # pass number of questions
 
-    if category == 'ANY':  # if setting is ANY, omit category string from URL
+    # if setting is ANY, omit passing argument to API
+    if category == 'ANY':  
         url_category = ""
     else:
         url_category = f'&category={category}'
 
-    if question_type == "ANY":  # if setting is ANY, omit type string from URL
+    if question_type == "ANY":
         url_type = ""
     else:
         url_type = f'&type={question_type}'
 
-    if difficulty == "ANY":   # omit category difficulty from URL for ANY
+    if difficulty == "ANY":
         url_difficulty = ""
     else:
         url_difficulty = f'&difficulty={difficulty}'
 
     url_token = f'&token={token}'  # ensure unique question session
 
+    # build complete API URL
     questions_url = ('https://opentdb.com/api.php?'
                      + url_no_of_questions
                      + url_category
                      + url_difficulty
                      + url_type
-                     + url_token)  # build complete API URL
+                     + url_token)
 
-    questions = requests.get(questions_url)  # get the questions
+    # get the questions from API
+    questions = requests.get(questions_url)
     questions_json = questions.json()
 
     return questions_json
