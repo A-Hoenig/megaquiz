@@ -57,7 +57,7 @@ def get_questions(number, category, question_type, difficulty, token):
     url_no_of_questions = f'amount={number}'  # pass number of questions
 
     # if setting is ANY, omit passing argument to API
-    if category == 'ANY':  
+    if category == 'ANY':
         url_category = ""
     else:
         url_category = f'&category={category}'
