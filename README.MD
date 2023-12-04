@@ -351,11 +351,6 @@ PYTHON FOR MAIN APP. HTML, CSS for mock CLI in HEROKU.
 <!-- GETTING STARTED -->
 ## Running the app
 
-for a quick run without Google sheets integration:
-
-1. Fork or clone the repository and enter your IDE
-2. In the terminal / command line type: **python3 run.py** to run the app on your IDE
-
 The finished app is hosted with HEROKU here:
 <br>
 <a href="https://MEGA-QUIZ-c93f32d70f60.herokuapp.com/">MEGA-QUIZ</a>
@@ -363,6 +358,12 @@ The finished app is hosted with HEROKU here:
 
 For full app functionality, a google sheet needs to be set up with API credentials as well.
 A step by step guide on how to do this can be referenced [Here (README_googleAPI)](README_googleAPI.md)
+
+once the google sheet is created,
+
+1. Fork or clone the repository and enter your IDE
+2. add the creds.json file to the root directory
+2. In the terminal / command line type: **python3 run.py** to run the app on your IDE
 
 ## Repository
 
